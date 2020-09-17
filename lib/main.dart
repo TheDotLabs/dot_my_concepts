@@ -30,6 +30,12 @@ class MyApp extends StatelessWidget {
         // closer together (more dense) than on mobile platforms.
         visualDensity: VisualDensity.adaptivePlatformDensity,
       ),
+      darkTheme: ThemeData(
+        visualDensity: VisualDensity.adaptivePlatformDensity,
+        primarySwatch: Colors.indigo,
+        brightness: Brightness.dark,
+      ),
+      debugShowCheckedModeBanner: false,
       home: HomePage(),
     );
   }

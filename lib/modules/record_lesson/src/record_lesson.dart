@@ -27,7 +27,6 @@ class _RecordLessonPageState extends State<RecordLessonPage> {
 
   PainterController _paintController;
   bool isCanvasEmpty = true;
-  final int startEpoch = DateTime.now().millisecondsSinceEpoch;
 
   CountdownTimer countDownTimer;
 
@@ -37,6 +36,10 @@ class _RecordLessonPageState extends State<RecordLessonPage> {
 
   double _kHeight = 300;
   double _kWidth = 300;
+
+  int startEpoch;
+
+  final _paintKey = GlobalKey();
 
   @override
   void initState() {
@@ -68,127 +71,127 @@ class _RecordLessonPageState extends State<RecordLessonPage> {
     _kWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Container(
-        child: SingleChildScrollView(
-          child: Column(
-            children: [
-              Container(
+        child: Column(
+          children: [
+            ConstrainedBox(
+              constraints: BoxConstraints(
+                maxHeight: 500,
+                maxWidth: 500,
+              ),
+              child: Container(
                 color: Colors.black87,
-                height: _kHeight,
-                width: _kWidth,
-                child: Stack(
-                  children: [
-                    PageView(
-                      physics: NeverScrollableScrollPhysics(),
-                      controller: _imageController,
-                      onPageChanged: (val) {
-                        setState(() {
-                          _pageIndex = val;
-                        });
-                        _addEvent(name: Events.changeImage, index: val);
-                        _paintController?.clear();
-                      },
-                      scrollDirection: Axis.horizontal,
-                      children: [
-                        ..._imageList.map(
-                          (e) => CachedNetworkImage(
-                            imageUrl: e,
-                            placeholder: (context, url) =>
-                                Center(child: CircularProgressIndicator()),
-                            errorWidget: (context, url, error) =>
-                                Icon(Icons.error),
+                child: IntrinsicHeight(
+                  child: Stack(
+                    children: [
+                      CachedNetworkImage(
+                        imageUrl: _imageList[_pageIndex],
+                        placeholder: (context, url) =>
+                            Center(child: CircularProgressIndicator()),
+                        errorWidget: (context, url, error) => Icon(Icons.error),
+                      ),
+                      if (countDownTimer?.isRunning ?? false)
+                        Container(
+                          key: _paintKey,
+                          child: Painter(
+                            _paintController,
+                            () {},
                           ),
                         ),
-                      ],
-                    ),
-                    if (countDownTimer?.isRunning ?? false)
-                      Painter(_paintController, () {}),
-                  ],
+                    ],
+                  ),
                 ),
               ),
-              SizedBox(
-                height: 16,
-              ),
-              if (countDownTimer?.isRunning ?? false)
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                  children: [
-                    RaisedButton(
-                      onPressed: _pageIndex > 0
-                          ? () {
-                              _pageIndex--;
-                              _imageController.jumpToPage(_pageIndex);
-                            }
-                          : null,
-                      child: Text("PREVIOUS"),
-                    ),
-                    RaisedButton(
-                      onPressed: (_pageIndex < _imageList.length - 1)
-                          ? () {
-                              _pageIndex++;
-                              _imageController.jumpToPage(_pageIndex);
-                            }
-                          : null,
-                      child: Text("NEXT"),
-                    )
-                  ],
-                ),
-              SizedBox(
-                height: 16,
-              ),
-              if (countDownTimer?.isRunning ?? false)
-                Text(
-                    remainingDuration.toString().split('.')[0].padLeft(8, '0')),
+            ),
+            SizedBox(
+              height: 16,
+            ),
+            if (countDownTimer?.isRunning ?? false)
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
-                  if (countDownTimer == null || !countDownTimer.isRunning)
-                    RaisedButton(
-                      onPressed: () {
-                        setState(() {
-                          this.remainingDuration =
-                              Duration(seconds: _totalSeconds);
-                        });
-
-                        countDownTimer = new CountdownTimer(
-                          Duration(seconds: _totalSeconds),
-                          Duration(seconds: 1),
-                        );
-                        countDownTimer.listen((event) {
-                          if (mounted)
+                  RaisedButton(
+                    onPressed: _pageIndex > 0
+                        ? () {
                             setState(() {
-                              this.remainingDuration = event.remaining;
+                              _pageIndex--;
                             });
-                        });
-                      },
-                      child: Text("START"),
-                    )
-                  else
-                    RaisedButton(
-                      onPressed: countDownTimer?.isRunning ?? false
-                          ? () {
-                              setState(() {
-                                countDownTimer.cancel();
-                                _paintController.clear();
-                              });
-                              _onComplete();
-                            }
-                          : null,
-                      child: Text("STOP"),
-                    ),
-                ],
-              ),
-              /*Column(
-                children: [
-                  ..._eventList.map(
-                    (e) => Text(jsonEncode(e.toJson())),
+                            _addEvent(
+                                name: Events.changeImage, index: _pageIndex);
+                          }
+                        : null,
+                    child: Text("PREVIOUS"),
                   ),
+                  RaisedButton(
+                    onPressed: (_pageIndex < _imageList.length - 1)
+                        ? () {
+                            setState(() {
+                              _pageIndex++;
+                            });
+                            _addEvent(
+                                name: Events.changeImage, index: _pageIndex);
+                          }
+                        : null,
+                    child: Text("NEXT"),
+                  )
                 ],
-              )*/
-              SizedBox(
-                height: 16,
               ),
-            ],
-          ),
+            SizedBox(
+              height: 16,
+            ),
+            if (countDownTimer?.isRunning ?? false)
+              Text(remainingDuration.toString().split('.')[0].padLeft(8, '0')),
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+              children: [
+                if (countDownTimer == null || !countDownTimer.isRunning)
+                  RaisedButton(
+                    onPressed: () {
+                      startEpoch = DateTime.now().millisecondsSinceEpoch;
+
+                      setState(() {
+                        this.remainingDuration =
+                            Duration(seconds: _totalSeconds);
+                      });
+
+                      countDownTimer = new CountdownTimer(
+                        Duration(seconds: _totalSeconds),
+                        Duration(seconds: 1),
+                      );
+                      countDownTimer.listen((event) {
+                        if (mounted)
+                          setState(() {
+                            this.remainingDuration = event.remaining;
+                          });
+                      });
+                    },
+                    child: Text("START"),
+                  )
+                else
+                  RaisedButton(
+                    onPressed: countDownTimer?.isRunning ?? false
+                        ? () {
+                            setState(() {
+                              countDownTimer.cancel();
+                              _paintController.clear();
+                            });
+                            _onComplete();
+                          }
+                        : null,
+                    child: Text("STOP"),
+                  ),
+              ],
+            ),
+            /*Column(
+              children: [
+                ..._eventList.map(
+                  (e) => Text(jsonEncode(e.toJson())),
+                ),
+              ],
+            )*/
+            SizedBox(
+              height: 16,
+            ),
+          ],
         ),
       ),
     );
@@ -200,13 +203,16 @@ class _RecordLessonPageState extends State<RecordLessonPage> {
     double x,
     double y,
   }) {
+    RenderBox box = _paintKey.currentContext.findRenderObject();
+    final height = box.size.height;
+    final width = box.size.width;
     _eventList.add(
       MyEvent(
         event: name,
         index: index,
         time: DateTime.now().millisecondsSinceEpoch - startEpoch,
-        x: double.parse(((x ?? 0) / _kWidth).toStringAsFixed(4)),
-        y: double.parse(((y ?? 0) / _kHeight).toStringAsFixed(4)),
+        x: double.parse(((x ?? 0) / width).toStringAsFixed(4)),
+        y: double.parse(((y ?? 0) / height).toStringAsFixed(4)),
       ),
     );
   }
@@ -216,7 +222,7 @@ class _RecordLessonPageState extends State<RecordLessonPage> {
       final lessonRef = FirebaseFirestore.instance.collection('lessons').doc();
       final lesson = Lesson(
         events: _eventList,
-        duration: _totalSeconds * 1000 - remainingDuration.inMilliseconds,
+        duration: DateTime.now().millisecondsSinceEpoch - startEpoch,
         id: lessonRef.id,
         name: "Sample Title",
         description: "Sample description of the video",
