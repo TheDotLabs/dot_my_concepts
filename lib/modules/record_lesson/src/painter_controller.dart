@@ -7,9 +7,13 @@ class Painter extends StatefulWidget {
   final PainterController painterController;
 
   final VoidCallback onTouch;
+  final bool disableTouch;
 
-  Painter(this.painterController, this.onTouch)
-      : super(
+  Painter(
+    this.painterController,
+    this.onTouch, {
+    this.disableTouch = false,
+  }) : super(
           key: ValueKey<PainterController>(painterController),
         );
 
@@ -36,7 +40,7 @@ class _PainterState extends State<Painter> {
       ),
     );
     child = ClipRect(child: child);
-    if (!_finished) {
+    if (!_finished && !widget.disableTouch) {
       child = GestureDetector(
         child: child,
         onPanStart: _onPanStart,
@@ -56,7 +60,6 @@ class _PainterState extends State<Painter> {
         .globalToLocal(start.globalPosition);
     widget.painterController._pathHistory.add(pos);
     widget.painterController.notifyListeners();
-    widget.onTouch();
   }
 
   void _onPanUpdate(DragUpdateDetails update) {
@@ -106,20 +109,22 @@ class PathHistory {
       _inDrag = true;
       path = new Path();
       path.moveTo(startPoint.dx, startPoint.dy);
-      painterController.startMotion(startPoint.dx, startPoint.dy);
+      if (painterController.startMotion != null)
+        painterController.startMotion(startPoint.dx, startPoint.dy);
     }
   }
 
   void updateCurrent(Offset nextPoint) {
     if (_inDrag) {
       path.lineTo(nextPoint.dx, nextPoint.dy);
-      painterController.moveMotion(nextPoint.dx, nextPoint.dy);
+      if (painterController.moveMotion != null)
+        painterController.moveMotion(nextPoint.dx, nextPoint.dy);
     }
   }
 
   void endCurrent() {
     _inDrag = false;
-    painterController.endMotion();
+    if (painterController.endMotion != null) painterController.endMotion();
   }
 
   void draw(Canvas canvas, Size size) {
@@ -132,8 +137,24 @@ class PathHistory {
 
   void clear() {
     path = new Path();
-
     painterController.notifyListeners();
+  }
+
+  void onPointerStart(double x, double y) {
+    print('on p start');
+    add(Offset(x, y));
+  }
+
+  void onPointerMove(double x, double y) {
+    print('on p move');
+
+    updateCurrent(Offset(x, y));
+  }
+
+  void onPointerEnd() {
+    print('on p end');
+
+    endCurrent();
   }
 }
 
@@ -175,5 +196,21 @@ class PainterController extends ChangeNotifier {
 
   void clear() {
     _pathHistory.clear();
+    notifyListeners();
+  }
+
+  void onPointerStart(double x, double y) {
+    _pathHistory.onPointerStart(x, y);
+    notifyListeners();
+  }
+
+  void onPointerMove(double x, double y) {
+    _pathHistory.onPointerMove(x, y);
+    notifyListeners();
+  }
+
+  void onPointerEnd() {
+    _pathHistory.onPointerEnd();
+    notifyListeners();
   }
 }

@@ -8,6 +8,227 @@ part of 'my_event.dart';
 // **************************************************************************
 
 T _$identity<T>(T value) => value;
+Lesson _$LessonFromJson(Map<String, dynamic> json) {
+  return _Lesson.fromJson(json);
+}
+
+class _$LessonTearOff {
+  const _$LessonTearOff();
+
+// ignore: unused_element
+  _Lesson call(
+      {List<MyEvent> events,
+      String id,
+      int duration,
+      String name,
+      String description,
+      List<String> images}) {
+    return _Lesson(
+      events: events,
+      id: id,
+      duration: duration,
+      name: name,
+      description: description,
+      images: images,
+    );
+  }
+}
+
+// ignore: unused_element
+const $Lesson = _$LessonTearOff();
+
+mixin _$Lesson {
+  List<MyEvent> get events;
+  String get id;
+  int get duration;
+  String get name;
+  String get description;
+  List<String> get images;
+
+  Map<String, dynamic> toJson();
+  $LessonCopyWith<Lesson> get copyWith;
+}
+
+abstract class $LessonCopyWith<$Res> {
+  factory $LessonCopyWith(Lesson value, $Res Function(Lesson) then) =
+      _$LessonCopyWithImpl<$Res>;
+  $Res call(
+      {List<MyEvent> events,
+      String id,
+      int duration,
+      String name,
+      String description,
+      List<String> images});
+}
+
+class _$LessonCopyWithImpl<$Res> implements $LessonCopyWith<$Res> {
+  _$LessonCopyWithImpl(this._value, this._then);
+
+  final Lesson _value;
+  // ignore: unused_field
+  final $Res Function(Lesson) _then;
+
+  @override
+  $Res call({
+    Object events = freezed,
+    Object id = freezed,
+    Object duration = freezed,
+    Object name = freezed,
+    Object description = freezed,
+    Object images = freezed,
+  }) {
+    return _then(_value.copyWith(
+      events: events == freezed ? _value.events : events as List<MyEvent>,
+      id: id == freezed ? _value.id : id as String,
+      duration: duration == freezed ? _value.duration : duration as int,
+      name: name == freezed ? _value.name : name as String,
+      description:
+          description == freezed ? _value.description : description as String,
+      images: images == freezed ? _value.images : images as List<String>,
+    ));
+  }
+}
+
+abstract class _$LessonCopyWith<$Res> implements $LessonCopyWith<$Res> {
+  factory _$LessonCopyWith(_Lesson value, $Res Function(_Lesson) then) =
+      __$LessonCopyWithImpl<$Res>;
+  @override
+  $Res call(
+      {List<MyEvent> events,
+      String id,
+      int duration,
+      String name,
+      String description,
+      List<String> images});
+}
+
+class __$LessonCopyWithImpl<$Res> extends _$LessonCopyWithImpl<$Res>
+    implements _$LessonCopyWith<$Res> {
+  __$LessonCopyWithImpl(_Lesson _value, $Res Function(_Lesson) _then)
+      : super(_value, (v) => _then(v as _Lesson));
+
+  @override
+  _Lesson get _value => super._value as _Lesson;
+
+  @override
+  $Res call({
+    Object events = freezed,
+    Object id = freezed,
+    Object duration = freezed,
+    Object name = freezed,
+    Object description = freezed,
+    Object images = freezed,
+  }) {
+    return _then(_Lesson(
+      events: events == freezed ? _value.events : events as List<MyEvent>,
+      id: id == freezed ? _value.id : id as String,
+      duration: duration == freezed ? _value.duration : duration as int,
+      name: name == freezed ? _value.name : name as String,
+      description:
+          description == freezed ? _value.description : description as String,
+      images: images == freezed ? _value.images : images as List<String>,
+    ));
+  }
+}
+
+@JsonSerializable()
+class _$_Lesson implements _Lesson {
+  _$_Lesson(
+      {this.events,
+      this.id,
+      this.duration,
+      this.name,
+      this.description,
+      this.images});
+
+  factory _$_Lesson.fromJson(Map<String, dynamic> json) =>
+      _$_$_LessonFromJson(json);
+
+  @override
+  final List<MyEvent> events;
+  @override
+  final String id;
+  @override
+  final int duration;
+  @override
+  final String name;
+  @override
+  final String description;
+  @override
+  final List<String> images;
+
+  @override
+  String toString() {
+    return 'Lesson(events: $events, id: $id, duration: $duration, name: $name, description: $description, images: $images)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _Lesson &&
+            (identical(other.events, events) ||
+                const DeepCollectionEquality().equals(other.events, events)) &&
+            (identical(other.id, id) ||
+                const DeepCollectionEquality().equals(other.id, id)) &&
+            (identical(other.duration, duration) ||
+                const DeepCollectionEquality()
+                    .equals(other.duration, duration)) &&
+            (identical(other.name, name) ||
+                const DeepCollectionEquality().equals(other.name, name)) &&
+            (identical(other.description, description) ||
+                const DeepCollectionEquality()
+                    .equals(other.description, description)) &&
+            (identical(other.images, images) ||
+                const DeepCollectionEquality().equals(other.images, images)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(events) ^
+      const DeepCollectionEquality().hash(id) ^
+      const DeepCollectionEquality().hash(duration) ^
+      const DeepCollectionEquality().hash(name) ^
+      const DeepCollectionEquality().hash(description) ^
+      const DeepCollectionEquality().hash(images);
+
+  @override
+  _$LessonCopyWith<_Lesson> get copyWith =>
+      __$LessonCopyWithImpl<_Lesson>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$_$_LessonToJson(this);
+  }
+}
+
+abstract class _Lesson implements Lesson {
+  factory _Lesson(
+      {List<MyEvent> events,
+      String id,
+      int duration,
+      String name,
+      String description,
+      List<String> images}) = _$_Lesson;
+
+  factory _Lesson.fromJson(Map<String, dynamic> json) = _$_Lesson.fromJson;
+
+  @override
+  List<MyEvent> get events;
+  @override
+  String get id;
+  @override
+  int get duration;
+  @override
+  String get name;
+  @override
+  String get description;
+  @override
+  List<String> get images;
+  @override
+  _$LessonCopyWith<_Lesson> get copyWith;
+}
+
 MyEvent _$MyEventFromJson(Map<String, dynamic> json) {
   return _MyEvent.fromJson(json);
 }
@@ -16,7 +237,12 @@ class _$MyEventTearOff {
   const _$MyEventTearOff();
 
 // ignore: unused_element
-  _MyEvent call({Events event, int index, int time, double x, double y}) {
+  _MyEvent call(
+      {@JsonKey(name: 'e') Events event,
+      @JsonKey(name: 'i') int index,
+      @JsonKey(name: 't') int time,
+      double x,
+      double y}) {
     return _MyEvent(
       event: event,
       index: index,
@@ -31,8 +257,11 @@ class _$MyEventTearOff {
 const $MyEvent = _$MyEventTearOff();
 
 mixin _$MyEvent {
+  @JsonKey(name: 'e')
   Events get event;
+  @JsonKey(name: 'i')
   int get index;
+  @JsonKey(name: 't')
   int get time;
   double get x;
   double get y;
@@ -44,7 +273,12 @@ mixin _$MyEvent {
 abstract class $MyEventCopyWith<$Res> {
   factory $MyEventCopyWith(MyEvent value, $Res Function(MyEvent) then) =
       _$MyEventCopyWithImpl<$Res>;
-  $Res call({Events event, int index, int time, double x, double y});
+  $Res call(
+      {@JsonKey(name: 'e') Events event,
+      @JsonKey(name: 'i') int index,
+      @JsonKey(name: 't') int time,
+      double x,
+      double y});
 }
 
 class _$MyEventCopyWithImpl<$Res> implements $MyEventCopyWith<$Res> {
@@ -76,7 +310,12 @@ abstract class _$MyEventCopyWith<$Res> implements $MyEventCopyWith<$Res> {
   factory _$MyEventCopyWith(_MyEvent value, $Res Function(_MyEvent) then) =
       __$MyEventCopyWithImpl<$Res>;
   @override
-  $Res call({Events event, int index, int time, double x, double y});
+  $Res call(
+      {@JsonKey(name: 'e') Events event,
+      @JsonKey(name: 'i') int index,
+      @JsonKey(name: 't') int time,
+      double x,
+      double y});
 }
 
 class __$MyEventCopyWithImpl<$Res> extends _$MyEventCopyWithImpl<$Res>
@@ -107,16 +346,24 @@ class __$MyEventCopyWithImpl<$Res> extends _$MyEventCopyWithImpl<$Res>
 
 @JsonSerializable()
 class _$_MyEvent implements _MyEvent {
-  _$_MyEvent({this.event, this.index, this.time, this.x, this.y});
+  _$_MyEvent(
+      {@JsonKey(name: 'e') this.event,
+      @JsonKey(name: 'i') this.index,
+      @JsonKey(name: 't') this.time,
+      this.x,
+      this.y});
 
   factory _$_MyEvent.fromJson(Map<String, dynamic> json) =>
       _$_$_MyEventFromJson(json);
 
   @override
+  @JsonKey(name: 'e')
   final Events event;
   @override
+  @JsonKey(name: 'i')
   final int index;
   @override
+  @JsonKey(name: 't')
   final int time;
   @override
   final double x;
@@ -164,16 +411,23 @@ class _$_MyEvent implements _MyEvent {
 }
 
 abstract class _MyEvent implements MyEvent {
-  factory _MyEvent({Events event, int index, int time, double x, double y}) =
-      _$_MyEvent;
+  factory _MyEvent(
+      {@JsonKey(name: 'e') Events event,
+      @JsonKey(name: 'i') int index,
+      @JsonKey(name: 't') int time,
+      double x,
+      double y}) = _$_MyEvent;
 
   factory _MyEvent.fromJson(Map<String, dynamic> json) = _$_MyEvent.fromJson;
 
   @override
+  @JsonKey(name: 'e')
   Events get event;
   @override
+  @JsonKey(name: 'i')
   int get index;
   @override
+  @JsonKey(name: 't')
   int get time;
   @override
   double get x;

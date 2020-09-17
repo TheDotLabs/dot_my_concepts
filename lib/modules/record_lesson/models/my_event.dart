@@ -4,11 +4,25 @@ part 'my_event.freezed.dart';
 part 'my_event.g.dart';
 
 @freezed
+abstract class Lesson with _$Lesson {
+  factory Lesson({
+    List<MyEvent> events,
+    String id,
+    int duration,
+    String name,
+    String description,
+    List<String> images,
+  }) = _Lesson;
+
+  factory Lesson.fromJson(Map<String, dynamic> json) => _$LessonFromJson(json);
+}
+
+@freezed
 abstract class MyEvent with _$MyEvent {
   factory MyEvent({
-    Events event,
-    int index,
-    int time,
+    @JsonKey(name: 'e') Events event,
+    @JsonKey(name: 'i') int index,
+    @JsonKey(name: 't') int time,
     double x,
     double y,
   }) = _MyEvent;
@@ -18,23 +32,23 @@ abstract class MyEvent with _$MyEvent {
 }
 
 enum Events {
-  @JsonValue('image')
+  @JsonValue('i')
   changeImage,
-  @JsonValue('pointer_start')
+  @JsonValue('p_s')
   pointerStart,
-  @JsonValue('pointer_move')
+  @JsonValue('p_m')
   pointerMove,
-  @JsonValue('pointer_end')
+  @JsonValue('p_e')
   pointerEnd,
 }
 
 extension EventsX on Events {
   String getName() {
-    if (this == Events.changeImage) return 'image';
-    if (this == Events.pointerStart) return 'pointer_start';
-    if (this == Events.pointerMove) return 'pointer_move';
+    if (this == Events.changeImage) return 'i';
+    if (this == Events.pointerStart) return 'p_s';
+    if (this == Events.pointerMove) return 'p_m';
     if (this == Events.pointerEnd)
-      return 'pointer_end';
+      return 'p_e';
     else
       return 'NA';
   }

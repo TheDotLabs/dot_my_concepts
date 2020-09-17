@@ -1,9 +1,14 @@
+import 'dart:convert';
+
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_record_lesson/modules/play_lesson/play_lesson_page.dart';
 import 'package:quiver/async.dart';
 
-import 'models/my_event.dart';
-import 'src/painter_controller.dart';
+import '../models/my_event.dart';
+import 'painter_controller.dart';
 
 class RecordLessonPage extends StatefulWidget {
   @override
@@ -31,6 +36,9 @@ class _RecordLessonPageState extends State<RecordLessonPage> {
 
   Duration remainingDuration;
 
+  double _kHeight = 300;
+  double _kWidth = 300;
+
   @override
   void initState() {
     super.initState();
@@ -57,6 +65,8 @@ class _RecordLessonPageState extends State<RecordLessonPage> {
 
   @override
   Widget build(BuildContext context) {
+    _kHeight = MediaQuery.of(context).size.height / 3;
+    _kWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       appBar: AppBar(
         title: Text("Record Lesson"),
@@ -67,7 +77,8 @@ class _RecordLessonPageState extends State<RecordLessonPage> {
             children: [
               Container(
                 color: Colors.black87,
-                height: MediaQuery.of(context).size.height / 3,
+                height: _kHeight,
+                width: _kWidth,
                 child: Stack(
                   children: [
                     PageView(
@@ -101,29 +112,30 @@ class _RecordLessonPageState extends State<RecordLessonPage> {
               SizedBox(
                 height: 16,
               ),
-              Row(
-                mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                children: [
-                  RaisedButton(
-                    onPressed: _pageIndex > 0
-                        ? () {
-                            _pageIndex--;
-                            _imageController.jumpToPage(_pageIndex);
-                          }
-                        : null,
-                    child: Text("PREVIOUS"),
-                  ),
-                  RaisedButton(
-                    onPressed: (_pageIndex < _imageList.length - 1)
-                        ? () {
-                            _pageIndex++;
-                            _imageController.jumpToPage(_pageIndex);
-                          }
-                        : null,
-                    child: Text("NEXT"),
-                  )
-                ],
-              ),
+              if (countDownTimer?.isRunning ?? false)
+                Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    RaisedButton(
+                      onPressed: _pageIndex > 0
+                          ? () {
+                              _pageIndex--;
+                              _imageController.jumpToPage(_pageIndex);
+                            }
+                          : null,
+                      child: Text("PREVIOUS"),
+                    ),
+                    RaisedButton(
+                      onPressed: (_pageIndex < _imageList.length - 1)
+                          ? () {
+                              _pageIndex++;
+                              _imageController.jumpToPage(_pageIndex);
+                            }
+                          : null,
+                      child: Text("NEXT"),
+                    )
+                  ],
+                ),
               SizedBox(
                 height: 16,
               ),
@@ -136,6 +148,11 @@ class _RecordLessonPageState extends State<RecordLessonPage> {
                   if (countDownTimer == null || !countDownTimer.isRunning)
                     RaisedButton(
                       onPressed: () {
+                        setState(() {
+                          this.remainingDuration =
+                              Duration(seconds: _totalSeconds);
+                        });
+
                         countDownTimer = new CountdownTimer(
                           Duration(seconds: _totalSeconds),
                           Duration(seconds: 1),
@@ -157,6 +174,7 @@ class _RecordLessonPageState extends State<RecordLessonPage> {
                                 countDownTimer.cancel();
                                 _paintController.clear();
                               });
+                              _onComplete();
                             }
                           : null,
                       child: Text("STOP"),
@@ -170,6 +188,16 @@ class _RecordLessonPageState extends State<RecordLessonPage> {
                   ),
                 ],
               )*/
+              SizedBox(
+                height: 16,
+              ),
+              RaisedButton(
+                onPressed: () {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (_) => PlayLessonPage()));
+                },
+                child: Text("Play Video"),
+              ),
             ],
           ),
         ),
@@ -188,9 +216,43 @@ class _RecordLessonPageState extends State<RecordLessonPage> {
         event: name,
         index: index,
         time: DateTime.now().millisecondsSinceEpoch - startEpoch,
-        x: x,
-        y: y,
+        x: double.parse(((x ?? 0) / _kWidth).toStringAsFixed(4)),
+        y: double.parse(((y ?? 0) / _kHeight).toStringAsFixed(4)),
       ),
     );
+  }
+
+  Future<void> _onComplete() async {
+    try {
+      final lessonRef = FirebaseFirestore.instance.collection('lessons').doc();
+      final lesson = Lesson(
+        events: _eventList,
+        duration: _totalSeconds * 1000 - remainingDuration.inMilliseconds,
+        id: lessonRef.id,
+        name: "Sample Title",
+        description: "Sample description of the video",
+        images: _imageList,
+      );
+      final map = Lesson(events: _eventList, id: lessonRef.id).toJson();
+      final jsonString = jsonEncode(map);
+      final StorageReference storageReference =
+          FirebaseStorage().ref().child('lessons/${lessonRef.id}/events.json');
+      final uploadTask = storageReference.putData(utf8.encode(jsonString),
+          StorageMetadata(contentType: 'application/json'));
+      await uploadTask.onComplete;
+      // logger.d('File Uploaded');
+      final jsonUrl = await storageReference.getDownloadURL();
+      print(jsonUrl);
+      await lessonRef.set({
+        ...lesson
+            .copyWith(
+              events: null,
+            )
+            .toJson(),
+      }, SetOptions(merge: true));
+      print('Lesson Uploaded');
+    } catch (e, s) {
+      print(e);
+    }
   }
 }
