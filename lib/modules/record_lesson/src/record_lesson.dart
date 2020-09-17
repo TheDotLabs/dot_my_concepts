@@ -4,7 +4,6 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_record_lesson/modules/play_lesson/play_lesson_page.dart';
 import 'package:quiver/async.dart';
 
 import '../models/my_event.dart';
@@ -68,9 +67,6 @@ class _RecordLessonPageState extends State<RecordLessonPage> {
     _kHeight = MediaQuery.of(context).size.height / 3;
     _kWidth = MediaQuery.of(context).size.width;
     return Scaffold(
-      appBar: AppBar(
-        title: Text("Record Lesson"),
-      ),
       body: Container(
         child: SingleChildScrollView(
           child: Column(
@@ -190,13 +186,6 @@ class _RecordLessonPageState extends State<RecordLessonPage> {
               )*/
               SizedBox(
                 height: 16,
-              ),
-              RaisedButton(
-                onPressed: () {
-                  Navigator.of(context).push(
-                      MaterialPageRoute(builder: (_) => PlayLessonPage()));
-                },
-                child: Text("Play Video"),
               ),
             ],
           ),

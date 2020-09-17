@@ -37,6 +37,7 @@ dependencies:
   path_provider: ^1.6.14
   rxdart: ^0.24.1
   path: ^1.7.0
+  timer_count_down: ^1.0.4+1
 
 dev_dependencies:
   flutter_test:
