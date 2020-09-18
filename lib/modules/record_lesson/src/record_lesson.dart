@@ -211,8 +211,8 @@ class _RecordLessonPageState extends State<RecordLessonPage> {
         event: name,
         index: index,
         time: DateTime.now().millisecondsSinceEpoch - startEpoch,
-        x: double.parse(((x ?? 0) / width).toStringAsFixed(4)),
-        y: double.parse(((y ?? 0) / height).toStringAsFixed(4)),
+        x: double.parse(((x ?? 0) / width).toStringAsFixed(6)),
+        y: double.parse(((y ?? 0) / height).toStringAsFixed(6)),
       ),
     );
   }

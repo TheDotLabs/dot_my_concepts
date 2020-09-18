@@ -38,6 +38,9 @@ class _PlayLessonPageState extends State<PlayLessonPage> {
 
   var eventList = <MyEvent>[];
 
+  final int _eventChunkSize = 500;
+  int _lastEventTime = 0;
+
   @override
   void initState() {
     super.initState();
@@ -295,14 +298,15 @@ class _PlayLessonPageState extends State<PlayLessonPage> {
     final height = box.size.height;
     final width = box.size.width;
 
+    if (eventList.isEmpty) {
+      eventList = _getNextList();
+    }
+
     final events = eventList.where((element) =>
-        (elapsed.inMilliseconds - 15 < element.time) &&
-        (element.time < elapsed.inMilliseconds + 15));
+        (elapsed.inMilliseconds - 25 < element.time) &&
+        (element.time < elapsed.inMilliseconds + 25));
     if (events != null) {
       events.forEach((event) {
-        print(elapsed.inMilliseconds);
-        print(event.event.getName());
-
         if (event.event == Events.changeImage) {
           setState(() {
             _imageIndex = event.index;
@@ -315,20 +319,31 @@ class _PlayLessonPageState extends State<PlayLessonPage> {
           _paintController.onPointerEnd();
         }
       });
-
       eventList.removeWhere((element) => events.contains(element));
     }
   }
 
   void _startVideo({double elapsedTime}) {
-    eventList = List.from(lesson.events);
+    _lastEventTime = elapsedTime?.toInt() ?? 0;
+    eventList = _getNextList();
+
+    final newList =
+        lesson.events.where((element) => element.time <= _lastEventTime);
+    final item = newList.lastWhere(
+        (element) => element.event == Events.changeImage,
+        orElse: () => null);
+
+    final lastMoveEvent = newList.lastWhere(
+        (element) => element.event == Events.pointerMove,
+        orElse: () => null);
+
     setState(() {
-      _imageIndex = 0;
+      _imageIndex = item?.index ?? 0;
       countDownTimer?.cancel();
-      _paintController.clear();
+      _paintController.onPointerStart(lastMoveEvent?.x, lastMoveEvent?.y);
 
       this.remainingDuration = Duration(
-        milliseconds: lesson.duration,
+        milliseconds: lesson.duration - (elapsedTime?.toInt() ?? 0),
       );
     });
 
@@ -361,5 +376,15 @@ class _PlayLessonPageState extends State<PlayLessonPage> {
       SystemChrome.setPreferredOrientations([DeviceOrientation.landscapeLeft]);
       SystemChrome.setEnabledSystemUIOverlays([]);
     }
+  }
+
+  List<MyEvent> _getNextList({int fromTime}) {
+    final list = lesson.events
+        .where((element) =>
+            element.time > (fromTime ?? _lastEventTime) &&
+            element.time < (fromTime ?? _lastEventTime) + 5000)
+        .toList();
+    _lastEventTime = list?.last?.time ?? lesson.events.last.time;
+    return list;
   }
 }

@@ -22,17 +22,12 @@ class Painter extends StatefulWidget {
 }
 
 class _PainterState extends State<Painter> {
-  bool _finished;
-
-  @override
-  void initState() {
-    super.initState();
-    _finished = false;
-  }
+  bool _finished = false;
 
   @override
   Widget build(BuildContext context) {
     Widget child = CustomPaint(
+      isComplex: true,
       willChange: true,
       painter: PainterPainter(
         widget.painterController._pathHistory,
@@ -87,7 +82,7 @@ class PainterPainter extends CustomPainter {
 
   @override
   bool shouldRepaint(PainterPainter oldDelegate) {
-    return true;
+    return false;
   }
 }
 
