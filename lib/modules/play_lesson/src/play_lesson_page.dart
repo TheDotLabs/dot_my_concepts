@@ -67,80 +67,86 @@ class _PlayLessonPageState extends State<PlayLessonPage> {
               )
             : SingleChildScrollView(
                 child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    ConstrainedBox(
-                      constraints: BoxConstraints(
-                        maxHeight: (MediaQuery.of(context).orientation ==
-                                Orientation.landscape)
-                            ? MediaQuery.of(context).size.height - 48
-                            : 500,
-                      ),
-                      child: Container(
-                        color: Colors.black87,
-                        child: IntrinsicWidth(
-                          child: IntrinsicHeight(
-                            child: Stack(
-                              children: [
-                                CachedNetworkImage(
-                                  imageUrl: lesson.images[_imageIndex],
-                                  placeholder: (context, url) => Center(
-                                      child: CircularProgressIndicator()),
-                                  errorWidget: (context, url, error) =>
-                                      Icon(Icons.error),
-                                ),
-                                Container(
-                                  key: _paintKey,
-                                  child: Painter(
-                                    _paintController,
-                                    () {},
-                                    disableTouch: true,
+                    Container(
+                      alignment: Alignment.center,
+                      color: Colors.black87,
+                      child: ConstrainedBox(
+                        constraints: BoxConstraints(
+                          maxHeight: (MediaQuery.of(context).orientation ==
+                                  Orientation.landscape)
+                              ? MediaQuery.of(context).size.height - 48
+                              : 500,
+                        ),
+                        child: Container(
+                          color: Colors.black87,
+                          child: IntrinsicWidth(
+                            child: IntrinsicHeight(
+                              child: Stack(
+                                children: [
+                                  CachedNetworkImage(
+                                    imageUrl: lesson.images[_imageIndex],
+                                    placeholder: (context, url) => Center(
+                                        child: CircularProgressIndicator()),
+                                    errorWidget: (context, url, error) =>
+                                        Icon(Icons.error),
                                   ),
-                                ),
-                                if (MediaQuery.of(context).platformBrightness ==
-                                    Brightness.dark)
-                                  Positioned.fill(
-                                    child: Container(
-                                      decoration:
-                                          BoxDecoration(color: Colors.black38),
+                                  Container(
+                                    key: _paintKey,
+                                    child: Painter(
+                                      _paintController,
+                                      () {},
+                                      disableTouch: true,
                                     ),
                                   ),
-                                if (countDownTimer == null ||
-                                    !countDownTimer.isRunning)
-                                  Positioned.fill(
-                                    child: Container(
-                                      decoration:
-                                          BoxDecoration(color: Colors.black54),
-                                      child: Center(
-                                        child: Container(
-                                          child: FloatingActionButton(
-                                            onPressed: () {
-                                              _startVideo();
-                                            },
-                                            child: Icon(
-                                              Icons.play_arrow,
-                                              color: Colors.white,
-                                              size: 32,
+                                  if (MediaQuery.of(context)
+                                          .platformBrightness ==
+                                      Brightness.dark)
+                                    Positioned.fill(
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            color: Colors.black38),
+                                      ),
+                                    ),
+                                  if (countDownTimer == null ||
+                                      !countDownTimer.isRunning)
+                                    Positioned.fill(
+                                      child: Container(
+                                        decoration: BoxDecoration(
+                                            color: Colors.black54),
+                                        child: Center(
+                                          child: Container(
+                                            child: FloatingActionButton(
+                                              onPressed: () {
+                                                _startVideo();
+                                              },
+                                              child: Icon(
+                                                Icons.play_arrow,
+                                                color: Colors.white,
+                                                size: 32,
+                                              ),
                                             ),
                                           ),
                                         ),
                                       ),
                                     ),
-                                  ),
-                                if (countDownTimer?.isRunning ?? false)
-                                  Positioned(
-                                    child: IconButton(
-                                      icon: Icon(
-                                        Icons.fullscreen,
-                                        color: Colors.black87,
+                                  if (countDownTimer?.isRunning ?? false)
+                                    Positioned(
+                                      child: IconButton(
+                                        icon: Icon(
+                                          Icons.fullscreen,
+                                          color: Colors.black87,
+                                        ),
+                                        onPressed: () {
+                                          _onFullScreenClick();
+                                        },
                                       ),
-                                      onPressed: () {
-                                        _onFullScreenClick();
-                                      },
-                                    ),
-                                    right: 4,
-                                    bottom: 4,
-                                  )
-                              ],
+                                      right: 4,
+                                      bottom: 4,
+                                    )
+                                ],
+                              ),
                             ),
                           ),
                         ),

@@ -9,7 +9,7 @@ class HomePage extends StatefulWidget {
 
 class _HomePageState extends State<HomePage> {
   final pages = <Widget>[LessonViewPage(), RecordLessonPage()];
-  final _pageController = PageController();
+  final _pageController = PageController(keepPage: true);
 
   @override
   Widget build(BuildContext context) {
@@ -23,8 +23,11 @@ class _HomePageState extends State<HomePage> {
         children: [...pages],
       ),
       bottomNavigationBar: BottomNavigationBar(
+        currentIndex: _pageController.page.toInt(),
         onTap: (val) {
-          _pageController.jumpToPage(val);
+          setState(() {
+            _pageController.jumpToPage(val);
+          });
         },
         items: [
           BottomNavigationBarItem(
