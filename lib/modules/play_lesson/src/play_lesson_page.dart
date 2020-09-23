@@ -271,7 +271,7 @@ class _PlayLessonPageState extends State<PlayLessonPage> {
 
   Future<void> init() async {
     final events = await _loadEvents();
-    final audio = await _loadAudio();
+    await _loadAudio();
 
     final doc = await FirebaseFirestore.instance
         .doc('lessons/${widget.lessonId}')
@@ -369,6 +369,7 @@ class _PlayLessonPageState extends State<PlayLessonPage> {
         }
       }
     });
+    player.seek(Duration(milliseconds: _lastEventTime));
     player.play();
   }
 
@@ -413,9 +414,9 @@ class _PlayLessonPageState extends State<PlayLessonPage> {
 
   Future<void> _loadAudio() async {
     final storageReference =
-        FirebaseStorage().ref().child('lessons/${widget.lessonId}/events.json');
+        FirebaseStorage().ref().child('lessons/${widget.lessonId}/audio.aac');
     var directory = await getTemporaryDirectory();
-    final path = p.join(directory.path, '${widget.lessonId}/events.json');
+    final path = p.join(directory.path, '${widget.lessonId}/audio.aac');
     final file = File(path);
     if (!file.existsSync()) {
       file.createSync(recursive: true);
