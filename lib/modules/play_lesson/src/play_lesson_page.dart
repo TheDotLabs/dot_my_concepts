@@ -6,9 +6,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'package:flutter_record_lesson/constants/lesson_constants.dart';
 import 'package:flutter_record_lesson/core/widgets/my_countdown_timer.dart';
 import 'package:flutter_record_lesson/modules/record_lesson/models/my_event.dart';
 import 'package:flutter_record_lesson/modules/record_lesson/src/painter_controller.dart';
+import 'package:just_audio/just_audio.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
@@ -40,6 +42,8 @@ class _PlayLessonPageState extends State<PlayLessonPage> {
 
   final int _eventChunkSize = 500;
   int _lastEventTime = 0;
+
+  final player = AudioPlayer();
 
   @override
   void initState() {
@@ -79,73 +83,84 @@ class _PlayLessonPageState extends State<PlayLessonPage> {
                               ? MediaQuery.of(context).size.height - 48
                               : 500,
                         ),
-                        child: Container(
-                          color: Colors.black87,
-                          child: IntrinsicWidth(
-                            child: IntrinsicHeight(
-                              child: Stack(
-                                children: [
-                                  CachedNetworkImage(
-                                    imageUrl: lesson.images[_imageIndex],
-                                    placeholder: (context, url) => Center(
-                                        child: CircularProgressIndicator()),
-                                    errorWidget: (context, url, error) =>
-                                        Icon(Icons.error),
-                                  ),
-                                  Container(
-                                    key: _paintKey,
-                                    child: Painter(
-                                      _paintController,
-                                      () {},
-                                      disableTouch: true,
+                        child: AspectRatio(
+                          aspectRatio: LessonConstants.aspectRatio,
+                          child: Container(
+                            child: IntrinsicWidth(
+                              child: IntrinsicHeight(
+                                child: Stack(
+                                  fit: StackFit.expand,
+                                  children: [
+                                    CachedNetworkImage(
+                                      imageUrl: lesson.images[_imageIndex],
+                                      placeholder: (context, url) => Center(
+                                          child: CircularProgressIndicator()),
+                                      errorWidget: (context, url, error) =>
+                                          Icon(Icons.error),
                                     ),
-                                  ),
-                                  if (MediaQuery.of(context)
-                                          .platformBrightness ==
-                                      Brightness.dark)
-                                    Positioned.fill(
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                            color: Colors.black38),
+                                    Container(
+                                      decoration: BoxDecoration(
+                                        border: Border.all(
+                                          width: 2,
+                                          color: Colors.red,
+                                        ),
+                                        borderRadius: BorderRadius.circular(0),
+                                      ),
+                                      key: _paintKey,
+                                      child: Painter(
+                                        _paintController,
+                                        () {},
+                                        disableTouch: true,
                                       ),
                                     ),
-                                  if (countDownTimer == null ||
-                                      !countDownTimer.isRunning)
-                                    Positioned.fill(
-                                      child: Container(
-                                        decoration: BoxDecoration(
-                                            color: Colors.black54),
-                                        child: Center(
-                                          child: Container(
-                                            child: FloatingActionButton(
-                                              onPressed: () {
-                                                _startVideo();
-                                              },
-                                              child: Icon(
-                                                Icons.play_arrow,
-                                                color: Colors.white,
-                                                size: 32,
+                                    if (MediaQuery.of(context)
+                                            .platformBrightness ==
+                                        Brightness.dark)
+                                      Positioned.fill(
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                              color: Colors.black38),
+                                        ),
+                                      ),
+                                    if (countDownTimer == null ||
+                                        !countDownTimer.isRunning)
+                                      Positioned.fill(
+                                        child: Container(
+                                          decoration: BoxDecoration(
+                                            color: Colors.black54,
+                                          ),
+                                          child: Center(
+                                            child: Container(
+                                              child: FloatingActionButton(
+                                                onPressed: () {
+                                                  _startVideo();
+                                                },
+                                                child: Icon(
+                                                  Icons.play_arrow,
+                                                  color: Colors.white,
+                                                  size: 32,
+                                                ),
                                               ),
                                             ),
                                           ),
                                         ),
                                       ),
-                                    ),
-                                  if (countDownTimer?.isRunning ?? false)
-                                    Positioned(
-                                      child: IconButton(
-                                        icon: Icon(
-                                          Icons.fullscreen,
-                                          color: Colors.black87,
+                                    if (countDownTimer?.isRunning ?? false)
+                                      Positioned(
+                                        child: IconButton(
+                                          icon: Icon(
+                                            Icons.fullscreen,
+                                            color: Colors.black87,
+                                          ),
+                                          onPressed: () {
+                                            _onFullScreenClick();
+                                          },
                                         ),
-                                        onPressed: () {
-                                          _onFullScreenClick();
-                                        },
-                                      ),
-                                      right: 4,
-                                      bottom: 4,
-                                    )
-                                ],
+                                        right: 4,
+                                        bottom: 4,
+                                      )
+                                  ],
+                                ),
                               ),
                             ),
                           ),
@@ -239,13 +254,6 @@ class _PlayLessonPageState extends State<PlayLessonPage> {
                           ),
                       ],
                     ),
-                    /*Column(
-              children: [
-                ..._eventList.map(
-                  (e) => Text(jsonEncode(e.toJson())),
-                ),
-              ],
-                )*/
                   ],
                 ),
               ),
@@ -262,21 +270,9 @@ class _PlayLessonPageState extends State<PlayLessonPage> {
   }
 
   Future<void> init() async {
-    final storageReference =
-        FirebaseStorage().ref().child('lessons/${widget.lessonId}/events.json');
-    var directory = await getTemporaryDirectory();
-    final path = p.join(directory.path, '${widget.lessonId}/events.json');
-    final file = File(path);
-    if (!file.existsSync()) {
-      file.createSync(recursive: true);
-    }
-    final task = storageReference.writeToFile(file);
-    await task.future;
-    final events =
-        ((jsonDecode(file.readAsStringSync()) as Map)['events'] as List)
-            .map((e) => MyEvent.fromJson(e))
-            .cast<MyEvent>()
-            .toList();
+    final events = await _loadEvents();
+    final audio = await _loadAudio();
+
     final doc = await FirebaseFirestore.instance
         .doc('lessons/${widget.lessonId}')
         .get();
@@ -314,6 +310,7 @@ class _PlayLessonPageState extends State<PlayLessonPage> {
     if (events != null) {
       events.forEach((event) {
         if (event.event == Events.changeImage) {
+          _paintController.clear();
           setState(() {
             _imageIndex = event.index;
           });
@@ -372,6 +369,7 @@ class _PlayLessonPageState extends State<PlayLessonPage> {
         }
       }
     });
+    player.play();
   }
 
   void _onFullScreenClick() {
@@ -392,5 +390,38 @@ class _PlayLessonPageState extends State<PlayLessonPage> {
         .toList();
     _lastEventTime = list?.last?.time ?? lesson.events.last.time;
     return list;
+  }
+
+  Future<List<MyEvent>> _loadEvents() async {
+    final storageReference =
+        FirebaseStorage().ref().child('lessons/${widget.lessonId}/events.json');
+    var directory = await getTemporaryDirectory();
+    final path = p.join(directory.path, '${widget.lessonId}/events.json');
+    final file = File(path);
+    if (!file.existsSync()) {
+      file.createSync(recursive: true);
+    }
+    final task = storageReference.writeToFile(file);
+    await task.future;
+    final events =
+        ((jsonDecode(file.readAsStringSync()) as Map)['events'] as List)
+            .map((e) => MyEvent.fromJson(e))
+            .cast<MyEvent>()
+            .toList();
+    return events;
+  }
+
+  Future<void> _loadAudio() async {
+    final storageReference =
+        FirebaseStorage().ref().child('lessons/${widget.lessonId}/events.json');
+    var directory = await getTemporaryDirectory();
+    final path = p.join(directory.path, '${widget.lessonId}/events.json');
+    final file = File(path);
+    if (!file.existsSync()) {
+      file.createSync(recursive: true);
+    }
+    final task = storageReference.writeToFile(file);
+    await task.future;
+    var duration = await player.setFilePath(path);
   }
 }

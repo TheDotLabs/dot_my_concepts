@@ -38,6 +38,9 @@ dependencies:
   rxdart: ^0.24.1
   path: ^1.7.0
   timer_count_down: ^1.0.4+1
+  flutter_sound: ^5.1.1
+  permission_handler: ^5.0.1+1
+  just_audio: ^0.4.4
 
 dev_dependencies:
   flutter_test:

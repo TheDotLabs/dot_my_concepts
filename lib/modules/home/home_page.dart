@@ -11,6 +11,8 @@ class _HomePageState extends State<HomePage> {
   final pages = <Widget>[LessonViewPage(), RecordLessonPage()];
   final _pageController = PageController(keepPage: true);
 
+  int _currentIndex = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -23,9 +25,10 @@ class _HomePageState extends State<HomePage> {
         children: [...pages],
       ),
       bottomNavigationBar: BottomNavigationBar(
-        currentIndex: _pageController.page.toInt(),
+        currentIndex: _currentIndex,
         onTap: (val) {
           setState(() {
+            _currentIndex = val;
             _pageController.jumpToPage(val);
           });
         },

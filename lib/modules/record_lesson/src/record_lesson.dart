@@ -1,9 +1,14 @@
 import 'dart:convert';
+import 'dart:io';
 
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_sound/flutter_sound.dart' as r;
+import 'package:flutter_sound/flutter_sound.dart';
+import 'package:path_provider/path_provider.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'package:quiver/async.dart';
 
 import '../models/my_event.dart';
@@ -40,6 +45,10 @@ class _RecordLessonPageState extends State<RecordLessonPage> {
   int startEpoch;
 
   final _paintKey = GlobalKey();
+
+  r.FlutterSoundRecorder myRecorder;
+
+  File outputFile;
 
   @override
   void initState() {
@@ -146,34 +155,23 @@ class _RecordLessonPageState extends State<RecordLessonPage> {
                 if (countDownTimer == null || !countDownTimer.isRunning)
                   RaisedButton(
                     onPressed: () {
-                      startEpoch = DateTime.now().millisecondsSinceEpoch;
-
-                      setState(() {
-                        this.remainingDuration =
-                            Duration(seconds: _totalSeconds);
-                      });
-
-                      countDownTimer = new CountdownTimer(
-                        Duration(seconds: _totalSeconds),
-                        Duration(seconds: 1),
-                      );
-                      countDownTimer.listen((event) {
-                        if (mounted)
-                          setState(() {
-                            this.remainingDuration = event.remaining;
-                          });
-                      });
+                      _startRecord();
                     },
                     child: Text("START"),
                   )
                 else
                   RaisedButton(
                     onPressed: countDownTimer?.isRunning ?? false
-                        ? () {
+                        ? () async {
                             setState(() {
                               countDownTimer.cancel();
                               _paintController.clear();
                             });
+                            await myRecorder.stopRecorder();
+                            if (myRecorder != null) {
+                              myRecorder.closeAudioSession();
+                              myRecorder = null;
+                            }
                             _onComplete();
                           }
                         : null,
@@ -230,14 +228,25 @@ class _RecordLessonPageState extends State<RecordLessonPage> {
       );
       final map = Lesson(events: _eventList, id: lessonRef.id).toJson();
       final jsonString = jsonEncode(map);
-      final StorageReference storageReference =
+
+      /// MP3 audio
+      final storageReference1 =
+          FirebaseStorage().ref().child('lessons/${lessonRef.id}/audio.aac');
+      final uploadTask1 = storageReference1.putFile(
+          outputFile, StorageMetadata(contentType: 'audio/aac'));
+      await uploadTask1.onComplete;
+      final audioUrl = await storageReference1.getDownloadURL();
+      print(audioUrl);
+
+      /// Events
+      final storageReference =
           FirebaseStorage().ref().child('lessons/${lessonRef.id}/events.json');
       final uploadTask = storageReference.putData(utf8.encode(jsonString),
           StorageMetadata(contentType: 'application/json'));
       await uploadTask.onComplete;
-      // logger.d('File Uploaded');
       final jsonUrl = await storageReference.getDownloadURL();
       print(jsonUrl);
+
       await lessonRef.set({
         ...lesson
             .copyWith(
@@ -249,5 +258,39 @@ class _RecordLessonPageState extends State<RecordLessonPage> {
     } catch (e, s) {
       print(e);
     }
+  }
+
+  void _startRecord() async {
+    myRecorder = await r.FlutterSoundRecorder().openAudioSession();
+
+    startEpoch = DateTime.now().millisecondsSinceEpoch;
+
+    setState(() {
+      this.remainingDuration = Duration(seconds: _totalSeconds);
+    });
+    final tempDir = await getTemporaryDirectory();
+    outputFile = File('${tempDir.path}/flutter_sound-tmp.aac');
+
+    // Request Microphone permission if needed
+    final status = await Permission.microphone.request();
+    if (status != PermissionStatus.granted)
+      throw RecordingPermissionException("Microphone permission not granted");
+
+    await myRecorder.startRecorder(
+      toFile: outputFile.path,
+      codec: r.Codec.aacADTS,
+      audioSource: r.AudioSource.defaultSource,
+    );
+
+    countDownTimer = new CountdownTimer(
+      Duration(seconds: _totalSeconds),
+      Duration(seconds: 1),
+    );
+    countDownTimer.listen((event) {
+      if (mounted)
+        setState(() {
+          this.remainingDuration = event.remaining;
+        });
+    });
   }
 }
