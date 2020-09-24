@@ -49,6 +49,9 @@ class _LessonViewPageState extends State<LessonViewPage> {
                                       imageUrl: e.images[0],
                                     ),
                             ),
+                            Divider(
+                              height: 1,
+                            ),
                             ListTile(
                               title: Text("${e.name ?? "---"}"),
                               subtitle: Text("${e.description ?? "---"}"),

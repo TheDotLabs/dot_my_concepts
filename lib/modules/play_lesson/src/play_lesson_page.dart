@@ -1,6 +1,7 @@
 import 'dart:convert';
 import 'dart:io';
 
+import 'package:audioplayers/audioplayers.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -10,7 +11,6 @@ import 'package:flutter_record_lesson/constants/lesson_constants.dart';
 import 'package:flutter_record_lesson/core/widgets/my_countdown_timer.dart';
 import 'package:flutter_record_lesson/modules/record_lesson/models/my_event.dart';
 import 'package:flutter_record_lesson/modules/record_lesson/src/painter_controller.dart';
-import 'package:just_audio/just_audio.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 
@@ -43,7 +43,13 @@ class _PlayLessonPageState extends State<PlayLessonPage> {
   final int _eventChunkSize = 500;
   int _lastEventTime = 0;
 
-  final player = AudioPlayer();
+  AudioPlayer audioPlayer = AudioPlayer();
+
+  bool _showVideoControls = false;
+
+  String _audioPath;
+
+  Duration _pauseDuration;
 
   @override
   void initState() {
@@ -73,157 +79,218 @@ class _PlayLessonPageState extends State<PlayLessonPage> {
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.stretch,
                   children: [
-                    Container(
-                      alignment: Alignment.center,
-                      color: Colors.black87,
-                      child: ConstrainedBox(
-                        constraints: BoxConstraints(
-                          maxHeight: (MediaQuery.of(context).orientation ==
-                                  Orientation.landscape)
-                              ? MediaQuery.of(context).size.height - 48
-                              : 500,
-                        ),
-                        child: AspectRatio(
-                          aspectRatio: LessonConstants.aspectRatio,
-                          child: Container(
-                            child: IntrinsicWidth(
-                              child: IntrinsicHeight(
-                                child: Stack(
-                                  fit: StackFit.expand,
-                                  children: [
-                                    CachedNetworkImage(
-                                      imageUrl: lesson.images[_imageIndex],
-                                      placeholder: (context, url) => Center(
-                                          child: CircularProgressIndicator()),
-                                      errorWidget: (context, url, error) =>
-                                          Icon(Icons.error),
-                                    ),
-                                    Container(
-                                      decoration: BoxDecoration(
-                                        border: Border.all(
-                                          width: 2,
-                                          color: Colors.red,
-                                        ),
-                                        borderRadius: BorderRadius.circular(0),
+                    GestureDetector(
+                      onTap: _onVideoTap,
+                      child: Container(
+                        alignment: Alignment.center,
+                        color: Colors.black87,
+                        child: ConstrainedBox(
+                          constraints: BoxConstraints(
+                            maxHeight: (MediaQuery.of(context).orientation ==
+                                    Orientation.landscape)
+                                ? MediaQuery.of(context).size.height
+                                : 500,
+                          ),
+                          child: AspectRatio(
+                            aspectRatio: LessonConstants.aspectRatio,
+                            child: Container(
+                              child: IntrinsicWidth(
+                                child: IntrinsicHeight(
+                                  child: Stack(
+                                    fit: StackFit.expand,
+                                    children: [
+                                      CachedNetworkImage(
+                                        imageUrl: lesson.images[_imageIndex],
+                                        placeholder: (context, url) => Center(
+                                            child: CircularProgressIndicator()),
+                                        errorWidget: (context, url, error) =>
+                                            Icon(Icons.error),
                                       ),
-                                      key: _paintKey,
-                                      child: Painter(
-                                        _paintController,
-                                        () {},
-                                        disableTouch: true,
-                                      ),
-                                    ),
-                                    if (MediaQuery.of(context)
-                                            .platformBrightness ==
-                                        Brightness.dark)
-                                      Positioned.fill(
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                              color: Colors.black38),
+                                      Container(
+                                        key: _paintKey,
+                                        child: Painter(
+                                          _paintController,
+                                          () {},
+                                          disableTouch: true,
                                         ),
                                       ),
-                                    if (countDownTimer == null ||
-                                        !countDownTimer.isRunning)
-                                      Positioned.fill(
-                                        child: Container(
-                                          decoration: BoxDecoration(
-                                            color: Colors.black54,
+                                      if (MediaQuery.of(context)
+                                              .platformBrightness ==
+                                          Brightness.dark)
+                                        Positioned.fill(
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                                color: Colors.black38),
                                           ),
-                                          child: Center(
-                                            child: Container(
-                                              child: FloatingActionButton(
-                                                onPressed: () {
-                                                  _startVideo();
-                                                },
-                                                child: Icon(
-                                                  Icons.play_arrow,
-                                                  color: Colors.white,
-                                                  size: 32,
+                                        ),
+                                      Positioned.fill(
+                                        child: AnimatedOpacity(
+                                          opacity: _showVideoControls &&
+                                                  (countDownTimer?.isRunning ??
+                                                      false)
+                                              ? 1.0
+                                              : 0.0,
+                                          duration: Duration(milliseconds: 200),
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              color: Colors.black
+                                                  .withOpacity(0.78),
+                                            ),
+                                            child: Column(
+                                              children: [
+                                                Expanded(
+                                                  child: Center(
+                                                    child: Container(
+                                                      margin: EdgeInsets.only(
+                                                        top: 44,
+                                                      ),
+                                                      child: IconButton(
+                                                        icon: Icon(
+                                                          Icons.pause,
+                                                          size: 36,
+                                                        ),
+                                                        color: Colors.white,
+                                                        onPressed:
+                                                            _onPauseVideo,
+                                                      ),
+                                                    ),
+                                                  ),
+                                                ),
+                                                Container(
+                                                  padding: EdgeInsets.symmetric(
+                                                      horizontal: 16),
+                                                  child: ((countDownTimer
+                                                              ?.isRunning ??
+                                                          false))
+                                                      ? Row(
+                                                          children: [
+                                                            Text(
+                                                              (Duration(milliseconds: lesson.duration) -
+                                                                      remainingDuration)
+                                                                  .toString()
+                                                                  .split('.')[0]
+                                                                  .padLeft(
+                                                                      8, '0')
+                                                                  .substring(
+                                                                      3, 8),
+                                                              style: TextStyle(
+                                                                fontSize: 12,
+                                                                color: Colors
+                                                                    .white,
+                                                                fontWeight:
+                                                                    FontWeight
+                                                                        .bold,
+                                                              ),
+                                                            ),
+                                                            if (lesson != null)
+                                                              Expanded(
+                                                                child:
+                                                                    SliderTheme(
+                                                                  data: SliderTheme.of(
+                                                                          context)
+                                                                      .copyWith(
+                                                                    thumbShape: RoundSliderThumbShape(
+                                                                        enabledThumbRadius:
+                                                                            8.0),
+                                                                  ),
+                                                                  child: Slider(
+                                                                    value: (lesson.duration -
+                                                                            (remainingDuration?.inMilliseconds ??
+                                                                                0))
+                                                                        .toDouble(),
+                                                                    min: 0.0,
+                                                                    max: lesson
+                                                                        .duration
+                                                                        .toDouble(),
+                                                                    onChanged:
+                                                                        (double
+                                                                            value) {
+                                                                      _startVideo(
+                                                                        elapsedTime:
+                                                                            value,
+                                                                      );
+                                                                    },
+                                                                  ),
+                                                                ),
+                                                              ),
+                                                            if (lesson != null)
+                                                              Text(
+                                                                Duration(
+                                                                        milliseconds: lesson
+                                                                            .duration)
+                                                                    .toString()
+                                                                    .split(
+                                                                        '.')[0]
+                                                                    .padLeft(
+                                                                        8, '0')
+                                                                    .substring(
+                                                                        3, 8),
+                                                                style:
+                                                                    TextStyle(
+                                                                  fontSize: 12,
+                                                                  color: Colors
+                                                                      .white,
+                                                                  fontWeight:
+                                                                      FontWeight
+                                                                          .bold,
+                                                                ),
+                                                              ),
+                                                            IconButton(
+                                                              icon: Icon(
+                                                                Icons
+                                                                    .fullscreen,
+                                                                color: Colors
+                                                                    .white,
+                                                              ),
+                                                              onPressed: () {
+                                                                _onFullScreenClick();
+                                                              },
+                                                            )
+                                                          ],
+                                                        )
+                                                      : Container(),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                      if (countDownTimer == null ||
+                                          !countDownTimer.isRunning)
+                                        Positioned.fill(
+                                          child: Container(
+                                            decoration: BoxDecoration(
+                                              color: Colors.black54,
+                                            ),
+                                            child: Center(
+                                              child: Container(
+                                                child: FloatingActionButton(
+                                                  onPressed: () {
+                                                    _startVideo(
+                                                      elapsedTime:
+                                                          _pauseDuration
+                                                              ?.inMilliseconds
+                                                              ?.toDouble(),
+                                                    );
+                                                    _pauseDuration = null;
+                                                  },
+                                                  child: Icon(
+                                                    Icons.play_arrow,
+                                                    color: Colors.white,
+                                                    size: 32,
+                                                  ),
                                                 ),
                                               ),
                                             ),
                                           ),
                                         ),
-                                      ),
-                                    if (countDownTimer?.isRunning ?? false)
-                                      Positioned(
-                                        child: IconButton(
-                                          icon: Icon(
-                                            Icons.fullscreen,
-                                            color: Colors.black87,
-                                          ),
-                                          onPressed: () {
-                                            _onFullScreenClick();
-                                          },
-                                        ),
-                                        right: 4,
-                                        bottom: 4,
-                                      )
-                                  ],
+                                    ],
+                                  ),
                                 ),
                               ),
                             ),
                           ),
                         ),
-                      ),
-                    ),
-                    Divider(
-                      height: 1,
-                    ),
-                    AnimatedContainer(
-                      duration: Duration(milliseconds: 100),
-                      curve: Curves.easeInOut,
-                      height: (countDownTimer?.isRunning ?? false) ? 48 : 0,
-                      padding: EdgeInsets.symmetric(horizontal: 16),
-                      child: Row(
-                        children: [
-                          if ((countDownTimer?.isRunning ?? false))
-                            Text(
-                              (Duration(milliseconds: lesson.duration) -
-                                      remainingDuration)
-                                  .toString()
-                                  .split('.')[0]
-                                  .padLeft(8, '0')
-                                  .substring(3, 8),
-                              style: TextStyle(
-                                fontSize: 12,
-                              ),
-                            ),
-                          if ((countDownTimer?.isRunning ?? false))
-                            Expanded(
-                              child: SliderTheme(
-                                data: SliderTheme.of(context).copyWith(
-                                    thumbShape: RoundSliderThumbShape(
-                                        enabledThumbRadius: 8.0)),
-                                child: Slider(
-                                  value: (lesson.duration -
-                                          (remainingDuration?.inMilliseconds ??
-                                              0))
-                                      .toDouble(),
-                                  min: 0.0,
-                                  max: lesson.duration.toDouble(),
-                                  onChanged: (double value) {
-                                    _startVideo(elapsedTime: value);
-
-                                    /*setState(() {
-                                    //seekToSecond(value.toInt());
-                                   // value = value;
-                                  });*/
-                                  },
-                                ),
-                              ),
-                            ),
-                          Text(
-                            Duration(milliseconds: lesson.duration)
-                                .toString()
-                                .split('.')[0]
-                                .padLeft(8, '0')
-                                .substring(3, 8),
-                            style: TextStyle(
-                              fontSize: 12,
-                            ),
-                          ),
-                        ],
                       ),
                     ),
                     Divider(
@@ -247,7 +314,7 @@ class _PlayLessonPageState extends State<PlayLessonPage> {
                                       countDownTimer.cancel();
                                       _paintController.clear();
                                     });
-                                    _onComplete();
+                                    _onStop();
                                   }
                                 : null,
                             child: Text("STOP"),
@@ -261,9 +328,10 @@ class _PlayLessonPageState extends State<PlayLessonPage> {
     );
   }
 
-  Future<void> _onComplete() async {
+  Future<void> _onStop() async {
     try {
       print('on stop');
+      audioPlayer?.stop();
     } catch (e, s) {
       print(e);
     }
@@ -276,22 +344,25 @@ class _PlayLessonPageState extends State<PlayLessonPage> {
     final doc = await FirebaseFirestore.instance
         .doc('lessons/${widget.lessonId}')
         .get();
-    if (mounted)
+    if (mounted) {
       setState(() {
         lesson =
             Lesson.fromJson(doc.data()).copyWith(id: doc.id, events: events);
       });
-    lesson.images.forEach((element) {
-      precacheImage(
-        CachedNetworkImageProvider(element),
-        context,
-      );
-    });
+      lesson.images.forEach((element) {
+        precacheImage(
+          CachedNetworkImageProvider(element),
+          context,
+        );
+      });
+    }
   }
 
   @override
   void dispose() {
     countDownTimer?.cancel();
+    audioPlayer?.stop();
+    audioPlayer?.dispose();
     super.dispose();
   }
 
@@ -326,7 +397,7 @@ class _PlayLessonPageState extends State<PlayLessonPage> {
     }
   }
 
-  void _startVideo({double elapsedTime}) {
+  void _startVideo({double elapsedTime}) async {
     _lastEventTime = elapsedTime?.toInt() ?? 0;
     eventList = _getNextList();
 
@@ -369,8 +440,9 @@ class _PlayLessonPageState extends State<PlayLessonPage> {
         }
       }
     });
-    player.seek(Duration(milliseconds: _lastEventTime));
-    player.play();
+    await audioPlayer.play(_audioPath, isLocal: true);
+
+    await audioPlayer.seek(Duration(milliseconds: elapsedTime?.toInt() ?? 0));
   }
 
   void _onFullScreenClick() {
@@ -423,6 +495,27 @@ class _PlayLessonPageState extends State<PlayLessonPage> {
     }
     final task = storageReference.writeToFile(file);
     await task.future;
-    var duration = await player.setFilePath(path);
+
+    _audioPath = path;
+  }
+
+  void _onVideoTap() {
+    setState(() {
+      _showVideoControls = true;
+    });
+    Future.delayed(Duration(seconds: 2)).then((value) {
+      if (mounted) {
+        setState(() {
+          _showVideoControls = false;
+        });
+      }
+    });
+  }
+
+  _onPauseVideo() {
+    _pauseDuration = countDownTimer.elapsedTime;
+
+    audioPlayer?.pause();
+    countDownTimer?.cancel();
   }
 }
