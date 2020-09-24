@@ -44,9 +44,7 @@ class LessonCard extends StatelessWidget {
                     child: Text(
                       "${lesson.name ?? "---"}",
                       style: Theme.of(context).textTheme.bodyText1.copyWith(
-                            fontSize: 14,
-                            color: Colors.blueGrey[900],
-                            fontWeight: FontWeight.bold,
+                            fontWeight: FontWeight.w700,
                           ),
                     ),
                   ),

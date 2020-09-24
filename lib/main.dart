@@ -13,6 +13,7 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    final textTheme = Theme.of(context).textTheme;
     return MaterialApp(
       title: 'DotMyConcepts',
       theme: ThemeData(
@@ -23,12 +24,12 @@ class MyApp extends StatelessWidget {
           color: Colors.white,
           brightness: Brightness.light,
           textTheme: GoogleFonts.latoTextTheme(
-            Theme.of(context).textTheme.copyWith(
-                  headline6: Theme.of(context).textTheme.headline6.copyWith(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                      ),
-                ),
+            textTheme.copyWith(
+              headline6: textTheme.headline6.copyWith(
+                fontSize: 18,
+                fontWeight: FontWeight.w600,
+              ),
+            ),
           ),
           iconTheme: Theme.of(context).iconTheme,
         ),
@@ -38,8 +39,16 @@ class MyApp extends StatelessWidget {
           space: 1,
         ),
         textTheme: GoogleFonts.latoTextTheme(
-          Theme.of(context).textTheme.apply(
+          textTheme
+              .apply(
                 bodyColor: Colors.blueGrey[900],
+              )
+              .copyWith(
+                overline: textTheme.overline.copyWith(
+                  fontSize: 12,
+                  fontWeight: FontWeight.w700,
+                ),
+                bodyText1: textTheme.bodyText1.copyWith(letterSpacing: 1.0),
               ),
         ),
       ),

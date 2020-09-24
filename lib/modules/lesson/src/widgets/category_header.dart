@@ -65,10 +65,14 @@ class _CategoryHeaderState extends State<CategoryHeader> {
                     padding: EdgeInsets.symmetric(vertical: 4, horizontal: 6),
                     child: Text(
                       '$_unit'.toUpperCase(),
-                      style: Theme.of(context).textTheme.display1.copyWith(
+                      style: Theme.of(context).textTheme.bodyText1.copyWith(
                             fontSize: 10,
                             fontWeight: FontWeight.w600,
-                            color: Colors.blueGrey[900].withOpacity(0.9),
+                            color: Theme.of(context)
+                                .textTheme
+                                .bodyText1
+                                .color
+                                .withOpacity(0.9),
                           ),
                     ),
                   ),

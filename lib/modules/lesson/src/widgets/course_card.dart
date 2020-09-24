@@ -36,10 +36,9 @@ class CourseCard extends StatelessWidget {
                 padding: const EdgeInsets.all(12.0),
                 child: Text(
                   lesson.title,
-                  style: TextStyle(
-                    fontSize: 14,
-                    fontWeight: FontWeight.w600,
-                  ),
+                  style: Theme.of(context).textTheme.bodyText1.copyWith(
+                        fontWeight: FontWeight.w700,
+                      ),
                 ),
               ),
             ],

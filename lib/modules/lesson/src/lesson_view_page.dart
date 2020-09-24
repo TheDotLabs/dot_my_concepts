@@ -37,10 +37,7 @@ class _LessonViewPageState extends State<LessonViewPage> {
             ),
             child: Text(
               'Newly Uploaded'.toUpperCase(),
-              style: Theme.of(context).textTheme.overline.copyWith(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w700,
-                  ),
+              style: Theme.of(context).textTheme.overline,
               textAlign: TextAlign.center,
             ),
           ),
@@ -83,10 +80,7 @@ class _LessonViewPageState extends State<LessonViewPage> {
             ),
             child: Text(
               'POPULAR COURSES'.toUpperCase(),
-              style: Theme.of(context).textTheme.overline.copyWith(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w700,
-                  ),
+              style: Theme.of(context).textTheme.overline,
               textAlign: TextAlign.center,
             ),
           ),
