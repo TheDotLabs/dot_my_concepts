@@ -12,6 +12,10 @@ abstract class Lesson with _$Lesson {
     String name,
     String description,
     List<String> images,
+    String category,
+    String subject,
+    String unit,
+    String chapter,
   }) = _Lesson;
 
   factory Lesson.fromJson(Map<String, dynamic> json) => _$LessonFromJson(json);

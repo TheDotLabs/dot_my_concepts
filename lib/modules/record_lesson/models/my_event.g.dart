@@ -17,6 +17,10 @@ _$_Lesson _$_$_LessonFromJson(Map<String, dynamic> json) {
     name: json['name'] as String,
     description: json['description'] as String,
     images: (json['images'] as List)?.map((e) => e as String)?.toList(),
+    category: json['category'] as String,
+    subject: json['subject'] as String,
+    unit: json['unit'] as String,
+    chapter: json['chapter'] as String,
   );
 }
 
@@ -27,6 +31,10 @@ Map<String, dynamic> _$_$_LessonToJson(_$_Lesson instance) => <String, dynamic>{
       'name': instance.name,
       'description': instance.description,
       'images': instance.images,
+      'category': instance.category,
+      'subject': instance.subject,
+      'unit': instance.unit,
+      'chapter': instance.chapter,
     };
 
 _$_MyEvent _$_$_MyEventFromJson(Map<String, dynamic> json) {

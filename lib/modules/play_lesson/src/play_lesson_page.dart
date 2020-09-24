@@ -9,10 +9,13 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_record_lesson/constants/lesson_constants.dart';
 import 'package:flutter_record_lesson/core/widgets/my_countdown_timer.dart';
+import 'package:flutter_record_lesson/core/widgets/my_error_widget.dart';
 import 'package:flutter_record_lesson/modules/record_lesson/models/my_event.dart';
 import 'package:flutter_record_lesson/modules/record_lesson/src/painter_controller.dart';
+import 'package:flutter_record_lesson/utils/extensions/behavior_subject.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
+import 'package:rxdart/rxdart.dart';
 
 class PlayLessonPage extends StatefulWidget {
   PlayLessonPage({this.lessonId});
@@ -24,13 +27,13 @@ class PlayLessonPage extends StatefulWidget {
 }
 
 class _PlayLessonPageState extends State<PlayLessonPage> {
+  final _subject = BehaviorSubject<Lesson>();
+
   PainterController _paintController;
 
   MyCountdownTimer countDownTimer;
 
   Duration remainingDuration;
-
-  Lesson lesson;
 
   int _imageIndex = 0;
 
@@ -50,6 +53,8 @@ class _PlayLessonPageState extends State<PlayLessonPage> {
   String _audioPath;
 
   Duration _pauseDuration;
+
+  Lesson get lesson => _subject.value;
 
   @override
   void initState() {
@@ -72,12 +77,11 @@ class _PlayLessonPageState extends State<PlayLessonPage> {
             : AppBar(
                 title: Text("View Lesson"),
               ),
-        body: Container(
-          child: lesson == null
-              ? Center(
-                  child: CircularProgressIndicator(),
-                )
-              : SingleChildScrollView(
+        body: StreamBuilder<Lesson>(
+            stream: _subject,
+            builder: (context, snapshot) {
+              if (snapshot.hasData && snapshot.data != null) {
+                return SingleChildScrollView(
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [
@@ -123,111 +127,65 @@ class _PlayLessonPageState extends State<PlayLessonPage> {
                                           Positioned.fill(
                                             child: Container(
                                               decoration: BoxDecoration(
-                                                  color: Colors.black38),
+                                                color: Colors.black38,
+                                              ),
                                             ),
                                           ),
                                         Positioned.fill(
-                                          child: AnimatedOpacity(
-                                            opacity: _showVideoControls &&
+                                          child: IgnorePointer(
+                                            ignoring: _showVideoControls &&
                                                     (countDownTimer
                                                             ?.isRunning ??
                                                         false)
-                                                ? 1.0
-                                                : 0.0,
-                                            duration:
-                                                Duration(milliseconds: 200),
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                color: Colors.black
-                                                    .withOpacity(0.78),
-                                              ),
-                                              child: Column(
-                                                children: [
-                                                  Expanded(
-                                                    child: Center(
-                                                      child: Container(
-                                                        margin: EdgeInsets.only(
-                                                          top: 44,
-                                                        ),
-                                                        child: IconButton(
-                                                          icon: Icon(
-                                                            Icons.pause,
-                                                            size: 36,
+                                                ? false
+                                                : true,
+                                            child: AnimatedOpacity(
+                                              opacity: _showVideoControls &&
+                                                      (countDownTimer
+                                                              ?.isRunning ??
+                                                          false)
+                                                  ? 1.0
+                                                  : 0.0,
+                                              duration:
+                                                  Duration(milliseconds: 200),
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  color: Colors.black
+                                                      .withOpacity(0.78),
+                                                ),
+                                                child: Column(
+                                                  children: [
+                                                    Expanded(
+                                                      child: Center(
+                                                        child: Container(
+                                                          margin:
+                                                              EdgeInsets.only(
+                                                            top: 44,
                                                           ),
-                                                          color: Colors.white,
-                                                          onPressed:
-                                                              _onPauseVideo,
+                                                          child: IconButton(
+                                                            icon: Icon(
+                                                              Icons.pause,
+                                                              size: 36,
+                                                            ),
+                                                            color: Colors.white,
+                                                            onPressed:
+                                                                _onPauseVideo,
+                                                          ),
                                                         ),
                                                       ),
                                                     ),
-                                                  ),
-                                                  Container(
-                                                    padding:
-                                                        EdgeInsets.symmetric(
-                                                            horizontal: 16),
-                                                    child: ((countDownTimer
-                                                                ?.isRunning ??
-                                                            false))
-                                                        ? Row(
-                                                            children: [
-                                                              Text(
-                                                                (Duration(milliseconds: lesson.duration) -
-                                                                        remainingDuration)
-                                                                    .toString()
-                                                                    .split(
-                                                                        '.')[0]
-                                                                    .padLeft(
-                                                                        8, '0')
-                                                                    .substring(
-                                                                        3, 8),
-                                                                style:
-                                                                    TextStyle(
-                                                                  fontSize: 12,
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
+                                                    Container(
+                                                      child: ((countDownTimer
+                                                                  ?.isRunning ??
+                                                              false))
+                                                          ? Row(
+                                                              children: [
+                                                                SizedBox(
+                                                                  width: 16,
                                                                 ),
-                                                              ),
-                                                              if (lesson !=
-                                                                  null)
-                                                                Expanded(
-                                                                  child:
-                                                                      SliderTheme(
-                                                                    data: SliderTheme.of(
-                                                                            context)
-                                                                        .copyWith(
-                                                                      thumbShape:
-                                                                          RoundSliderThumbShape(
-                                                                              enabledThumbRadius: 8.0),
-                                                                    ),
-                                                                    child:
-                                                                        Slider(
-                                                                      value: (lesson.duration -
-                                                                              (remainingDuration?.inMilliseconds ?? 0))
-                                                                          .toDouble(),
-                                                                      min: 0.0,
-                                                                      max: lesson
-                                                                          .duration
-                                                                          .toDouble(),
-                                                                      onChanged:
-                                                                          (double
-                                                                              value) {
-                                                                        _startVideo(
-                                                                          elapsedTime:
-                                                                              value,
-                                                                        );
-                                                                      },
-                                                                    ),
-                                                                  ),
-                                                                ),
-                                                              if (lesson !=
-                                                                  null)
                                                                 Text(
-                                                                  Duration(
-                                                                          milliseconds: lesson
-                                                                              .duration)
+                                                                  (Duration(milliseconds: lesson.duration) -
+                                                                          remainingDuration)
                                                                       .toString()
                                                                       .split('.')[
                                                                           0]
@@ -247,55 +205,143 @@ class _PlayLessonPageState extends State<PlayLessonPage> {
                                                                             .bold,
                                                                   ),
                                                                 ),
-                                                              IconButton(
-                                                                icon: Icon(
-                                                                  Icons
-                                                                      .fullscreen,
-                                                                  color: Colors
-                                                                      .white,
+                                                                if (lesson !=
+                                                                    null)
+                                                                  Expanded(
+                                                                    child:
+                                                                        SliderTheme(
+                                                                      data: SliderTheme.of(
+                                                                              context)
+                                                                          .copyWith(
+                                                                        thumbShape:
+                                                                            RoundSliderThumbShape(enabledThumbRadius: 8.0),
+                                                                      ),
+                                                                      child:
+                                                                          Slider(
+                                                                        value: (lesson.duration -
+                                                                                (remainingDuration?.inMilliseconds ?? 0))
+                                                                            .toDouble(),
+                                                                        min:
+                                                                            0.0,
+                                                                        max: lesson
+                                                                            .duration
+                                                                            .toDouble(),
+                                                                        onChanged:
+                                                                            (double
+                                                                                value) {
+                                                                          _startVideo(
+                                                                            elapsedTime:
+                                                                                value,
+                                                                          );
+                                                                        },
+                                                                      ),
+                                                                    ),
+                                                                  ),
+                                                                if (lesson !=
+                                                                    null)
+                                                                  Text(
+                                                                    Duration(
+                                                                            milliseconds: lesson
+                                                                                .duration)
+                                                                        .toString()
+                                                                        .split('.')[
+                                                                            0]
+                                                                        .padLeft(
+                                                                            8,
+                                                                            '0')
+                                                                        .substring(
+                                                                            3,
+                                                                            8),
+                                                                    style:
+                                                                        TextStyle(
+                                                                      fontSize:
+                                                                          12,
+                                                                      color: Colors
+                                                                          .white,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .bold,
+                                                                    ),
+                                                                  ),
+                                                                GestureDetector(
+                                                                  child:
+                                                                      Padding(
+                                                                    padding:
+                                                                        const EdgeInsets.all(
+                                                                            8.0),
+                                                                    child: Icon(
+                                                                      Icons
+                                                                          .fullscreen,
+                                                                      color: Colors
+                                                                          .white,
+                                                                    ),
+                                                                  ),
+                                                                  onTap: () {
+                                                                    _onFullScreenClick();
+                                                                  },
                                                                 ),
-                                                                onPressed: () {
-                                                                  _onFullScreenClick();
-                                                                },
-                                                              )
-                                                            ],
-                                                          )
-                                                        : Container(),
-                                                  )
-                                                ],
+                                                                SizedBox(
+                                                                  width: 8,
+                                                                ),
+                                                              ],
+                                                            )
+                                                          : Container(),
+                                                    )
+                                                  ],
+                                                ),
                                               ),
                                             ),
                                           ),
                                         ),
-                                        if (countDownTimer == null ||
-                                            !countDownTimer.isRunning)
-                                          Positioned.fill(
-                                            child: Container(
-                                              decoration: BoxDecoration(
-                                                color: Colors.black54,
-                                              ),
-                                              child: Center(
-                                                child: Container(
-                                                  child: FloatingActionButton(
-                                                    onPressed: () {
-                                                      _startVideo(
-                                                        elapsedTime:
-                                                            _pauseDuration
-                                                                ?.inMilliseconds
-                                                                ?.toDouble(),
-                                                      );
-                                                      _pauseDuration = null;
-                                                    },
-                                                    child: Icon(
-                                                      Icons.play_arrow,
-                                                      color: Colors.white,
-                                                      size: 32,
-                                                    ),
+                                        Positioned.fill(
+                                          child: IgnorePointer(
+                                            ignoring: (countDownTimer == null ||
+                                                    !countDownTimer.isRunning)
+                                                ? false
+                                                : true,
+                                            child: AnimatedOpacity(
+                                              opacity: (countDownTimer ==
+                                                          null ||
+                                                      !countDownTimer.isRunning)
+                                                  ? 1.0
+                                                  : 0.0,
+                                              duration:
+                                                  Duration(milliseconds: 200),
+                                              child: Container(
+                                                decoration: BoxDecoration(
+                                                  color: Colors.black54,
+                                                ),
+                                                child: Center(
+                                                  child: Container(
+                                                    child: (countDownTimer ==
+                                                                null ||
+                                                            !countDownTimer
+                                                                .isRunning)
+                                                        ? FloatingActionButton(
+                                                            onPressed: () {
+                                                              _startVideo(
+                                                                elapsedTime:
+                                                                    _pauseDuration
+                                                                        ?.inMilliseconds
+                                                                        ?.toDouble(),
+                                                              );
+                                                              _pauseDuration =
+                                                                  null;
+                                                            },
+                                                            child: Icon(
+                                                              Icons.play_arrow,
+                                                              color:
+                                                                  Colors.white,
+                                                              size: 32,
+                                                            ),
+                                                          )
+                                                        : Container(),
                                                   ),
                                                 ),
                                               ),
                                             ),
                                           ),
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -315,28 +361,17 @@ class _PlayLessonPageState extends State<PlayLessonPage> {
                       Divider(
                         height: 1,
                       ),
-                      Row(
-                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                        children: [
-                          if (countDownTimer?.isRunning ?? false)
-                            RaisedButton(
-                              onPressed: countDownTimer?.isRunning ?? false
-                                  ? () {
-                                      setState(() {
-                                        countDownTimer.cancel();
-                                        _paintController.clear();
-                                      });
-                                      _onStop();
-                                    }
-                                  : null,
-                              child: Text("STOP"),
-                            ),
-                        ],
-                      ),
                     ],
                   ),
-                ),
-        ),
+                );
+              } else if (snapshot.hasError) {
+                return MyErrorWidget(snapshot.error);
+              } else {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+            }),
       ),
     );
   }
@@ -351,32 +386,28 @@ class _PlayLessonPageState extends State<PlayLessonPage> {
   }
 
   Future<void> init() async {
-    final events = await _loadEvents();
-    await _loadAudio();
+    try {
+      _subject.addDataSafely(null);
+      final events = await _loadEvents();
+      await _loadAudio();
 
-    final doc = await FirebaseFirestore.instance
-        .doc('lessons/${widget.lessonId}')
-        .get();
-    if (mounted) {
-      setState(() {
-        lesson =
-            Lesson.fromJson(doc.data()).copyWith(id: doc.id, events: events);
-      });
+      final doc = await FirebaseFirestore.instance
+          .doc('lessons/${widget.lessonId}')
+          .get();
+      _subject.add(
+        Lesson.fromJson(doc.data()).copyWith(id: doc.id, events: events),
+      );
+
       lesson.images.forEach((element) {
         precacheImage(
           CachedNetworkImageProvider(element),
           context,
         );
       });
+    } catch (e, s) {
+      print(e);
+      _subject.addErrorSafely(e);
     }
-  }
-
-  @override
-  void dispose() {
-    countDownTimer?.cancel();
-    audioPlayer?.stop();
-    audioPlayer?.dispose();
-    super.dispose();
   }
 
   void _onTick(Duration elapsed) {
@@ -538,5 +569,14 @@ class _PlayLessonPageState extends State<PlayLessonPage> {
       return Future.value(false);
     }
     return Future.value(true);
+  }
+
+  @override
+  void dispose() {
+    _subject.close();
+    countDownTimer?.cancel();
+    audioPlayer?.stop();
+    audioPlayer?.dispose();
+    super.dispose();
   }
 }

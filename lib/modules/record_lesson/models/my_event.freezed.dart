@@ -22,7 +22,11 @@ class _$LessonTearOff {
       int duration,
       String name,
       String description,
-      List<String> images}) {
+      List<String> images,
+      String category,
+      String subject,
+      String unit,
+      String chapter}) {
     return _Lesson(
       events: events,
       id: id,
@@ -30,6 +34,10 @@ class _$LessonTearOff {
       name: name,
       description: description,
       images: images,
+      category: category,
+      subject: subject,
+      unit: unit,
+      chapter: chapter,
     );
   }
 }
@@ -44,6 +52,10 @@ mixin _$Lesson {
   String get name;
   String get description;
   List<String> get images;
+  String get category;
+  String get subject;
+  String get unit;
+  String get chapter;
 
   Map<String, dynamic> toJson();
   $LessonCopyWith<Lesson> get copyWith;
@@ -58,7 +70,11 @@ abstract class $LessonCopyWith<$Res> {
       int duration,
       String name,
       String description,
-      List<String> images});
+      List<String> images,
+      String category,
+      String subject,
+      String unit,
+      String chapter});
 }
 
 class _$LessonCopyWithImpl<$Res> implements $LessonCopyWith<$Res> {
@@ -76,6 +92,10 @@ class _$LessonCopyWithImpl<$Res> implements $LessonCopyWith<$Res> {
     Object name = freezed,
     Object description = freezed,
     Object images = freezed,
+    Object category = freezed,
+    Object subject = freezed,
+    Object unit = freezed,
+    Object chapter = freezed,
   }) {
     return _then(_value.copyWith(
       events: events == freezed ? _value.events : events as List<MyEvent>,
@@ -85,6 +105,10 @@ class _$LessonCopyWithImpl<$Res> implements $LessonCopyWith<$Res> {
       description:
           description == freezed ? _value.description : description as String,
       images: images == freezed ? _value.images : images as List<String>,
+      category: category == freezed ? _value.category : category as String,
+      subject: subject == freezed ? _value.subject : subject as String,
+      unit: unit == freezed ? _value.unit : unit as String,
+      chapter: chapter == freezed ? _value.chapter : chapter as String,
     ));
   }
 }
@@ -99,7 +123,11 @@ abstract class _$LessonCopyWith<$Res> implements $LessonCopyWith<$Res> {
       int duration,
       String name,
       String description,
-      List<String> images});
+      List<String> images,
+      String category,
+      String subject,
+      String unit,
+      String chapter});
 }
 
 class __$LessonCopyWithImpl<$Res> extends _$LessonCopyWithImpl<$Res>
@@ -118,6 +146,10 @@ class __$LessonCopyWithImpl<$Res> extends _$LessonCopyWithImpl<$Res>
     Object name = freezed,
     Object description = freezed,
     Object images = freezed,
+    Object category = freezed,
+    Object subject = freezed,
+    Object unit = freezed,
+    Object chapter = freezed,
   }) {
     return _then(_Lesson(
       events: events == freezed ? _value.events : events as List<MyEvent>,
@@ -127,6 +159,10 @@ class __$LessonCopyWithImpl<$Res> extends _$LessonCopyWithImpl<$Res>
       description:
           description == freezed ? _value.description : description as String,
       images: images == freezed ? _value.images : images as List<String>,
+      category: category == freezed ? _value.category : category as String,
+      subject: subject == freezed ? _value.subject : subject as String,
+      unit: unit == freezed ? _value.unit : unit as String,
+      chapter: chapter == freezed ? _value.chapter : chapter as String,
     ));
   }
 }
@@ -139,7 +175,11 @@ class _$_Lesson implements _Lesson {
       this.duration,
       this.name,
       this.description,
-      this.images});
+      this.images,
+      this.category,
+      this.subject,
+      this.unit,
+      this.chapter});
 
   factory _$_Lesson.fromJson(Map<String, dynamic> json) =>
       _$_$_LessonFromJson(json);
@@ -156,10 +196,18 @@ class _$_Lesson implements _Lesson {
   final String description;
   @override
   final List<String> images;
+  @override
+  final String category;
+  @override
+  final String subject;
+  @override
+  final String unit;
+  @override
+  final String chapter;
 
   @override
   String toString() {
-    return 'Lesson(events: $events, id: $id, duration: $duration, name: $name, description: $description, images: $images)';
+    return 'Lesson(events: $events, id: $id, duration: $duration, name: $name, description: $description, images: $images, category: $category, subject: $subject, unit: $unit, chapter: $chapter)';
   }
 
   @override
@@ -179,7 +227,17 @@ class _$_Lesson implements _Lesson {
                 const DeepCollectionEquality()
                     .equals(other.description, description)) &&
             (identical(other.images, images) ||
-                const DeepCollectionEquality().equals(other.images, images)));
+                const DeepCollectionEquality().equals(other.images, images)) &&
+            (identical(other.category, category) ||
+                const DeepCollectionEquality()
+                    .equals(other.category, category)) &&
+            (identical(other.subject, subject) ||
+                const DeepCollectionEquality()
+                    .equals(other.subject, subject)) &&
+            (identical(other.unit, unit) ||
+                const DeepCollectionEquality().equals(other.unit, unit)) &&
+            (identical(other.chapter, chapter) ||
+                const DeepCollectionEquality().equals(other.chapter, chapter)));
   }
 
   @override
@@ -190,7 +248,11 @@ class _$_Lesson implements _Lesson {
       const DeepCollectionEquality().hash(duration) ^
       const DeepCollectionEquality().hash(name) ^
       const DeepCollectionEquality().hash(description) ^
-      const DeepCollectionEquality().hash(images);
+      const DeepCollectionEquality().hash(images) ^
+      const DeepCollectionEquality().hash(category) ^
+      const DeepCollectionEquality().hash(subject) ^
+      const DeepCollectionEquality().hash(unit) ^
+      const DeepCollectionEquality().hash(chapter);
 
   @override
   _$LessonCopyWith<_Lesson> get copyWith =>
@@ -209,7 +271,11 @@ abstract class _Lesson implements Lesson {
       int duration,
       String name,
       String description,
-      List<String> images}) = _$_Lesson;
+      List<String> images,
+      String category,
+      String subject,
+      String unit,
+      String chapter}) = _$_Lesson;
 
   factory _Lesson.fromJson(Map<String, dynamic> json) = _$_Lesson.fromJson;
 
@@ -225,6 +291,14 @@ abstract class _Lesson implements Lesson {
   String get description;
   @override
   List<String> get images;
+  @override
+  String get category;
+  @override
+  String get subject;
+  @override
+  String get unit;
+  @override
+  String get chapter;
   @override
   _$LessonCopyWith<_Lesson> get copyWith;
 }

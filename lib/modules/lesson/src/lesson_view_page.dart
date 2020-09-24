@@ -1,9 +1,8 @@
 import 'dart:async';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_record_lesson/modules/play_lesson/src/play_lesson_page.dart';
+import 'package:flutter_record_lesson/modules/lesson/src/widgets/lesson_card.dart';
 import 'package:flutter_record_lesson/modules/record_lesson/models/my_event.dart';
 
 class LessonViewPage extends StatefulWidget {
@@ -25,42 +24,44 @@ class _LessonViewPageState extends State<LessonViewPage> {
           builder: (context, snapshot) {
             if (snapshot.hasData && snapshot.data != null) {
               return ListView(
+                padding: EdgeInsets.symmetric(
+                  horizontal: 8,
+                ),
                 children: [
-                  ...snapshot.data.map(
-                    (e) => Card(
-                      elevation: 1,
-                      child: GestureDetector(
-                        onTap: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (_) => PlayLessonPage(
-                                lessonId: e.id,
-                              ),
-                            ),
-                          );
-                        },
-                        child: Column(
-                          children: [
-                            Container(
-                              height: MediaQuery.of(context).size.height / 3,
-                              child: e.images == null
-                                  ? Container()
-                                  : CachedNetworkImage(
-                                      imageUrl: e.images[0],
-                                    ),
-                            ),
-                            Divider(
-                              height: 1,
-                            ),
-                            ListTile(
-                              title: Text("${e.name ?? "---"}"),
-                              subtitle: Text("${e.description ?? "---"}"),
-                            )
-                          ],
-                        ),
-                      ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8.0,
+                      vertical: 16,
                     ),
-                  )
+                    child: Text(
+                      'Newly Uploaded'.toUpperCase(),
+                      style: Theme.of(context).textTheme.overline.copyWith(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w700,
+                          ),
+                      textAlign: TextAlign.start,
+                    ),
+                  ),
+                  ...snapshot.data.map(
+                    (e) => LessonCard(e),
+                  ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 8.0,
+                      vertical: 16,
+                    ),
+                    child: Text(
+                      'POPULAR COURSES'.toUpperCase(),
+                      style: Theme.of(context).textTheme.overline.copyWith(
+                            fontSize: 14,
+                            fontWeight: FontWeight.w700,
+                          ),
+                      textAlign: TextAlign.start,
+                    ),
+                  ),
+                  ...snapshot.data.map(
+                    (e) => LessonCard(e),
+                  ),
                 ],
               );
             } else if (snapshot.hasError) {

@@ -17,7 +17,13 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text("MyLearn"),
+        title: Text(
+          "JEE Mains and Advance",
+        ),
+      ),
+      drawer: Container(
+        width: MediaQuery.of(context).size.width / 1.2,
+        color: Colors.white,
       ),
       body: PageView(
         controller: _pageController,
