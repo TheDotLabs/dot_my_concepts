@@ -6,7 +6,7 @@ The animated video created will be played using images and event sequence.
 
 Source of Inspiration - Unacademy Educator App
 
-<img src="https://raw.githubusercontent.com/apgapg/flutter_record_lesson/master/res/s1.png"  width="auto">
+<img src="https://raw.githubusercontent.com/apgapg/flutter_record_lesson/master/res/s1.png"  height="500">
 
 ## Getting Started
 

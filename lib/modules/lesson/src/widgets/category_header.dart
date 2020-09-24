@@ -50,7 +50,7 @@ class _CategoryHeaderState extends State<CategoryHeader> {
                     child: Text(
                       '$_chapter'.toUpperCase(),
                       style: Theme.of(context).textTheme.bodyText1.copyWith(
-                            fontSize: 12,
+                            fontSize: 10,
                             color: Colors.white,
                           ),
                     ),
@@ -66,7 +66,7 @@ class _CategoryHeaderState extends State<CategoryHeader> {
                     child: Text(
                       '$_unit'.toUpperCase(),
                       style: Theme.of(context).textTheme.display1.copyWith(
-                            fontSize: 12,
+                            fontSize: 10,
                             fontWeight: FontWeight.w600,
                             color: Colors.blueGrey[900].withOpacity(0.9),
                           ),

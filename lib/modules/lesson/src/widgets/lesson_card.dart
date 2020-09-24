@@ -13,31 +13,28 @@ class LessonCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BorderContainer(
-      child: Container(
-        child: GestureDetector(
-          onTap: () {
-            Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (_) => PlayLessonPage(
-                  lessonId: lesson.id,
-                ),
-              ),
-            );
-          },
+    return GestureDetector(
+      onTap: () {
+        Navigator.of(context).push(
+          MaterialPageRoute(
+            builder: (_) => PlayLessonPage(
+              lessonId: lesson.id,
+            ),
+          ),
+        );
+      },
+      child: BorderContainer(
+        child: Container(
           child: Column(
             children: [
               CategoryHeader(lesson),
               Container(
-                height: MediaQuery.of(context).size.height / 4,
+                height: MediaQuery.of(context).size.height / 5.5,
                 child: lesson.images == null
                     ? Container()
                     : CachedNetworkImage(
                         imageUrl: lesson.images[0],
                       ),
-              ),
-              Divider(
-                height: 1,
               ),
               Column(
                 crossAxisAlignment: CrossAxisAlignment.stretch,
@@ -46,10 +43,11 @@ class LessonCard extends StatelessWidget {
                     padding: const EdgeInsets.all(12.0),
                     child: Text(
                       "${lesson.name ?? "---"}",
-                      style: Theme.of(context)
-                          .textTheme
-                          .bodyText1
-                          .copyWith(fontSize: 16, color: Colors.blueGrey[900]),
+                      style: Theme.of(context).textTheme.bodyText1.copyWith(
+                            fontSize: 14,
+                            color: Colors.blueGrey[900],
+                            fontWeight: FontWeight.bold,
+                          ),
                     ),
                   ),
                 ],
