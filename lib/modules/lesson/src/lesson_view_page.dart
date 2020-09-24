@@ -39,7 +39,7 @@ class _LessonViewPageState extends State<LessonViewPage> {
                             fontSize: 14,
                             fontWeight: FontWeight.w700,
                           ),
-                      textAlign: TextAlign.start,
+                      textAlign: TextAlign.center,
                     ),
                   ),
                   ...snapshot.data.map(
@@ -56,12 +56,24 @@ class _LessonViewPageState extends State<LessonViewPage> {
                             fontSize: 14,
                             fontWeight: FontWeight.w700,
                           ),
-                      textAlign: TextAlign.start,
+                      textAlign: TextAlign.center,
                     ),
                   ),
                   ...snapshot.data.map(
                     (e) => LessonCard(e),
                   ),
+                  Padding(
+                    padding: const EdgeInsets.symmetric(vertical: 48.0),
+                    child: Text(
+                      '-- Prefer Quality Over Quantity --',
+                      style: TextStyle(
+                        color: Colors.grey,
+                        fontStyle: FontStyle.italic,
+                        fontSize: 12,
+                      ),
+                      textAlign: TextAlign.center,
+                    ),
+                  )
                 ],
               );
             } else if (snapshot.hasError) {
