@@ -28,9 +28,6 @@ class LessonCard extends StatelessWidget {
           child: Column(
             children: [
               CategoryHeader(lesson),
-              Divider(
-                height: 1,
-              ),
               Container(
                 height: MediaQuery.of(context).size.height / 4,
                 child: lesson.images == null
