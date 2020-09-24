@@ -64,160 +64,115 @@ class _PlayLessonPageState extends State<PlayLessonPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-      appBar: (MediaQuery.of(context).orientation == Orientation.landscape)
-          ? null
-          : AppBar(
-              title: Text("View Lesson"),
-            ),
-      body: Container(
-        child: lesson == null
-            ? Center(
-                child: CircularProgressIndicator(),
-              )
-            : SingleChildScrollView(
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    GestureDetector(
-                      onTap: _onVideoTap,
-                      child: Container(
-                        alignment: Alignment.center,
-                        color: Colors.black87,
-                        child: ConstrainedBox(
-                          constraints: BoxConstraints(
-                            maxHeight: (MediaQuery.of(context).orientation ==
-                                    Orientation.landscape)
-                                ? MediaQuery.of(context).size.height
-                                : 500,
-                          ),
-                          child: AspectRatio(
-                            aspectRatio: LessonConstants.aspectRatio,
-                            child: Container(
-                              child: IntrinsicWidth(
-                                child: IntrinsicHeight(
-                                  child: Stack(
-                                    fit: StackFit.expand,
-                                    children: [
-                                      CachedNetworkImage(
-                                        imageUrl: lesson.images[_imageIndex],
-                                        placeholder: (context, url) => Center(
-                                            child: CircularProgressIndicator()),
-                                        errorWidget: (context, url, error) =>
-                                            Icon(Icons.error),
-                                      ),
-                                      Container(
-                                        key: _paintKey,
-                                        child: Painter(
-                                          _paintController,
-                                          () {},
-                                          disableTouch: true,
+    return WillPopScope(
+      onWillPop: _onWillPop,
+      child: Scaffold(
+        appBar: (MediaQuery.of(context).orientation == Orientation.landscape)
+            ? null
+            : AppBar(
+                title: Text("View Lesson"),
+              ),
+        body: Container(
+          child: lesson == null
+              ? Center(
+                  child: CircularProgressIndicator(),
+                )
+              : SingleChildScrollView(
+                  child: Column(
+                    crossAxisAlignment: CrossAxisAlignment.stretch,
+                    children: [
+                      GestureDetector(
+                        onTap: _onVideoTap,
+                        child: Container(
+                          alignment: Alignment.center,
+                          color: Colors.black87,
+                          child: ConstrainedBox(
+                            constraints: BoxConstraints(
+                              maxHeight: (MediaQuery.of(context).orientation ==
+                                      Orientation.landscape)
+                                  ? MediaQuery.of(context).size.height
+                                  : 500,
+                            ),
+                            child: AspectRatio(
+                              aspectRatio: LessonConstants.aspectRatio,
+                              child: Container(
+                                child: IntrinsicWidth(
+                                  child: IntrinsicHeight(
+                                    child: Stack(
+                                      fit: StackFit.expand,
+                                      children: [
+                                        CachedNetworkImage(
+                                          imageUrl: lesson.images[_imageIndex],
+                                          placeholder: (context, url) => Center(
+                                              child:
+                                                  CircularProgressIndicator()),
+                                          errorWidget: (context, url, error) =>
+                                              Icon(Icons.error),
                                         ),
-                                      ),
-                                      if (MediaQuery.of(context)
-                                              .platformBrightness ==
-                                          Brightness.dark)
-                                        Positioned.fill(
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                                color: Colors.black38),
+                                        Container(
+                                          key: _paintKey,
+                                          child: Painter(
+                                            _paintController,
+                                            () {},
+                                            disableTouch: true,
                                           ),
                                         ),
-                                      Positioned.fill(
-                                        child: AnimatedOpacity(
-                                          opacity: _showVideoControls &&
-                                                  (countDownTimer?.isRunning ??
-                                                      false)
-                                              ? 1.0
-                                              : 0.0,
-                                          duration: Duration(milliseconds: 200),
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              color: Colors.black
-                                                  .withOpacity(0.78),
+                                        if (MediaQuery.of(context)
+                                                .platformBrightness ==
+                                            Brightness.dark)
+                                          Positioned.fill(
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                  color: Colors.black38),
                                             ),
-                                            child: Column(
-                                              children: [
-                                                Expanded(
-                                                  child: Center(
-                                                    child: Container(
-                                                      margin: EdgeInsets.only(
-                                                        top: 44,
-                                                      ),
-                                                      child: IconButton(
-                                                        icon: Icon(
-                                                          Icons.pause,
-                                                          size: 36,
+                                          ),
+                                        Positioned.fill(
+                                          child: AnimatedOpacity(
+                                            opacity: _showVideoControls &&
+                                                    (countDownTimer
+                                                            ?.isRunning ??
+                                                        false)
+                                                ? 1.0
+                                                : 0.0,
+                                            duration:
+                                                Duration(milliseconds: 200),
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                color: Colors.black
+                                                    .withOpacity(0.78),
+                                              ),
+                                              child: Column(
+                                                children: [
+                                                  Expanded(
+                                                    child: Center(
+                                                      child: Container(
+                                                        margin: EdgeInsets.only(
+                                                          top: 44,
                                                         ),
-                                                        color: Colors.white,
-                                                        onPressed:
-                                                            _onPauseVideo,
+                                                        child: IconButton(
+                                                          icon: Icon(
+                                                            Icons.pause,
+                                                            size: 36,
+                                                          ),
+                                                          color: Colors.white,
+                                                          onPressed:
+                                                              _onPauseVideo,
+                                                        ),
                                                       ),
                                                     ),
                                                   ),
-                                                ),
-                                                Container(
-                                                  padding: EdgeInsets.symmetric(
-                                                      horizontal: 16),
-                                                  child: ((countDownTimer
-                                                              ?.isRunning ??
-                                                          false))
-                                                      ? Row(
-                                                          children: [
-                                                            Text(
-                                                              (Duration(milliseconds: lesson.duration) -
-                                                                      remainingDuration)
-                                                                  .toString()
-                                                                  .split('.')[0]
-                                                                  .padLeft(
-                                                                      8, '0')
-                                                                  .substring(
-                                                                      3, 8),
-                                                              style: TextStyle(
-                                                                fontSize: 12,
-                                                                color: Colors
-                                                                    .white,
-                                                                fontWeight:
-                                                                    FontWeight
-                                                                        .bold,
-                                                              ),
-                                                            ),
-                                                            if (lesson != null)
-                                                              Expanded(
-                                                                child:
-                                                                    SliderTheme(
-                                                                  data: SliderTheme.of(
-                                                                          context)
-                                                                      .copyWith(
-                                                                    thumbShape: RoundSliderThumbShape(
-                                                                        enabledThumbRadius:
-                                                                            8.0),
-                                                                  ),
-                                                                  child: Slider(
-                                                                    value: (lesson.duration -
-                                                                            (remainingDuration?.inMilliseconds ??
-                                                                                0))
-                                                                        .toDouble(),
-                                                                    min: 0.0,
-                                                                    max: lesson
-                                                                        .duration
-                                                                        .toDouble(),
-                                                                    onChanged:
-                                                                        (double
-                                                                            value) {
-                                                                      _startVideo(
-                                                                        elapsedTime:
-                                                                            value,
-                                                                      );
-                                                                    },
-                                                                  ),
-                                                                ),
-                                                              ),
-                                                            if (lesson != null)
+                                                  Container(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 16),
+                                                    child: ((countDownTimer
+                                                                ?.isRunning ??
+                                                            false))
+                                                        ? Row(
+                                                            children: [
                                                               Text(
-                                                                Duration(
-                                                                        milliseconds: lesson
-                                                                            .duration)
+                                                                (Duration(milliseconds: lesson.duration) -
+                                                                        remainingDuration)
                                                                     .toString()
                                                                     .split(
                                                                         '.')[0]
@@ -235,56 +190,114 @@ class _PlayLessonPageState extends State<PlayLessonPage> {
                                                                           .bold,
                                                                 ),
                                                               ),
-                                                            IconButton(
-                                                              icon: Icon(
-                                                                Icons
-                                                                    .fullscreen,
-                                                                color: Colors
-                                                                    .white,
-                                                              ),
-                                                              onPressed: () {
-                                                                _onFullScreenClick();
-                                                              },
-                                                            )
-                                                          ],
-                                                        )
-                                                      : Container(),
-                                                )
-                                              ],
+                                                              if (lesson !=
+                                                                  null)
+                                                                Expanded(
+                                                                  child:
+                                                                      SliderTheme(
+                                                                    data: SliderTheme.of(
+                                                                            context)
+                                                                        .copyWith(
+                                                                      thumbShape:
+                                                                          RoundSliderThumbShape(
+                                                                              enabledThumbRadius: 8.0),
+                                                                    ),
+                                                                    child:
+                                                                        Slider(
+                                                                      value: (lesson.duration -
+                                                                              (remainingDuration?.inMilliseconds ?? 0))
+                                                                          .toDouble(),
+                                                                      min: 0.0,
+                                                                      max: lesson
+                                                                          .duration
+                                                                          .toDouble(),
+                                                                      onChanged:
+                                                                          (double
+                                                                              value) {
+                                                                        _startVideo(
+                                                                          elapsedTime:
+                                                                              value,
+                                                                        );
+                                                                      },
+                                                                    ),
+                                                                  ),
+                                                                ),
+                                                              if (lesson !=
+                                                                  null)
+                                                                Text(
+                                                                  Duration(
+                                                                          milliseconds: lesson
+                                                                              .duration)
+                                                                      .toString()
+                                                                      .split('.')[
+                                                                          0]
+                                                                      .padLeft(
+                                                                          8,
+                                                                          '0')
+                                                                      .substring(
+                                                                          3, 8),
+                                                                  style:
+                                                                      TextStyle(
+                                                                    fontSize:
+                                                                        12,
+                                                                    color: Colors
+                                                                        .white,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                  ),
+                                                                ),
+                                                              IconButton(
+                                                                icon: Icon(
+                                                                  Icons
+                                                                      .fullscreen,
+                                                                  color: Colors
+                                                                      .white,
+                                                                ),
+                                                                onPressed: () {
+                                                                  _onFullScreenClick();
+                                                                },
+                                                              )
+                                                            ],
+                                                          )
+                                                        : Container(),
+                                                  )
+                                                ],
+                                              ),
                                             ),
                                           ),
                                         ),
-                                      ),
-                                      if (countDownTimer == null ||
-                                          !countDownTimer.isRunning)
-                                        Positioned.fill(
-                                          child: Container(
-                                            decoration: BoxDecoration(
-                                              color: Colors.black54,
-                                            ),
-                                            child: Center(
-                                              child: Container(
-                                                child: FloatingActionButton(
-                                                  onPressed: () {
-                                                    _startVideo(
-                                                      elapsedTime:
-                                                          _pauseDuration
-                                                              ?.inMilliseconds
-                                                              ?.toDouble(),
-                                                    );
-                                                    _pauseDuration = null;
-                                                  },
-                                                  child: Icon(
-                                                    Icons.play_arrow,
-                                                    color: Colors.white,
-                                                    size: 32,
+                                        if (countDownTimer == null ||
+                                            !countDownTimer.isRunning)
+                                          Positioned.fill(
+                                            child: Container(
+                                              decoration: BoxDecoration(
+                                                color: Colors.black54,
+                                              ),
+                                              child: Center(
+                                                child: Container(
+                                                  child: FloatingActionButton(
+                                                    onPressed: () {
+                                                      _startVideo(
+                                                        elapsedTime:
+                                                            _pauseDuration
+                                                                ?.inMilliseconds
+                                                                ?.toDouble(),
+                                                      );
+                                                      _pauseDuration = null;
+                                                    },
+                                                    child: Icon(
+                                                      Icons.play_arrow,
+                                                      color: Colors.white,
+                                                      size: 32,
+                                                    ),
                                                   ),
                                                 ),
                                               ),
                                             ),
                                           ),
-                                        ),
-                                    ],
+                                      ],
+                                    ),
                                   ),
                                 ),
                               ),
@@ -292,38 +305,38 @@ class _PlayLessonPageState extends State<PlayLessonPage> {
                           ),
                         ),
                       ),
-                    ),
-                    Divider(
-                      height: 1,
-                    ),
-                    ListTile(
-                      title: Text("${lesson.name ?? "---"}"),
-                      subtitle: Text("${lesson.description ?? "---"}"),
-                    ),
-                    Divider(
-                      height: 1,
-                    ),
-                    Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-                      children: [
-                        if (countDownTimer?.isRunning ?? false)
-                          RaisedButton(
-                            onPressed: countDownTimer?.isRunning ?? false
-                                ? () {
-                                    setState(() {
-                                      countDownTimer.cancel();
-                                      _paintController.clear();
-                                    });
-                                    _onStop();
-                                  }
-                                : null,
-                            child: Text("STOP"),
-                          ),
-                      ],
-                    ),
-                  ],
+                      Divider(
+                        height: 1,
+                      ),
+                      ListTile(
+                        title: Text("${lesson.name ?? "---"}"),
+                        subtitle: Text("${lesson.description ?? "---"}"),
+                      ),
+                      Divider(
+                        height: 1,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                        children: [
+                          if (countDownTimer?.isRunning ?? false)
+                            RaisedButton(
+                              onPressed: countDownTimer?.isRunning ?? false
+                                  ? () {
+                                      setState(() {
+                                        countDownTimer.cancel();
+                                        _paintController.clear();
+                                      });
+                                      _onStop();
+                                    }
+                                  : null,
+                              child: Text("STOP"),
+                            ),
+                        ],
+                      ),
+                    ],
+                  ),
                 ),
-              ),
+        ),
       ),
     );
   }
@@ -517,5 +530,13 @@ class _PlayLessonPageState extends State<PlayLessonPage> {
 
     audioPlayer?.pause();
     countDownTimer?.cancel();
+  }
+
+  Future<bool> _onWillPop() {
+    if (MediaQuery.of(context).orientation == Orientation.landscape) {
+      _onFullScreenClick();
+      return Future.value(false);
+    }
+    return Future.value(true);
   }
 }
