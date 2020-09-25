@@ -5,6 +5,8 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_record_lesson/constants/lesson_constants.dart';
+import 'package:flutter_record_lesson/core/extensions/color_extension.dart';
 import 'package:flutter_sound/flutter_sound.dart' as r;
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:path_provider/path_provider.dart';
@@ -20,7 +22,6 @@ class RecordLessonPage extends StatefulWidget {
 }
 
 class _RecordLessonPageState extends State<RecordLessonPage> {
-  final _imageController = PageController();
   int _pageIndex = 0;
   final _imageList = [
     "https://storage.googleapis.com/teaching-6b309.appspot.com/Physics/Rotational%20Mechanics/0NGIMFPU254QUVDPFA5C/0NGIMFPU254QUVDPFA5C%20solution_2.jpeg",
@@ -31,16 +32,8 @@ class _RecordLessonPageState extends State<RecordLessonPage> {
   final _eventList = <MyEvent>[];
 
   PainterController _paintController;
-  bool isCanvasEmpty = true;
 
   CountdownTimer countDownTimer;
-
-  int _totalSeconds = 15 * 60;
-
-  Duration remainingDuration;
-
-  double _kHeight = 300;
-  double _kWidth = 300;
 
   int startEpoch;
 
@@ -50,34 +43,42 @@ class _RecordLessonPageState extends State<RecordLessonPage> {
 
   File outputFile;
 
+  get _isRecording => countDownTimer?.isRunning ?? false;
+
+  final remainingDurationNotifier = ValueNotifier<Duration>(
+    Duration(seconds: LessonConstants.totalSeconds),
+  );
+
   @override
   void initState() {
     super.initState();
+    _initPaintController();
+  }
+
+  void _initPaintController() {
     _paintController = PainterController(
       backgroundColor: Colors.transparent,
       drawColor: Colors.greenAccent.withOpacity(0.4),
-      thickness: 28,
+      thickness: 24,
       startMotion: (x, y) {
-        print('Start: $x,$y');
         _addEvent(name: Events.pointerStart, x: x, y: y);
       },
       moveMotion: (x, y) {
-        print('Move: $x,$y');
         _addEvent(name: Events.pointerMove, x: x, y: y);
       },
       endMotion: () {
-        print('End');
-        _addEvent(
-          name: Events.pointerEnd,
-        );
+        _addEvent(name: Events.pointerEnd);
       },
     );
   }
 
+  void _setPointerColor(Color color) {
+    _paintController.setPointerColor(color);
+    _addEvent(name: Events.pointerColor, color: Colors.blue.withOpacity(0.4));
+  }
+
   @override
   Widget build(BuildContext context) {
-    _kHeight = MediaQuery.of(context).size.height / 3;
-    _kWidth = MediaQuery.of(context).size.width;
     return Scaffold(
       body: Container(
         child: Column(
@@ -114,7 +115,7 @@ class _RecordLessonPageState extends State<RecordLessonPage> {
             SizedBox(
               height: 16,
             ),
-            if (countDownTimer?.isRunning ?? false)
+            if (_isRecording)
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                 children: [
@@ -147,12 +148,17 @@ class _RecordLessonPageState extends State<RecordLessonPage> {
             SizedBox(
               height: 16,
             ),
-            if (countDownTimer?.isRunning ?? false)
-              Text(remainingDuration.toString().split('.')[0].padLeft(8, '0')),
+            if (_isRecording)
+              ValueListenableBuilder<Duration>(
+                valueListenable: remainingDurationNotifier,
+                builder: (context, value, child) {
+                  return Text(value.toString().split('.')[0].padLeft(8, '0'));
+                },
+              ),
             Row(
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
-                if (countDownTimer == null || !countDownTimer.isRunning)
+                if (!_isRecording)
                   RaisedButton(
                     onPressed: () {
                       _startRecord();
@@ -161,31 +167,13 @@ class _RecordLessonPageState extends State<RecordLessonPage> {
                   )
                 else
                   RaisedButton(
-                    onPressed: countDownTimer?.isRunning ?? false
-                        ? () async {
-                            setState(() {
-                              countDownTimer.cancel();
-                              _paintController.clear();
-                            });
-                            await myRecorder.stopRecorder();
-                            if (myRecorder != null) {
-                              myRecorder.closeAudioSession();
-                              myRecorder = null;
-                            }
-                            _onComplete();
-                          }
-                        : null,
+                    onPressed: () async {
+                      _onStopRecord();
+                    },
                     child: Text("STOP"),
                   ),
               ],
             ),
-            /*Column(
-              children: [
-                ..._eventList.map(
-                  (e) => Text(jsonEncode(e.toJson())),
-                ),
-              ],
-            )*/
             SizedBox(
               height: 16,
             ),
@@ -200,6 +188,7 @@ class _RecordLessonPageState extends State<RecordLessonPage> {
     int index,
     double x,
     double y,
+    Color color,
   }) {
     RenderBox box = _paintKey.currentContext.findRenderObject();
     final height = box.size.height;
@@ -211,12 +200,23 @@ class _RecordLessonPageState extends State<RecordLessonPage> {
         time: DateTime.now().millisecondsSinceEpoch - startEpoch,
         x: double.parse(((x ?? 0) / width).toStringAsFixed(6)),
         y: double.parse(((y ?? 0) / height).toStringAsFixed(6)),
+        color: color.hexCode(),
       ),
     );
   }
 
-  Future<void> _onComplete() async {
+  Future<void> _onStopRecord() async {
     try {
+      setState(() {
+        countDownTimer.cancel();
+        _paintController.clear();
+      });
+      await myRecorder.stopRecorder();
+      if (myRecorder != null) {
+        myRecorder.closeAudioSession();
+        myRecorder = null;
+      }
+
       final lessonRef = FirebaseFirestore.instance.collection('lessons').doc();
       final lesson = Lesson(
         events: _eventList,
@@ -248,12 +248,9 @@ class _RecordLessonPageState extends State<RecordLessonPage> {
       print(jsonUrl);
 
       await lessonRef.set({
-        ...lesson
-            .copyWith(
-              events: null,
-            )
-            .toJson(),
+        ...lesson.copyWith(events: null).toJson(),
       }, SetOptions(merge: true));
+
       print('Lesson Uploaded');
     } catch (e, s) {
       print(e);
@@ -264,10 +261,8 @@ class _RecordLessonPageState extends State<RecordLessonPage> {
     myRecorder = await r.FlutterSoundRecorder().openAudioSession();
 
     startEpoch = DateTime.now().millisecondsSinceEpoch;
-
-    setState(() {
-      this.remainingDuration = Duration(seconds: _totalSeconds);
-    });
+    remainingDurationNotifier.value =
+        Duration(seconds: LessonConstants.totalSeconds);
     final tempDir = await getTemporaryDirectory();
     outputFile = File('${tempDir.path}/flutter_sound-tmp.aac');
 
@@ -283,14 +278,22 @@ class _RecordLessonPageState extends State<RecordLessonPage> {
     );
 
     countDownTimer = new CountdownTimer(
-      Duration(seconds: _totalSeconds),
+      Duration(seconds: LessonConstants.totalSeconds),
       Duration(seconds: 1),
     );
     countDownTimer.listen((event) {
-      if (mounted)
-        setState(() {
-          this.remainingDuration = event.remaining;
-        });
+      remainingDurationNotifier.value = event.remaining;
+    });
+  }
+
+  void reset() {
+    setState(() {
+      remainingDurationNotifier.value =
+          Duration(seconds: LessonConstants.totalSeconds);
+      countDownTimer?.cancel();
+      countDownTimer = null;
+      _paintController.clear();
+      myRecorder = null;
     });
   }
 }

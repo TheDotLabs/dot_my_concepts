@@ -27,6 +27,7 @@ abstract class MyEvent with _$MyEvent {
     @JsonKey(name: 'e') Events event,
     @JsonKey(name: 'i') int index,
     @JsonKey(name: 't') int time,
+    @JsonKey(name: 'c') String color,
     double x,
     double y,
   }) = _MyEvent;
@@ -44,6 +45,8 @@ enum Events {
   pointerMove,
   @JsonValue('p_e')
   pointerEnd,
+  @JsonValue('p_c')
+  pointerColor,
 }
 
 extension EventsX on Events {

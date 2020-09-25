@@ -151,6 +151,10 @@ class PathHistory {
 
     endCurrent();
   }
+
+  void setPointerColor(Color color) {
+    paint.color = color;
+  }
 }
 
 typedef PathMotion = void Function(double x, double y);
@@ -172,12 +176,13 @@ class PainterController extends ChangeNotifier {
     this.moveMotion,
     this.endMotion,
   }) {
-    final paint = Paint();
-    paint.color = drawColor;
-    paint.style = PaintingStyle.stroke;
-    paint.strokeWidth = thickness;
-    paint.strokeCap = StrokeCap.round;
-    paint.strokeJoin = StrokeJoin.round;
+    final paint = Paint()
+      ..color = drawColor
+      ..style = PaintingStyle.stroke
+      ..strokeWidth = thickness
+      ..strokeCap = StrokeCap.round
+      ..strokeJoin = StrokeJoin.round;
+
     _pathHistory = PathHistory(
       backgroundColor: backgroundColor,
       paint: paint,
@@ -207,5 +212,9 @@ class PainterController extends ChangeNotifier {
   void onPointerEnd() {
     _pathHistory.onPointerEnd();
     notifyListeners();
+  }
+
+  void setPointerColor(Color color) {
+    _pathHistory.setPointerColor(color);
   }
 }

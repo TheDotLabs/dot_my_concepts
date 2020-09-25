@@ -315,12 +315,14 @@ class _$MyEventTearOff {
       {@JsonKey(name: 'e') Events event,
       @JsonKey(name: 'i') int index,
       @JsonKey(name: 't') int time,
+      @JsonKey(name: 'c') String color,
       double x,
       double y}) {
     return _MyEvent(
       event: event,
       index: index,
       time: time,
+      color: color,
       x: x,
       y: y,
     );
@@ -337,6 +339,8 @@ mixin _$MyEvent {
   int get index;
   @JsonKey(name: 't')
   int get time;
+  @JsonKey(name: 'c')
+  String get color;
   double get x;
   double get y;
 
@@ -351,6 +355,7 @@ abstract class $MyEventCopyWith<$Res> {
       {@JsonKey(name: 'e') Events event,
       @JsonKey(name: 'i') int index,
       @JsonKey(name: 't') int time,
+      @JsonKey(name: 'c') String color,
       double x,
       double y});
 }
@@ -367,6 +372,7 @@ class _$MyEventCopyWithImpl<$Res> implements $MyEventCopyWith<$Res> {
     Object event = freezed,
     Object index = freezed,
     Object time = freezed,
+    Object color = freezed,
     Object x = freezed,
     Object y = freezed,
   }) {
@@ -374,6 +380,7 @@ class _$MyEventCopyWithImpl<$Res> implements $MyEventCopyWith<$Res> {
       event: event == freezed ? _value.event : event as Events,
       index: index == freezed ? _value.index : index as int,
       time: time == freezed ? _value.time : time as int,
+      color: color == freezed ? _value.color : color as String,
       x: x == freezed ? _value.x : x as double,
       y: y == freezed ? _value.y : y as double,
     ));
@@ -388,6 +395,7 @@ abstract class _$MyEventCopyWith<$Res> implements $MyEventCopyWith<$Res> {
       {@JsonKey(name: 'e') Events event,
       @JsonKey(name: 'i') int index,
       @JsonKey(name: 't') int time,
+      @JsonKey(name: 'c') String color,
       double x,
       double y});
 }
@@ -405,6 +413,7 @@ class __$MyEventCopyWithImpl<$Res> extends _$MyEventCopyWithImpl<$Res>
     Object event = freezed,
     Object index = freezed,
     Object time = freezed,
+    Object color = freezed,
     Object x = freezed,
     Object y = freezed,
   }) {
@@ -412,6 +421,7 @@ class __$MyEventCopyWithImpl<$Res> extends _$MyEventCopyWithImpl<$Res>
       event: event == freezed ? _value.event : event as Events,
       index: index == freezed ? _value.index : index as int,
       time: time == freezed ? _value.time : time as int,
+      color: color == freezed ? _value.color : color as String,
       x: x == freezed ? _value.x : x as double,
       y: y == freezed ? _value.y : y as double,
     ));
@@ -424,6 +434,7 @@ class _$_MyEvent implements _MyEvent {
       {@JsonKey(name: 'e') this.event,
       @JsonKey(name: 'i') this.index,
       @JsonKey(name: 't') this.time,
+      @JsonKey(name: 'c') this.color,
       this.x,
       this.y});
 
@@ -440,13 +451,16 @@ class _$_MyEvent implements _MyEvent {
   @JsonKey(name: 't')
   final int time;
   @override
+  @JsonKey(name: 'c')
+  final String color;
+  @override
   final double x;
   @override
   final double y;
 
   @override
   String toString() {
-    return 'MyEvent(event: $event, index: $index, time: $time, x: $x, y: $y)';
+    return 'MyEvent(event: $event, index: $index, time: $time, color: $color, x: $x, y: $y)';
   }
 
   @override
@@ -459,6 +473,8 @@ class _$_MyEvent implements _MyEvent {
                 const DeepCollectionEquality().equals(other.index, index)) &&
             (identical(other.time, time) ||
                 const DeepCollectionEquality().equals(other.time, time)) &&
+            (identical(other.color, color) ||
+                const DeepCollectionEquality().equals(other.color, color)) &&
             (identical(other.x, x) ||
                 const DeepCollectionEquality().equals(other.x, x)) &&
             (identical(other.y, y) ||
@@ -471,6 +487,7 @@ class _$_MyEvent implements _MyEvent {
       const DeepCollectionEquality().hash(event) ^
       const DeepCollectionEquality().hash(index) ^
       const DeepCollectionEquality().hash(time) ^
+      const DeepCollectionEquality().hash(color) ^
       const DeepCollectionEquality().hash(x) ^
       const DeepCollectionEquality().hash(y);
 
@@ -489,6 +506,7 @@ abstract class _MyEvent implements MyEvent {
       {@JsonKey(name: 'e') Events event,
       @JsonKey(name: 'i') int index,
       @JsonKey(name: 't') int time,
+      @JsonKey(name: 'c') String color,
       double x,
       double y}) = _$_MyEvent;
 
@@ -503,6 +521,9 @@ abstract class _MyEvent implements MyEvent {
   @override
   @JsonKey(name: 't')
   int get time;
+  @override
+  @JsonKey(name: 'c')
+  String get color;
   @override
   double get x;
   @override

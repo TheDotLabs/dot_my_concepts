@@ -42,6 +42,7 @@ _$_MyEvent _$_$_MyEventFromJson(Map<String, dynamic> json) {
     event: _$enumDecodeNullable(_$EventsEnumMap, json['e']),
     index: json['i'] as int,
     time: json['t'] as int,
+    color: json['c'] as String,
     x: (json['x'] as num)?.toDouble(),
     y: (json['y'] as num)?.toDouble(),
   );
@@ -52,6 +53,7 @@ Map<String, dynamic> _$_$_MyEventToJson(_$_MyEvent instance) =>
       'e': _$EventsEnumMap[instance.event],
       'i': instance.index,
       't': instance.time,
+      'c': instance.color,
       'x': instance.x,
       'y': instance.y,
     };
@@ -93,4 +95,5 @@ const _$EventsEnumMap = {
   Events.pointerStart: 'p_s',
   Events.pointerMove: 'p_m',
   Events.pointerEnd: 'p_e',
+  Events.pointerColor: 'p_c',
 };
