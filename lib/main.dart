@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
     final newTextTheme = textTheme
         .apply(
           bodyColor: Colors.blueGrey[900],
+          displayColor: Colors.blueGrey[900],
         )
         .copyWith(
           overline: textTheme.overline.copyWith(
