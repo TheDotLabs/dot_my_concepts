@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_record_lesson/modules/lesson/index.dart';
-import 'package:flutter_record_lesson/modules/record_lesson/src/record_lesson.dart';
+import 'package:flutter_record_lesson/modules/record_lesson/src/lesson_record_page.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -8,7 +8,10 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final pages = <Widget>[LessonViewPage(), RecordLessonPage()];
+  final pages = <Widget>[
+    FeedPage(),
+    LessonRecordPage(),
+  ];
   final _pageController = PageController(keepPage: true);
 
   int _currentIndex = 0;
@@ -41,7 +44,11 @@ class _HomePageState extends State<HomePage> {
         items: [
           BottomNavigationBarItem(
             icon: Icon(Icons.list_alt_outlined),
-            title: Text("Lessons"),
+            title: Text("Feed"),
+          ),
+          BottomNavigationBarItem(
+            icon: Icon(Icons.list_alt_outlined),
+            title: Text("Course"),
           ),
           BottomNavigationBarItem(
             icon: Icon(Icons.video_call_outlined),

@@ -84,27 +84,29 @@ class _CategoryHeaderState extends State<CategoryHeader> {
   }
 
   Future<void> init() async {
-    final categoryDoc = await FirebaseFirestore.instance
-        .collection('categories')
-        .doc('${widget.lesson.category}')
-        .get();
+    try {
+      final categoryDoc = await FirebaseFirestore.instance
+          .collection('categories')
+          .doc('${widget.lesson.category}')
+          .get();
 
-    setState(() {
-      _category = categoryDoc.data()['title'];
-      _subject = (categoryDoc.data()['subjects'] as List).firstWhere(
-          (element) => element['id'] == widget.lesson.subject)['title'];
-      _unit = (categoryDoc.data()['subjects'] as List)
-          .firstWhere(
-              (element) => element['id'] == widget.lesson.subject)['units']
-          .firstWhere(
-              (element) => element['id'] == widget.lesson.unit)['title'];
-      _chapter = (categoryDoc.data()['subjects'] as List)
-          .firstWhere(
-              (element) => element['id'] == widget.lesson.subject)['units']
-          .firstWhere(
-              (element) => element['id'] == widget.lesson.unit)['chapters']
-          .firstWhere(
-              (element) => element['id'] == widget.lesson.chapter)['title'];
-    });
+      setState(() {
+        _category = categoryDoc.data()['title'];
+        _subject = (categoryDoc.data()['subjects'] as List).firstWhere(
+            (element) => element['id'] == widget.lesson.subject)['title'];
+        _unit = (categoryDoc.data()['subjects'] as List)
+            .firstWhere(
+                (element) => element['id'] == widget.lesson.subject)['units']
+            .firstWhere(
+                (element) => element['id'] == widget.lesson.unit)['title'];
+        _chapter = (categoryDoc.data()['subjects'] as List)
+            .firstWhere(
+                (element) => element['id'] == widget.lesson.subject)['units']
+            .firstWhere(
+                (element) => element['id'] == widget.lesson.unit)['chapters']
+            .firstWhere(
+                (element) => element['id'] == widget.lesson.chapter)['title'];
+      });
+    } catch (e, s) {}
   }
 }

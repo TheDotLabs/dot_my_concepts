@@ -24,6 +24,10 @@ class MyApp extends StatelessWidget {
             fontSize: 12,
             fontWeight: FontWeight.w700,
           ),
+          button: textTheme.button.copyWith(
+            letterSpacing: 1.0,
+            fontWeight: FontWeight.w600,
+          ),
           bodyText1: textTheme.bodyText1.copyWith(letterSpacing: 1.0),
           bodyText2: textTheme.bodyText2.copyWith(letterSpacing: 1.0),
           headline1: textTheme.headline1.copyWith(letterSpacing: 1.0),
@@ -33,9 +37,14 @@ class MyApp extends StatelessWidget {
           headline5: textTheme.headline5.copyWith(letterSpacing: 1.0),
           headline6: textTheme.headline6.copyWith(
             fontSize: 18,
-            fontWeight: FontWeight.w600,
+            fontWeight: FontWeight.w700,
             letterSpacing: 1.0,
           ),
+          subtitle1: textTheme.subtitle1.copyWith(
+            letterSpacing: 1.0,
+            fontWeight: FontWeight.w600,
+          ),
+          subtitle2: textTheme.subtitle2.copyWith(letterSpacing: 1.0),
         );
     return MaterialApp(
       title: 'DotMyConcepts',
