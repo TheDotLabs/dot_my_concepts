@@ -55,13 +55,13 @@ class _FeedPageState extends State<FeedPage>
                       child: Column(
                         children: [
                           ...snapshot.data.subjects.map(
-                            (e) => ListTile(
+                            (subject) => ListTile(
                               dense: true,
                               contentPadding: EdgeInsets.symmetric(
                                 horizontal: 16,
                               ),
                               title: Text(
-                                e.title,
+                                subject.title,
                                 style: TextStyle(
                                   fontSize: 14,
                                 ),
@@ -71,8 +71,14 @@ class _FeedPageState extends State<FeedPage>
                                 style: Theme.of(context).textTheme.caption,
                               ),
                               onTap: () {
-                                Navigator.of(context).push(MaterialPageRoute(
-                                    builder: (_) => UnitPage(subject: e)));
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (_) => SelectUnitPage(
+                                      category: snapshot.data,
+                                      subject: subject,
+                                    ),
+                                  ),
+                                );
                               },
                             ),
                           ),

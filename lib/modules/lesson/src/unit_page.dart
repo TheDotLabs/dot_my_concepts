@@ -4,16 +4,20 @@ import 'package:flutter_record_lesson/models/category.dart';
 import 'package:flutter_record_lesson/modules/record_lesson/src/view_courses_page.dart';
 import 'package:rxdart/rxdart.dart';
 
-class UnitPage extends StatefulWidget {
+class SelectUnitPage extends StatefulWidget {
   final MySubject subject;
+  final Category category;
 
-  UnitPage({@required this.subject});
+  SelectUnitPage({
+    @required this.subject,
+    @required this.category,
+  });
 
   @override
-  _UnitPageState createState() => _UnitPageState();
+  _SelectUnitPageState createState() => _SelectUnitPageState();
 }
 
-class _UnitPageState extends State<UnitPage> {
+class _SelectUnitPageState extends State<SelectUnitPage> {
   final _subject = BehaviorSubject<List<MySubject>>();
 
   @override
@@ -32,7 +36,7 @@ class _UnitPageState extends State<UnitPage> {
             ? ListView(
                 physics: BouncingScrollPhysics(),
                 padding: EdgeInsets.symmetric(
-                  horizontal: 8,
+                  horizontal: 4,
                   vertical: 4,
                 ),
                 children: [
@@ -52,19 +56,22 @@ class _UnitPageState extends State<UnitPage> {
                           ),
                         ),
                         if (unit.chapters != null && unit.chapters.isNotEmpty)
-                          ...unit.chapters.map(
-                            (e) => Container(
+                          ..._getChapterList(unit.chapters).map(
+                            (chapter) => Container(
                               child: ListTile(
                                 dense: true,
-                                title: Text(e.title),
-                                subtitle: e.description != null
-                                    ? Text(e.description)
+                                title: Text(chapter.title),
+                                subtitle: chapter.description != null
+                                    ? Text(chapter.description)
                                     : null,
                                 onTap: () {
                                   Navigator.of(context).push(
                                     MaterialPageRoute(
                                       builder: (_) => ViewCoursesPage(
-                                        chapter: e,
+                                        category: widget.category,
+                                        subject: widget.subject,
+                                        unit: unit,
+                                        chapter: chapter,
                                       ),
                                     ),
                                   );
@@ -102,6 +109,13 @@ class _UnitPageState extends State<UnitPage> {
 
   List<MyUnit> _getList() {
     final list = List<MyUnit>.from(widget.subject.units);
+
+    list.sort((a, b) => int.parse(a.id).compareTo(int.parse(b.id)));
+    return list;
+  }
+
+  List<MyChapter> _getChapterList(List<MyChapter> rawList) {
+    final list = List<MyChapter>.from(rawList);
 
     list.sort((a, b) => int.parse(a.id).compareTo(int.parse(b.id)));
     return list;

@@ -4,9 +4,9 @@ import 'package:flutter_record_lesson/core/models/course.dart';
 import 'package:flutter_record_lesson/core/widgets/BorderContainer.dart';
 
 class CourseCard extends StatelessWidget {
-  final Course lesson;
+  final Course course;
 
-  CourseCard(this.lesson);
+  CourseCard(this.course);
 
   @override
   Widget build(BuildContext context) {
@@ -28,14 +28,14 @@ class CourseCard extends StatelessWidget {
             children: [
               Expanded(
                 child: CachedNetworkImage(
-                  imageUrl: lesson.cover,
+                  imageUrl: course.cover,
                   fit: BoxFit.cover,
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: Text(
-                  lesson.title,
+                  course.title,
                   style: Theme.of(context).textTheme.bodyText1.copyWith(
                         fontWeight: FontWeight.w700,
                       ),
