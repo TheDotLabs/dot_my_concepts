@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_record_lesson/core/widgets/no_item_found.dart';
 import 'package:flutter_record_lesson/models/category.dart';
 import 'package:flutter_record_lesson/modules/lesson/src/select_unit_page.dart';
 import 'package:rxdart/rxdart.dart';
@@ -37,34 +38,39 @@ class _SubjectPageState extends State<SubjectPage> {
           if (snapshot.hasData && snapshot.data != null) {
             final list = snapshot.data;
             return Container(
-              child: ListView(
-                padding: EdgeInsets.symmetric(
-                  horizontal: 4,
-                  vertical: 8,
-                ),
-                children: [
-                  ...list.map(
-                    (e) => ListTile(
-                      dense: true,
-                      title: Text(e.title),
-                      trailing: Icon(Icons.keyboard_arrow_right),
-                      subtitle:
-                          e.description != null ? Text(e.description) : null,
-                      onTap: () {
-                        Navigator.of(context).push(
-                          MaterialPageRoute(
-                            builder: (_) => SelectUnitPage(
-                              subject: e,
-                              category: widget.category,
-                              onTap: _onChapterSelect,
-                            ),
+              child: list.isNotEmpty
+                  ? ListView(
+                      padding: EdgeInsets.symmetric(
+                        horizontal: 4,
+                        vertical: 8,
+                      ),
+                      children: [
+                        ...list.map(
+                          (e) => ListTile(
+                            dense: true,
+                            title: Text(e.title),
+                            trailing: Icon(Icons.keyboard_arrow_right),
+                            subtitle: e.description != null
+                                ? Text(e.description)
+                                : null,
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (_) => SelectUnitPage(
+                                    subject: e,
+                                    category: widget.category,
+                                    onTap: _onChapterSelect,
+                                  ),
+                                ),
+                              );
+                            },
                           ),
-                        );
-                      },
+                        )
+                      ],
+                    )
+                  : Center(
+                      child: NoItemFound(msg: 'No subject found'),
                     ),
-                  )
-                ],
-              ),
             );
           } else if (snapshot.hasError) {
             return Center(
