@@ -30,7 +30,10 @@ class _CategoryPageState extends State<CategoryPage> {
               final list = snapshot.data;
               return Container(
                 child: ListView(
-                  padding: EdgeInsets.symmetric(horizontal: 8),
+                  padding: EdgeInsets.symmetric(
+                    horizontal: 4,
+                    vertical: 8,
+                  ),
                   children: [
                     ...list.map(
                       (e) => ListTile(
