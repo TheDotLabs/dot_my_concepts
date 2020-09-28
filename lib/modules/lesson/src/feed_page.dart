@@ -4,10 +4,11 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_record_lesson/core/models/course.dart';
 import 'package:flutter_record_lesson/models/category.dart';
-import 'package:flutter_record_lesson/modules/lesson/src/unit_page.dart';
+import 'package:flutter_record_lesson/modules/lesson/src/select_unit_page.dart';
 import 'package:flutter_record_lesson/modules/lesson/src/widgets/lesson_card.dart';
 import 'package:flutter_record_lesson/modules/lesson/src/widgets/teacher_card.dart';
 import 'package:flutter_record_lesson/modules/record_lesson/models/my_event.dart';
+import 'package:flutter_record_lesson/modules/record_lesson/src/view_courses_page.dart';
 
 import 'widgets/course_card.dart';
 
@@ -18,6 +19,8 @@ class FeedPage extends StatefulWidget {
 
 class _FeedPageState extends State<FeedPage>
     with AutomaticKeepAliveClientMixin {
+  static const String _categoryId = 'kmr68ONGNU9tNBDgpMHD';
+
   @override
   void initState() {
     super.initState();
@@ -76,6 +79,7 @@ class _FeedPageState extends State<FeedPage>
                                     builder: (_) => SelectUnitPage(
                                       category: snapshot.data,
                                       subject: subject,
+                                      onTap: _onChapterSelect,
                                     ),
                                   ),
                                 );
@@ -299,8 +303,26 @@ class _FeedPageState extends State<FeedPage>
       final list = snapshot.docs
           .map((e) => Category.fromJson(e.data()).copyWith(id: e.id))
           .toList(growable: false);
-      return sink.add(list[0]);
+      return sink.add(list.firstWhere((element) => element.id == _categoryId));
     }));
+  }
+
+  void _onChapterSelect({
+    Category category,
+    MySubject subject,
+    MyUnit unit,
+    MyChapter chapter,
+  }) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => ViewCoursesPage(
+          category: category,
+          subject: subject,
+          unit: unit,
+          chapter: chapter,
+        ),
+      ),
+    );
   }
 
   @override

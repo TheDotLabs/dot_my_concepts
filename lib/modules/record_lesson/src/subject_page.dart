@@ -2,15 +2,16 @@ import 'dart:async';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_record_lesson/core/widgets/BorderContainer.dart';
 import 'package:flutter_record_lesson/models/category.dart';
-import 'package:flutter_record_lesson/modules/record_lesson/src/chapter_page.dart';
+import 'package:flutter_record_lesson/modules/lesson/src/select_unit_page.dart';
 import 'package:rxdart/rxdart.dart';
 
-class SubjectPage extends StatefulWidget {
-  final String categoryId;
+import 'record_lesson.dart';
 
-  SubjectPage({this.categoryId});
+class SubjectPage extends StatefulWidget {
+  final Category category;
+
+  SubjectPage({this.category});
 
   @override
   _SubjectPageState createState() => _SubjectPageState();
@@ -28,7 +29,7 @@ class _SubjectPageState extends State<SubjectPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Select Unit'),
+        title: Text('Select Subject'),
       ),
       body: StreamBuilder<List<MySubject>>(
         stream: _getStream(),
@@ -38,52 +39,28 @@ class _SubjectPageState extends State<SubjectPage> {
             return Container(
               child: ListView(
                 padding: EdgeInsets.symmetric(
-                  horizontal: 8,
-                  vertical: 10,
+                  horizontal: 4,
+                  vertical: 8,
                 ),
                 children: [
                   ...list.map(
-                    (subject) => Column(
-                      crossAxisAlignment: CrossAxisAlignment.center,
-                      mainAxisSize: MainAxisSize.min,
-                      children: [
-                        Container(
-                          padding: const EdgeInsets.all(8.0),
-                          decoration: BoxDecoration(
-                            color: Colors.blueGrey[50],
-                            borderRadius: BorderRadius.circular(4),
-                          ),
-                          child: Text(
-                            subject.title.toUpperCase(),
-                            style: Theme.of(context).textTheme.overline,
-                          ),
-                        ),
-                        ...subject.units.map(
-                          (e) => Container(
-                            margin: EdgeInsets.symmetric(
-                              vertical: 8,
-                            ),
-                            child: BorderContainer(
-                              child: ListTile(
-                                title: Text(e.title),
-                                trailing: Icon(Icons.keyboard_arrow_right),
-                                subtitle: e.description != null
-                                    ? Text(e.description)
-                                    : null,
-                                onTap: () {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (_) => ChapterPage(
-                                        unit: e,
-                                      ),
-                                    ),
-                                  );
-                                },
-                              ),
+                    (e) => ListTile(
+                      dense: true,
+                      title: Text(e.title),
+                      trailing: Icon(Icons.keyboard_arrow_right),
+                      subtitle:
+                          e.description != null ? Text(e.description) : null,
+                      onTap: () {
+                        Navigator.of(context).push(
+                          MaterialPageRoute(
+                            builder: (_) => SelectUnitPage(
+                              subject: e,
+                              category: widget.category,
+                              onTap: _onChapterSelect,
                             ),
                           ),
-                        ),
-                      ],
+                        );
+                      },
                     ),
                   )
                 ],
@@ -118,8 +95,26 @@ class _SubjectPageState extends State<SubjectPage> {
           .map((e) => Category.fromJson(e.data()).copyWith(id: e.id))
           .toList(growable: false);
       return sink.add(
-        list.firstWhere((element) => element.id == widget.categoryId).subjects,
+        list.firstWhere((element) => element.id == widget.category.id).subjects,
       );
     }));
+  }
+
+  void _onChapterSelect({
+    Category category,
+    MySubject subject,
+    MyUnit unit,
+    MyChapter chapter,
+  }) {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => RecordLessonPage(
+            /*category: category,
+          subject: subject,
+          unit: unit,
+          chapter: chapter,*/
+            ),
+      ),
+    );
   }
 }

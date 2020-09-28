@@ -1,16 +1,24 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_record_lesson/core/widgets/no_item_found.dart';
 import 'package:flutter_record_lesson/models/category.dart';
-import 'package:flutter_record_lesson/modules/record_lesson/src/view_courses_page.dart';
 import 'package:rxdart/rxdart.dart';
+
+typedef ChapterSelectCallback = void Function({
+  Category category,
+  MySubject subject,
+  MyUnit unit,
+  MyChapter chapter,
+});
 
 class SelectUnitPage extends StatefulWidget {
   final MySubject subject;
   final Category category;
+  final ChapterSelectCallback onTap;
 
   SelectUnitPage({
     @required this.subject,
     @required this.category,
+    @required this.onTap,
   });
 
   @override
@@ -65,15 +73,11 @@ class _SelectUnitPageState extends State<SelectUnitPage> {
                                     ? Text(chapter.description)
                                     : null,
                                 onTap: () {
-                                  Navigator.of(context).push(
-                                    MaterialPageRoute(
-                                      builder: (_) => ViewCoursesPage(
-                                        category: widget.category,
-                                        subject: widget.subject,
-                                        unit: unit,
-                                        chapter: chapter,
-                                      ),
-                                    ),
+                                  widget.onTap(
+                                    category: widget.category,
+                                    subject: widget.subject,
+                                    unit: unit,
+                                    chapter: chapter,
                                   );
                                 },
                                 trailing: Icon(Icons.keyboard_arrow_right),

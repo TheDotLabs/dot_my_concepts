@@ -44,7 +44,7 @@ class _ViewCoursesPageState extends State<ViewCoursesPage> {
                     ),
                     children: [
                       ...snapshot.data.map(
-                        (e) => CourseCard(
+                        (e) => _CourseCard(
                           course: e,
                         ),
                       ),
@@ -101,8 +101,8 @@ class _ViewCoursesPageState extends State<ViewCoursesPage> {
   }
 }
 
-class CourseCard extends StatelessWidget {
-  CourseCard({this.course});
+class _CourseCard extends StatelessWidget {
+  _CourseCard({this.course});
 
   final Course course;
 

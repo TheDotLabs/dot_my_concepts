@@ -47,10 +47,6 @@ class _HomePageState extends State<HomePage> {
             title: Text("Feed"),
           ),
           BottomNavigationBarItem(
-            icon: Icon(Icons.list_alt_outlined),
-            title: Text("Course"),
-          ),
-          BottomNavigationBarItem(
             icon: Icon(Icons.video_call_outlined),
             title: Text("Record"),
           ),

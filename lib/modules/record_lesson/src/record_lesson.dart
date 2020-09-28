@@ -80,6 +80,9 @@ class _RecordLessonPageState extends State<RecordLessonPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(
+        title: Text('Record Lesson'),
+      ),
       body: Container(
         child: Column(
           children: [

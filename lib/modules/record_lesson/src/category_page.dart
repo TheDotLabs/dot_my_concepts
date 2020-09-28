@@ -3,7 +3,6 @@ import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_record_lesson/core/widgets/BorderContainer.dart';
 import 'package:flutter_record_lesson/models/category.dart';
 import 'package:flutter_record_lesson/modules/record_lesson/src/subject_page.dart';
 
@@ -34,37 +33,30 @@ class _CategoryPageState extends State<CategoryPage> {
                   padding: EdgeInsets.symmetric(horizontal: 8),
                   children: [
                     ...list.map(
-                      (e) => Container(
-                        margin: EdgeInsets.symmetric(
+                      (e) => ListTile(
+                        dense: true,
+                        contentPadding: EdgeInsets.symmetric(
+                          horizontal: 16,
                           vertical: 8,
                         ),
-                        child: BorderContainer(
-                          child: ListTile(
-                            contentPadding: EdgeInsets.symmetric(
-                              horizontal: 16,
-                              vertical: 8,
-                            ),
-                            leading: CachedNetworkImage(
-                              imageUrl: e.image,
-                              height: 40,
-                              width: 40,
-                            ),
-                            trailing: Icon(Icons.keyboard_arrow_right),
-                            title: Text(e.title),
-                            subtitle: e.description != null
-                                ? Text(e.description)
-                                : null,
-                            onTap: () {
-                              Navigator.of(context).push(
-                                MaterialPageRoute(
-                                  builder: (_) => SubjectPage(
-                                    categoryId: e.id,
-                                  ),
-                                ),
-                              );
-                            },
-                          ),
+                        leading: CachedNetworkImage(
+                          imageUrl: e.image,
+                          height: 40,
+                          width: 40,
                         ),
+                        trailing: Icon(Icons.keyboard_arrow_right),
+                        title: Text(e.title),
+                        subtitle:
+                            e.description != null ? Text(e.description) : null,
+                        onTap: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (_) => SubjectPage(
+                                category: e,
+                              ),
+                            ),
+                          );
+                        },
                       ),
                     )
                   ],
