@@ -235,18 +235,18 @@ class _RecordLessonPageState extends State<RecordLessonPage> {
       /// MP3 audio
       final storageReference1 =
           FirebaseStorage().ref().child('lessons/${lessonRef.id}/audio.aac');
-      final uploadTask1 = storageReference1.putFile(
-          outputFile, StorageMetadata(contentType: 'audio/aac'));
-      await uploadTask1.onComplete;
+      await storageReference1.putFile(
+          outputFile, SettableMetadata(contentType: 'audio/aac'));
+
       final audioUrl = await storageReference1.getDownloadURL();
       print(audioUrl);
 
       /// Events
-      final storageReference =
-          FirebaseStorage().ref().child('lessons/${lessonRef.id}/events.json');
-      final uploadTask = storageReference.putData(utf8.encode(jsonString),
-          StorageMetadata(contentType: 'application/json'));
-      await uploadTask.onComplete;
+      final storageReference = FirebaseStorage.instance
+          .ref()
+          .child('lessons/${lessonRef.id}/events.json');
+      await storageReference.putData(utf8.encode(jsonString),
+          SettableMetadata(contentType: 'application/json'));
       final jsonUrl = await storageReference.getDownloadURL();
       print(jsonUrl);
 

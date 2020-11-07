@@ -518,8 +518,8 @@ class _PlayLessonPageState extends State<PlayLessonPage> {
     if (!file.existsSync()) {
       file.createSync(recursive: true);
     }
-    final task = storageReference.writeToFile(file);
-    await task.future;
+    await storageReference.putFile(file);
+
     final events =
         ((jsonDecode(file.readAsStringSync()) as Map)['events'] as List)
             .map((e) => MyEvent.fromJson(e))
@@ -529,16 +529,16 @@ class _PlayLessonPageState extends State<PlayLessonPage> {
   }
 
   Future<void> _loadAudio() async {
-    final storageReference =
-        FirebaseStorage().ref().child('lessons/${widget.lessonId}/audio.aac');
+    final storageReference = FirebaseStorage.instance
+        .ref()
+        .child('lessons/${widget.lessonId}/audio.aac');
     var directory = await getTemporaryDirectory();
     final path = p.join(directory.path, '${widget.lessonId}/audio.aac');
     final file = File(path);
     if (!file.existsSync()) {
       file.createSync(recursive: true);
     }
-    final task = storageReference.writeToFile(file);
-    await task.future;
+    await storageReference.putFile(file);
 
     _audioPath = path;
   }
