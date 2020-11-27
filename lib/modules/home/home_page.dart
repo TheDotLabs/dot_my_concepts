@@ -1,6 +1,11 @@
+import 'dart:async';
+
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_record_lesson/models/category.dart';
 import 'package:flutter_record_lesson/modules/lesson/index.dart';
 import 'package:flutter_record_lesson/modules/record_lesson/src/lesson_record_page.dart';
+import 'package:flutter_record_lesson/modules/select_category_page.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -20,9 +25,45 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text(
-          "JEE Mains and Advance",
-        ),
+        title: StreamBuilder<List<Category>>(
+            stream: _getStream(),
+            builder: (context, snapshot) {
+              if (snapshot.hasData && snapshot.data != null) {
+                final list = snapshot.data;
+                return InkWell(
+                  onTap: _onCategoryTap,
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(
+                      vertical: 8.0,
+                      horizontal: 4,
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Text(
+                          list[0].title,
+                          overflow: TextOverflow.ellipsis,
+                          maxLines: 1,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.only(top: 4.0),
+                          child: Icon(Icons.keyboard_arrow_down_rounded),
+                        ),
+                      ],
+                    ),
+                  ),
+                );
+              } else if (snapshot.hasError) {
+                return Center(
+                  child: Text(snapshot.error),
+                );
+              } else {
+                return Center(
+                  child: CircularProgressIndicator(),
+                );
+              }
+            }),
+        centerTitle: false,
       ),
       drawer: Container(
         width: MediaQuery.of(context).size.width / 1.2,
@@ -51,6 +92,26 @@ class _HomePageState extends State<HomePage> {
             title: Text("Record"),
           ),
         ],
+      ),
+    );
+  }
+
+  Stream<List<Category>> _getStream() {
+    return FirebaseFirestore.instance
+        .collection('categories')
+        .snapshots()
+        .transform(StreamTransformer.fromHandlers(handleData: (snapshot, sink) {
+      final list = snapshot.docs
+          .map((e) => Category.fromJson(e.data()).copyWith(id: e.id))
+          .toList(growable: false);
+      return sink.add(list);
+    }));
+  }
+
+  void _onCategoryTap() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => SelectCategoryPage(),
       ),
     );
   }

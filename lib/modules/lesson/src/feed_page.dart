@@ -54,14 +54,14 @@ class _FeedPageState extends State<FeedPage>
                 builder: (context, snapshot) {
                   if (snapshot.hasData && snapshot.data != null) {
                     return Container(
-                      padding: EdgeInsets.fromLTRB(8, 0, 8, 8),
+                      padding: EdgeInsets.fromLTRB(4, 0, 4, 8),
                       child: Column(
                         children: [
                           ...snapshot.data.subjects.map(
                             (subject) => ListTile(
                               dense: true,
                               contentPadding: EdgeInsets.symmetric(
-                                horizontal: 16,
+                                horizontal: 12,
                               ),
                               title: Text(
                                 subject.title,
@@ -119,17 +119,20 @@ class _FeedPageState extends State<FeedPage>
                 stream: _getStream(),
                 builder: (context, snapshot) {
                   if (snapshot.hasData && snapshot.data != null) {
-                    return ListView(
-                      padding: EdgeInsets.symmetric(
-                        horizontal: 8,
-                      ),
-                      physics: NeverScrollableScrollPhysics(),
-                      shrinkWrap: true,
-                      children: [
-                        ...snapshot.data.map(
-                          (e) => LessonCard(e),
+                    return Container(
+                      height: 180,
+                      child: ListView(
+                        padding: EdgeInsets.symmetric(
+                          horizontal: 8,
                         ),
-                      ],
+                        scrollDirection: Axis.horizontal,
+                        physics: NeverScrollableScrollPhysics(),
+                        children: [
+                          ...snapshot.data.map(
+                            (e) => LessonCard(e),
+                          ),
+                        ],
+                      ),
                     );
                   } else if (snapshot.hasError) {
                     return Center(
@@ -200,7 +203,7 @@ class _FeedPageState extends State<FeedPage>
                 vertical: 16,
               ),
               child: Text(
-                'POPULAR TEACHERS'.toUpperCase(),
+                'ELITE TEACHERS'.toUpperCase(),
                 style: Theme.of(context).textTheme.overline,
                 textAlign: TextAlign.center,
               ),

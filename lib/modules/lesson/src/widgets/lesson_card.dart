@@ -25,19 +25,19 @@ class LessonCard extends StatelessWidget {
       },
       child: BorderContainer(
         child: Container(
+          width: MediaQuery.of(context).size.width / 1.6,
           child: Column(
             children: [
               CategoryHeader(lesson),
-              Container(
-                height: MediaQuery.of(context).size.height / 5.5,
+              Expanded(
                 child: lesson.images == null
                     ? Container()
                     : CachedNetworkImage(
                         imageUrl: lesson.images[0],
+                        fit: BoxFit.cover,
                       ),
               ),
               Column(
-                crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   Padding(
                     padding: const EdgeInsets.all(12.0),
