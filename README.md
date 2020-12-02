@@ -1,4 +1,4 @@
-# flutter_record_lesson
+# dot_my_concepts
 
 A new Flutter project to record lessons by creating a slide show with audio in background controlled via an event json file.
 

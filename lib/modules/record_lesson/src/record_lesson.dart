@@ -7,8 +7,9 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_record_lesson/constants/lesson_constants.dart';
 import 'package:flutter_record_lesson/core/extensions/color_extension.dart';
-import 'package:flutter_sound/flutter_sound.dart' as r;
 import 'package:flutter_sound/flutter_sound.dart';
+import 'package:flutter_sound_platform_interface/flutter_sound_platform_interface.dart';
+import 'package:flutter_sound_platform_interface/flutter_sound_recorder_platform_interface.dart';
 import 'package:path_provider/path_provider.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:quiver/async.dart';
@@ -39,7 +40,7 @@ class _RecordLessonPageState extends State<RecordLessonPage> {
 
   final _paintKey = GlobalKey();
 
-  r.FlutterSoundRecorder myRecorder;
+  FlutterSoundRecorder myRecorder;
 
   File outputFile;
 
@@ -261,7 +262,7 @@ class _RecordLessonPageState extends State<RecordLessonPage> {
   }
 
   void _startRecord() async {
-    myRecorder = await r.FlutterSoundRecorder().openAudioSession();
+    myRecorder = await FlutterSoundRecorder().openAudioSession();
 
     startEpoch = DateTime.now().millisecondsSinceEpoch;
     remainingDurationNotifier.value =
@@ -276,8 +277,8 @@ class _RecordLessonPageState extends State<RecordLessonPage> {
 
     await myRecorder.startRecorder(
       toFile: outputFile.path,
-      codec: r.Codec.aacADTS,
-      audioSource: r.AudioSource.defaultSource,
+      codec: Codec.aacADTS,
+      audioSource: AudioSource.defaultSource,
     );
 
     countDownTimer = new CountdownTimer(

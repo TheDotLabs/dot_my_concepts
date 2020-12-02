@@ -3,6 +3,8 @@ import 'dart:async';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_record_lesson/app/bloc/base/app_bloc.dart';
+import 'package:flutter_record_lesson/di/injector.dart';
 import 'package:flutter_record_lesson/models/category.dart';
 
 class SelectCategoryPage extends StatefulWidget {
@@ -50,9 +52,7 @@ class _SelectCategoryPageState extends State<SelectCategoryPage> {
                         title: Text(e.title),
                         subtitle:
                             e.description != null ? Text(e.description) : null,
-                        onTap: () {
-                          Navigator.of(context).pop();
-                        },
+                        onTap: () => _onCategorySelect(e),
                       ),
                     )
                   ],
@@ -86,5 +86,10 @@ class _SelectCategoryPageState extends State<SelectCategoryPage> {
           .toList(growable: false);
       return sink.add(list);
     }));
+  }
+
+  void _onCategorySelect(Category e) {
+    injector<AppBloc>().onCategorySelection(e);
+    Navigator.of(context).pop();
   }
 }

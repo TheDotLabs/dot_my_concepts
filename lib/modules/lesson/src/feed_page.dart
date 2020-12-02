@@ -329,6 +329,5 @@ class _FeedPageState extends State<FeedPage>
   }
 
   @override
-  // TODO: implement wantKeepAlive
   bool get wantKeepAlive => true;
 }

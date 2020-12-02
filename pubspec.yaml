@@ -38,10 +38,17 @@ dependencies:
   rxdart: ^0.24.1
   path: ^1.7.0
   timer_count_down: ^1.0.4+1
-  flutter_sound: ^6.4.2+1
+  flutter_sound: ^6.4.3+44
   permission_handler: ^5.0.1+1
   audioplayers: ^0.17.0
   google_fonts: ^1.1.1
+  get_it: ^4.0.4
+  provider: ^4.3.2+2
+
+  fa_flutter_core:
+    git:
+      url: https://github.com/FieldAssist/fa_flutter_core.git
+      ref: main
 
 dev_dependencies:
   flutter_test:
@@ -51,6 +58,8 @@ dev_dependencies:
   build_runner: ^1.10.4
   freezed: ^0.12.2
   json_serializable: ^3.5.0
+
+
 
 # For information on the generic Dart part of this file, see the
 # following page: https://dart.dev/tools/pub/pubspec

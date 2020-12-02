@@ -1,11 +1,14 @@
-import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_record_lesson/app/bloc/base/app_bloc.dart';
 import 'package:flutter_record_lesson/modules/home/home_page.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+
+import 'di/injector.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
-  await Firebase.initializeApp();
+  await Injector().configure(Flavor.debug);
   runApp(MyApp());
 }
 
@@ -46,27 +49,30 @@ class MyApp extends StatelessWidget {
           ),
           subtitle2: textTheme.subtitle2.copyWith(letterSpacing: 1.0),
         );
-    return MaterialApp(
-      title: 'DotMyConcepts',
-      theme: ThemeData(
-        primarySwatch: Colors.blue,
-        visualDensity: VisualDensity.adaptivePlatformDensity,
-        appBarTheme: AppBarTheme(
-          elevation: 1,
-          color: Colors.white,
-          brightness: Brightness.light,
+    return ChangeNotifierProvider.value(
+      value: injector<AppBloc>(),
+      child: MaterialApp(
+        title: 'DotMyConcepts',
+        theme: ThemeData(
+          primarySwatch: Colors.blue,
+          visualDensity: VisualDensity.adaptivePlatformDensity,
+          appBarTheme: AppBarTheme(
+            elevation: 1,
+            color: Colors.white,
+            brightness: Brightness.light,
+            textTheme: newTextTheme,
+            iconTheme: Theme.of(context).iconTheme,
+          ),
+          scaffoldBackgroundColor: Colors.white,
+          dividerTheme: DividerThemeData(
+            color: Colors.black38,
+            space: 1,
+          ),
           textTheme: newTextTheme,
-          iconTheme: Theme.of(context).iconTheme,
         ),
-        scaffoldBackgroundColor: Colors.white,
-        dividerTheme: DividerThemeData(
-          color: Colors.black38,
-          space: 1,
-        ),
-        textTheme: newTextTheme,
+        debugShowCheckedModeBanner: false,
+        home: HomePage(),
       ),
-      debugShowCheckedModeBanner: false,
-      home: HomePage(),
     );
   }
 }
