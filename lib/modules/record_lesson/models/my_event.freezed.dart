@@ -12,6 +12,7 @@ Lesson _$LessonFromJson(Map<String, dynamic> json) {
   return _Lesson.fromJson(json);
 }
 
+/// @nodoc
 class _$LessonTearOff {
   const _$LessonTearOff();
 
@@ -40,11 +41,18 @@ class _$LessonTearOff {
       chapter: chapter,
     );
   }
+
+// ignore: unused_element
+  Lesson fromJson(Map<String, Object> json) {
+    return Lesson.fromJson(json);
+  }
 }
 
+/// @nodoc
 // ignore: unused_element
 const $Lesson = _$LessonTearOff();
 
+/// @nodoc
 mixin _$Lesson {
   List<MyEvent> get events;
   String get id;
@@ -61,6 +69,7 @@ mixin _$Lesson {
   $LessonCopyWith<Lesson> get copyWith;
 }
 
+/// @nodoc
 abstract class $LessonCopyWith<$Res> {
   factory $LessonCopyWith(Lesson value, $Res Function(Lesson) then) =
       _$LessonCopyWithImpl<$Res>;
@@ -77,6 +86,7 @@ abstract class $LessonCopyWith<$Res> {
       String chapter});
 }
 
+/// @nodoc
 class _$LessonCopyWithImpl<$Res> implements $LessonCopyWith<$Res> {
   _$LessonCopyWithImpl(this._value, this._then);
 
@@ -113,6 +123,7 @@ class _$LessonCopyWithImpl<$Res> implements $LessonCopyWith<$Res> {
   }
 }
 
+/// @nodoc
 abstract class _$LessonCopyWith<$Res> implements $LessonCopyWith<$Res> {
   factory _$LessonCopyWith(_Lesson value, $Res Function(_Lesson) then) =
       __$LessonCopyWithImpl<$Res>;
@@ -130,6 +141,7 @@ abstract class _$LessonCopyWith<$Res> implements $LessonCopyWith<$Res> {
       String chapter});
 }
 
+/// @nodoc
 class __$LessonCopyWithImpl<$Res> extends _$LessonCopyWithImpl<$Res>
     implements _$LessonCopyWith<$Res> {
   __$LessonCopyWithImpl(_Lesson _value, $Res Function(_Lesson) _then)
@@ -168,6 +180,8 @@ class __$LessonCopyWithImpl<$Res> extends _$LessonCopyWithImpl<$Res>
 }
 
 @JsonSerializable()
+
+/// @nodoc
 class _$_Lesson implements _Lesson {
   _$_Lesson(
       {this.events,
@@ -307,6 +321,7 @@ MyEvent _$MyEventFromJson(Map<String, dynamic> json) {
   return _MyEvent.fromJson(json);
 }
 
+/// @nodoc
 class _$MyEventTearOff {
   const _$MyEventTearOff();
 
@@ -327,11 +342,18 @@ class _$MyEventTearOff {
       y: y,
     );
   }
+
+// ignore: unused_element
+  MyEvent fromJson(Map<String, Object> json) {
+    return MyEvent.fromJson(json);
+  }
 }
 
+/// @nodoc
 // ignore: unused_element
 const $MyEvent = _$MyEventTearOff();
 
+/// @nodoc
 mixin _$MyEvent {
   @JsonKey(name: 'e')
   Events get event;
@@ -348,6 +370,7 @@ mixin _$MyEvent {
   $MyEventCopyWith<MyEvent> get copyWith;
 }
 
+/// @nodoc
 abstract class $MyEventCopyWith<$Res> {
   factory $MyEventCopyWith(MyEvent value, $Res Function(MyEvent) then) =
       _$MyEventCopyWithImpl<$Res>;
@@ -360,6 +383,7 @@ abstract class $MyEventCopyWith<$Res> {
       double y});
 }
 
+/// @nodoc
 class _$MyEventCopyWithImpl<$Res> implements $MyEventCopyWith<$Res> {
   _$MyEventCopyWithImpl(this._value, this._then);
 
@@ -387,6 +411,7 @@ class _$MyEventCopyWithImpl<$Res> implements $MyEventCopyWith<$Res> {
   }
 }
 
+/// @nodoc
 abstract class _$MyEventCopyWith<$Res> implements $MyEventCopyWith<$Res> {
   factory _$MyEventCopyWith(_MyEvent value, $Res Function(_MyEvent) then) =
       __$MyEventCopyWithImpl<$Res>;
@@ -400,6 +425,7 @@ abstract class _$MyEventCopyWith<$Res> implements $MyEventCopyWith<$Res> {
       double y});
 }
 
+/// @nodoc
 class __$MyEventCopyWithImpl<$Res> extends _$MyEventCopyWithImpl<$Res>
     implements _$MyEventCopyWith<$Res> {
   __$MyEventCopyWithImpl(_MyEvent _value, $Res Function(_MyEvent) _then)
@@ -429,6 +455,8 @@ class __$MyEventCopyWithImpl<$Res> extends _$MyEventCopyWithImpl<$Res>
 }
 
 @JsonSerializable()
+
+/// @nodoc
 class _$_MyEvent implements _MyEvent {
   _$_MyEvent(
       {@JsonKey(name: 'e') this.event,

@@ -6,7 +6,7 @@ part 'category.g.dart';
 @freezed
 abstract class Category with _$Category {
   factory Category({
-    @JsonKey(defaultValue: 0) String id,
+    @JsonKey(defaultValue: "0") String id,
     String title,
     String description,
     String image,

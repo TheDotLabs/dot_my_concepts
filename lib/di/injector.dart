@@ -1,9 +1,13 @@
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fa_flutter_core/fa_flutter_core.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_record_lesson/app/bloc/app_bloc_impl.dart';
 import 'package:flutter_record_lesson/app/bloc/base/app_bloc.dart';
+import 'package:flutter_record_lesson/data/repo/google_login_repository.dart';
+import 'package:flutter_record_lesson/modules/profile/index.dart';
 import 'package:flutter_record_lesson/utils/log_utils.dart';
 import 'package:get_it/get_it.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 // ignore_for_file: cascade_invocations
 GetIt injector = GetIt.instance;
@@ -51,11 +55,31 @@ class Injector {
     injector.registerSingleton<AppPrefs>(appsPrefs);
     //final appPrefsHelper = AppPrefsHelperImpl(appPrefs: injector());
     //injector.registerSingleton<AppPrefsHelper>(appPrefsHelper);
+
+    // FirestoreInstance
+    injector.registerLazySingleton<FirebaseFirestore>(
+        () => FirebaseFirestore.instance);
+
+    // GoogleLoginRepository
+    injector.registerLazySingleton<GoogleLoginRepository>(
+      () => GoogleLoginRepository(
+        googleSignIn: GoogleSignIn(),
+      ),
+    );
+
+    // UserRepository
+    injector.registerLazySingleton<UserRepository>(() => FirebaseUserRepository(
+          prefHelper: injector(),
+          firestore: injector(),
+        ));
   }
 
   Future<void> _initBlocs() async {
     // ApplicationBloc
-    final appBloc = AppBlocImpl(appPrefs: injector());
+    final appBloc = AppBlocImpl(
+      appPrefs: injector(),
+      firestore: injector(),
+    );
     //await appBloc.init();
     injector.registerSingleton<AppBloc>(
       appBloc,

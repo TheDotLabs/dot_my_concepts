@@ -8,7 +8,7 @@ part of 'category.dart';
 
 _$_Category _$_$_CategoryFromJson(Map<String, dynamic> json) {
   return _$_Category(
-    id: json['id'] as String,
+    id: json['id'] as String ?? '0',
     title: json['title'] as String,
     description: json['description'] as String,
     image: json['image'] as String,
@@ -30,7 +30,7 @@ Map<String, dynamic> _$_$_CategoryToJson(_$_Category instance) =>
 
 _$_MySubject _$_$_MySubjectFromJson(Map<String, dynamic> json) {
   return _$_MySubject(
-    id: json['id'] as String,
+    id: json['id'] as String ?? 0,
     title: json['title'] as String,
     description: json['description'] as String,
     units: (json['units'] as List)
@@ -50,7 +50,7 @@ Map<String, dynamic> _$_$_MySubjectToJson(_$_MySubject instance) =>
 
 _$_MyUnit _$_$_MyUnitFromJson(Map<String, dynamic> json) {
   return _$_MyUnit(
-    id: json['id'] as String,
+    id: json['id'] as String ?? 0,
     title: json['title'] as String,
     description: json['description'] as String,
     chapters: (json['chapters'] as List)
@@ -69,7 +69,7 @@ Map<String, dynamic> _$_$_MyUnitToJson(_$_MyUnit instance) => <String, dynamic>{
 
 _$_MyChapter _$_$_MyChapterFromJson(Map<String, dynamic> json) {
   return _$_MyChapter(
-    id: json['id'] as String,
+    id: json['id'] as String ?? 0,
     title: json['title'] as String,
     description: json['description'] as String,
   );

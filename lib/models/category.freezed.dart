@@ -12,12 +12,13 @@ Category _$CategoryFromJson(Map<String, dynamic> json) {
   return _Category.fromJson(json);
 }
 
+/// @nodoc
 class _$CategoryTearOff {
   const _$CategoryTearOff();
 
 // ignore: unused_element
   _Category call(
-      {String id,
+      {@JsonKey(defaultValue: "0") String id,
       String title,
       String description,
       String image,
@@ -30,12 +31,20 @@ class _$CategoryTearOff {
       subjects: subjects,
     );
   }
+
+// ignore: unused_element
+  Category fromJson(Map<String, Object> json) {
+    return Category.fromJson(json);
+  }
 }
 
+/// @nodoc
 // ignore: unused_element
 const $Category = _$CategoryTearOff();
 
+/// @nodoc
 mixin _$Category {
+  @JsonKey(defaultValue: "0")
   String get id;
   String get title;
   String get description;
@@ -46,17 +55,19 @@ mixin _$Category {
   $CategoryCopyWith<Category> get copyWith;
 }
 
+/// @nodoc
 abstract class $CategoryCopyWith<$Res> {
   factory $CategoryCopyWith(Category value, $Res Function(Category) then) =
       _$CategoryCopyWithImpl<$Res>;
   $Res call(
-      {String id,
+      {@JsonKey(defaultValue: "0") String id,
       String title,
       String description,
       String image,
       List<MySubject> subjects});
 }
 
+/// @nodoc
 class _$CategoryCopyWithImpl<$Res> implements $CategoryCopyWith<$Res> {
   _$CategoryCopyWithImpl(this._value, this._then);
 
@@ -84,18 +95,20 @@ class _$CategoryCopyWithImpl<$Res> implements $CategoryCopyWith<$Res> {
   }
 }
 
+/// @nodoc
 abstract class _$CategoryCopyWith<$Res> implements $CategoryCopyWith<$Res> {
   factory _$CategoryCopyWith(_Category value, $Res Function(_Category) then) =
       __$CategoryCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String id,
+      {@JsonKey(defaultValue: "0") String id,
       String title,
       String description,
       String image,
       List<MySubject> subjects});
 }
 
+/// @nodoc
 class __$CategoryCopyWithImpl<$Res> extends _$CategoryCopyWithImpl<$Res>
     implements _$CategoryCopyWith<$Res> {
   __$CategoryCopyWithImpl(_Category _value, $Res Function(_Category) _then)
@@ -125,14 +138,21 @@ class __$CategoryCopyWithImpl<$Res> extends _$CategoryCopyWithImpl<$Res>
 }
 
 @JsonSerializable()
+
+/// @nodoc
 class _$_Category implements _Category {
   _$_Category(
-      {this.id, this.title, this.description, this.image, this.subjects});
+      {@JsonKey(defaultValue: "0") this.id,
+      this.title,
+      this.description,
+      this.image,
+      this.subjects});
 
   factory _$_Category.fromJson(Map<String, dynamic> json) =>
       _$_$_CategoryFromJson(json);
 
   @override
+  @JsonKey(defaultValue: "0")
   final String id;
   @override
   final String title;
@@ -187,7 +207,7 @@ class _$_Category implements _Category {
 
 abstract class _Category implements Category {
   factory _Category(
-      {String id,
+      {@JsonKey(defaultValue: "0") String id,
       String title,
       String description,
       String image,
@@ -196,6 +216,7 @@ abstract class _Category implements Category {
   factory _Category.fromJson(Map<String, dynamic> json) = _$_Category.fromJson;
 
   @override
+  @JsonKey(defaultValue: "0")
   String get id;
   @override
   String get title;
@@ -213,12 +234,16 @@ MySubject _$MySubjectFromJson(Map<String, dynamic> json) {
   return _MySubject.fromJson(json);
 }
 
+/// @nodoc
 class _$MySubjectTearOff {
   const _$MySubjectTearOff();
 
 // ignore: unused_element
   _MySubject call(
-      {String id, String title, String description, List<MyUnit> units}) {
+      {@JsonKey(defaultValue: 0) String id,
+      String title,
+      String description,
+      List<MyUnit> units}) {
     return _MySubject(
       id: id,
       title: title,
@@ -226,12 +251,20 @@ class _$MySubjectTearOff {
       units: units,
     );
   }
+
+// ignore: unused_element
+  MySubject fromJson(Map<String, Object> json) {
+    return MySubject.fromJson(json);
+  }
 }
 
+/// @nodoc
 // ignore: unused_element
 const $MySubject = _$MySubjectTearOff();
 
+/// @nodoc
 mixin _$MySubject {
+  @JsonKey(defaultValue: 0)
   String get id;
   String get title;
   String get description;
@@ -241,12 +274,18 @@ mixin _$MySubject {
   $MySubjectCopyWith<MySubject> get copyWith;
 }
 
+/// @nodoc
 abstract class $MySubjectCopyWith<$Res> {
   factory $MySubjectCopyWith(MySubject value, $Res Function(MySubject) then) =
       _$MySubjectCopyWithImpl<$Res>;
-  $Res call({String id, String title, String description, List<MyUnit> units});
+  $Res call(
+      {@JsonKey(defaultValue: 0) String id,
+      String title,
+      String description,
+      List<MyUnit> units});
 }
 
+/// @nodoc
 class _$MySubjectCopyWithImpl<$Res> implements $MySubjectCopyWith<$Res> {
   _$MySubjectCopyWithImpl(this._value, this._then);
 
@@ -271,14 +310,20 @@ class _$MySubjectCopyWithImpl<$Res> implements $MySubjectCopyWith<$Res> {
   }
 }
 
+/// @nodoc
 abstract class _$MySubjectCopyWith<$Res> implements $MySubjectCopyWith<$Res> {
   factory _$MySubjectCopyWith(
           _MySubject value, $Res Function(_MySubject) then) =
       __$MySubjectCopyWithImpl<$Res>;
   @override
-  $Res call({String id, String title, String description, List<MyUnit> units});
+  $Res call(
+      {@JsonKey(defaultValue: 0) String id,
+      String title,
+      String description,
+      List<MyUnit> units});
 }
 
+/// @nodoc
 class __$MySubjectCopyWithImpl<$Res> extends _$MySubjectCopyWithImpl<$Res>
     implements _$MySubjectCopyWith<$Res> {
   __$MySubjectCopyWithImpl(_MySubject _value, $Res Function(_MySubject) _then)
@@ -305,13 +350,20 @@ class __$MySubjectCopyWithImpl<$Res> extends _$MySubjectCopyWithImpl<$Res>
 }
 
 @JsonSerializable()
+
+/// @nodoc
 class _$_MySubject implements _MySubject {
-  _$_MySubject({this.id, this.title, this.description, this.units});
+  _$_MySubject(
+      {@JsonKey(defaultValue: 0) this.id,
+      this.title,
+      this.description,
+      this.units});
 
   factory _$_MySubject.fromJson(Map<String, dynamic> json) =>
       _$_$_MySubjectFromJson(json);
 
   @override
+  @JsonKey(defaultValue: 0)
   final String id;
   @override
   final String title;
@@ -360,7 +412,7 @@ class _$_MySubject implements _MySubject {
 
 abstract class _MySubject implements MySubject {
   factory _MySubject(
-      {String id,
+      {@JsonKey(defaultValue: 0) String id,
       String title,
       String description,
       List<MyUnit> units}) = _$_MySubject;
@@ -369,6 +421,7 @@ abstract class _MySubject implements MySubject {
       _$_MySubject.fromJson;
 
   @override
+  @JsonKey(defaultValue: 0)
   String get id;
   @override
   String get title;
@@ -384,12 +437,16 @@ MyUnit _$MyUnitFromJson(Map<String, dynamic> json) {
   return _MyUnit.fromJson(json);
 }
 
+/// @nodoc
 class _$MyUnitTearOff {
   const _$MyUnitTearOff();
 
 // ignore: unused_element
   _MyUnit call(
-      {String id, String title, String description, List<MyChapter> chapters}) {
+      {@JsonKey(defaultValue: 0) String id,
+      String title,
+      String description,
+      List<MyChapter> chapters}) {
     return _MyUnit(
       id: id,
       title: title,
@@ -397,12 +454,20 @@ class _$MyUnitTearOff {
       chapters: chapters,
     );
   }
+
+// ignore: unused_element
+  MyUnit fromJson(Map<String, Object> json) {
+    return MyUnit.fromJson(json);
+  }
 }
 
+/// @nodoc
 // ignore: unused_element
 const $MyUnit = _$MyUnitTearOff();
 
+/// @nodoc
 mixin _$MyUnit {
+  @JsonKey(defaultValue: 0)
   String get id;
   String get title;
   String get description;
@@ -412,13 +477,18 @@ mixin _$MyUnit {
   $MyUnitCopyWith<MyUnit> get copyWith;
 }
 
+/// @nodoc
 abstract class $MyUnitCopyWith<$Res> {
   factory $MyUnitCopyWith(MyUnit value, $Res Function(MyUnit) then) =
       _$MyUnitCopyWithImpl<$Res>;
   $Res call(
-      {String id, String title, String description, List<MyChapter> chapters});
+      {@JsonKey(defaultValue: 0) String id,
+      String title,
+      String description,
+      List<MyChapter> chapters});
 }
 
+/// @nodoc
 class _$MyUnitCopyWithImpl<$Res> implements $MyUnitCopyWith<$Res> {
   _$MyUnitCopyWithImpl(this._value, this._then);
 
@@ -444,14 +514,19 @@ class _$MyUnitCopyWithImpl<$Res> implements $MyUnitCopyWith<$Res> {
   }
 }
 
+/// @nodoc
 abstract class _$MyUnitCopyWith<$Res> implements $MyUnitCopyWith<$Res> {
   factory _$MyUnitCopyWith(_MyUnit value, $Res Function(_MyUnit) then) =
       __$MyUnitCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String id, String title, String description, List<MyChapter> chapters});
+      {@JsonKey(defaultValue: 0) String id,
+      String title,
+      String description,
+      List<MyChapter> chapters});
 }
 
+/// @nodoc
 class __$MyUnitCopyWithImpl<$Res> extends _$MyUnitCopyWithImpl<$Res>
     implements _$MyUnitCopyWith<$Res> {
   __$MyUnitCopyWithImpl(_MyUnit _value, $Res Function(_MyUnit) _then)
@@ -479,13 +554,20 @@ class __$MyUnitCopyWithImpl<$Res> extends _$MyUnitCopyWithImpl<$Res>
 }
 
 @JsonSerializable()
+
+/// @nodoc
 class _$_MyUnit implements _MyUnit {
-  _$_MyUnit({this.id, this.title, this.description, this.chapters});
+  _$_MyUnit(
+      {@JsonKey(defaultValue: 0) this.id,
+      this.title,
+      this.description,
+      this.chapters});
 
   factory _$_MyUnit.fromJson(Map<String, dynamic> json) =>
       _$_$_MyUnitFromJson(json);
 
   @override
+  @JsonKey(defaultValue: 0)
   final String id;
   @override
   final String title;
@@ -535,7 +617,7 @@ class _$_MyUnit implements _MyUnit {
 
 abstract class _MyUnit implements MyUnit {
   factory _MyUnit(
-      {String id,
+      {@JsonKey(defaultValue: 0) String id,
       String title,
       String description,
       List<MyChapter> chapters}) = _$_MyUnit;
@@ -543,6 +625,7 @@ abstract class _MyUnit implements MyUnit {
   factory _MyUnit.fromJson(Map<String, dynamic> json) = _$_MyUnit.fromJson;
 
   @override
+  @JsonKey(defaultValue: 0)
   String get id;
   @override
   String get title;
@@ -558,23 +641,33 @@ MyChapter _$MyChapterFromJson(Map<String, dynamic> json) {
   return _MyChapter.fromJson(json);
 }
 
+/// @nodoc
 class _$MyChapterTearOff {
   const _$MyChapterTearOff();
 
 // ignore: unused_element
-  _MyChapter call({String id, String title, String description}) {
+  _MyChapter call(
+      {@JsonKey(defaultValue: 0) String id, String title, String description}) {
     return _MyChapter(
       id: id,
       title: title,
       description: description,
     );
   }
+
+// ignore: unused_element
+  MyChapter fromJson(Map<String, Object> json) {
+    return MyChapter.fromJson(json);
+  }
 }
 
+/// @nodoc
 // ignore: unused_element
 const $MyChapter = _$MyChapterTearOff();
 
+/// @nodoc
 mixin _$MyChapter {
+  @JsonKey(defaultValue: 0)
   String get id;
   String get title;
   String get description;
@@ -583,12 +676,15 @@ mixin _$MyChapter {
   $MyChapterCopyWith<MyChapter> get copyWith;
 }
 
+/// @nodoc
 abstract class $MyChapterCopyWith<$Res> {
   factory $MyChapterCopyWith(MyChapter value, $Res Function(MyChapter) then) =
       _$MyChapterCopyWithImpl<$Res>;
-  $Res call({String id, String title, String description});
+  $Res call(
+      {@JsonKey(defaultValue: 0) String id, String title, String description});
 }
 
+/// @nodoc
 class _$MyChapterCopyWithImpl<$Res> implements $MyChapterCopyWith<$Res> {
   _$MyChapterCopyWithImpl(this._value, this._then);
 
@@ -611,14 +707,17 @@ class _$MyChapterCopyWithImpl<$Res> implements $MyChapterCopyWith<$Res> {
   }
 }
 
+/// @nodoc
 abstract class _$MyChapterCopyWith<$Res> implements $MyChapterCopyWith<$Res> {
   factory _$MyChapterCopyWith(
           _MyChapter value, $Res Function(_MyChapter) then) =
       __$MyChapterCopyWithImpl<$Res>;
   @override
-  $Res call({String id, String title, String description});
+  $Res call(
+      {@JsonKey(defaultValue: 0) String id, String title, String description});
 }
 
+/// @nodoc
 class __$MyChapterCopyWithImpl<$Res> extends _$MyChapterCopyWithImpl<$Res>
     implements _$MyChapterCopyWith<$Res> {
   __$MyChapterCopyWithImpl(_MyChapter _value, $Res Function(_MyChapter) _then)
@@ -643,13 +742,17 @@ class __$MyChapterCopyWithImpl<$Res> extends _$MyChapterCopyWithImpl<$Res>
 }
 
 @JsonSerializable()
+
+/// @nodoc
 class _$_MyChapter implements _MyChapter {
-  _$_MyChapter({this.id, this.title, this.description});
+  _$_MyChapter(
+      {@JsonKey(defaultValue: 0) this.id, this.title, this.description});
 
   factory _$_MyChapter.fromJson(Map<String, dynamic> json) =>
       _$_$_MyChapterFromJson(json);
 
   @override
+  @JsonKey(defaultValue: 0)
   final String id;
   @override
   final String title;
@@ -692,13 +795,16 @@ class _$_MyChapter implements _MyChapter {
 }
 
 abstract class _MyChapter implements MyChapter {
-  factory _MyChapter({String id, String title, String description}) =
-      _$_MyChapter;
+  factory _MyChapter(
+      {@JsonKey(defaultValue: 0) String id,
+      String title,
+      String description}) = _$_MyChapter;
 
   factory _MyChapter.fromJson(Map<String, dynamic> json) =
       _$_MyChapter.fromJson;
 
   @override
+  @JsonKey(defaultValue: 0)
   String get id;
   @override
   String get title;

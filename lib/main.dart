@@ -1,10 +1,13 @@
+import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_record_lesson/app/bloc/base/app_bloc.dart';
-import 'package:flutter_record_lesson/modules/home/home_page.dart';
+import 'package:flutter_record_lesson/modules/home/src/home_page.dart';
+import 'package:flutter_record_lesson/modules/login/index.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import 'di/injector.dart';
+import 'modules/profile/index.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
@@ -53,6 +56,9 @@ class MyApp extends StatelessWidget {
       value: injector<AppBloc>(),
       child: MaterialApp(
         title: 'DotMyConcepts',
+        navigatorObservers: [
+          BotToastNavigatorObserver(),
+        ],
         theme: ThemeData(
           primarySwatch: Colors.blue,
           visualDensity: VisualDensity.adaptivePlatformDensity,
@@ -71,8 +77,20 @@ class MyApp extends StatelessWidget {
           textTheme: newTextTheme,
         ),
         debugShowCheckedModeBanner: false,
-        home: HomePage(),
+        home: injector<UserRepository>().getUserLoggedIn()
+            ? HomePage()
+            : LoginScreen(),
+        builder: _buildWidget,
       ),
     );
+  }
+
+  Widget _buildWidget(BuildContext context, Widget child) {
+    /* ErrorWidget.builder = (errorDetails) {
+      return buildError(context, errorDetails);
+    };*/
+    final botToastBuilder = BotToastInit();
+    final myWidget = botToastBuilder(context, child);
+    return myWidget;
   }
 }
