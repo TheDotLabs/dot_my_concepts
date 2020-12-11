@@ -6,12 +6,12 @@ import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
 import 'package:flutter_record_lesson/app/bloc/base/app_bloc.dart';
 import 'package:flutter_record_lesson/core/models/course.dart';
+import 'package:flutter_record_lesson/di/injector.dart';
 import 'package:flutter_record_lesson/models/category.dart';
 import 'package:flutter_record_lesson/modules/common/src/widgets/empty_text.dart';
 import 'package:flutter_record_lesson/modules/common/src/widgets/section_divider.dart';
 import 'package:flutter_record_lesson/modules/lesson/src/select_unit_page.dart';
 import 'package:flutter_record_lesson/modules/lesson/src/widgets/lesson_card.dart';
-import 'package:flutter_record_lesson/modules/lesson/src/widgets/teacher_card.dart';
 import 'package:flutter_record_lesson/modules/record_lesson/models/my_event.dart';
 import 'package:flutter_record_lesson/modules/record_lesson/src/view_courses_page.dart';
 import 'package:provider/provider.dart';
@@ -132,18 +132,25 @@ class _FeedPageState extends State<FeedPage>
                     if (snapshot.hasData && snapshot.data != null) {
                       return Container(
                         height: 180,
-                        child: ListView(
-                          padding: EdgeInsets.symmetric(
-                            horizontal: 8,
-                          ),
-                          scrollDirection: Axis.horizontal,
-                          physics: NeverScrollableScrollPhysics(),
-                          children: [
-                            ...snapshot.data.map(
-                              (e) => LessonCard(e),
-                            ),
-                          ],
-                        ),
+                        child: ((checkIfListIsNotEmpty(snapshot.data)))
+                            ? ListView(
+                                padding: EdgeInsets.symmetric(
+                                  horizontal: 8,
+                                ),
+                                scrollDirection: Axis.horizontal,
+                                physics: NeverScrollableScrollPhysics(),
+                                children: [
+                                  ...snapshot.data.map(
+                                    (e) => LessonCard(e),
+                                  )
+                                ],
+                              )
+                            : Container(
+                                child: Center(child: EmptyText()),
+                                padding: EdgeInsets.symmetric(
+                                  vertical: 16,
+                                ),
+                              ),
                       );
                     } else if (snapshot.hasError) {
                       return Center(
@@ -178,18 +185,25 @@ class _FeedPageState extends State<FeedPage>
                   if (snapshot.hasData && snapshot.data != null) {
                     return Container(
                       height: 180,
-                      child: ListView(
-                        padding: EdgeInsets.symmetric(
-                          horizontal: 8,
-                        ),
-                        physics: BouncingScrollPhysics(),
-                        scrollDirection: Axis.horizontal,
-                        children: [
-                          ...snapshot.data.map(
-                            (e) => CourseCard(e),
-                          ),
-                        ],
-                      ),
+                      child: (checkIfListIsNotEmpty(snapshot.data))
+                          ? ListView(
+                              padding: EdgeInsets.symmetric(
+                                horizontal: 8,
+                              ),
+                              physics: BouncingScrollPhysics(),
+                              scrollDirection: Axis.horizontal,
+                              children: [
+                                ...snapshot.data.map(
+                                  (e) => CourseCard(e),
+                                ),
+                              ],
+                            )
+                          : Container(
+                              child: Center(child: EmptyText()),
+                              padding: EdgeInsets.symmetric(
+                                vertical: 16,
+                              ),
+                            ),
                     );
                   } else if (snapshot.hasError) {
                     return Center(
@@ -202,13 +216,8 @@ class _FeedPageState extends State<FeedPage>
                   }
                 },
               ),
-              Container(
-                margin: EdgeInsets.only(top: 16),
-                height: 8,
-                width: MediaQuery.of(context).size.width,
-                color: Colors.blueGrey[50],
-              ),
-              Padding(
+
+              /* Padding(
                 padding: const EdgeInsets.symmetric(
                   horizontal: 8.0,
                   vertical: 16,
@@ -248,7 +257,7 @@ class _FeedPageState extends State<FeedPage>
                     );
                   }
                 },
-              ),
+              ),*/
               Container(
                 margin: EdgeInsets.only(top: 16),
                 height: 8,
@@ -271,18 +280,32 @@ class _FeedPageState extends State<FeedPage>
   Stream<List<Lesson>> _getNewlyUploadedStream() {
     return FirebaseFirestore.instance
         .collection('lessons')
+        .where(
+          'category',
+          isEqualTo: injector<AppBloc>().selectedCategory,
+        )
+        .limit(5)
         .snapshots()
         .transform(
-            StreamTransformer.fromHandlers(handleData: (snapshots, sink) {
-      return sink.add(snapshots.docs
-          .map((e) => Lesson.fromJson(e.data()).copyWith(id: e.id))
-          .toList(growable: false));
-    }));
+      StreamTransformer.fromHandlers(
+        handleData: (snapshots, sink) {
+          return sink.add(
+            snapshots.docs
+                .map((e) => Lesson.fromJson(e.data()).copyWith(id: e.id))
+                .toList(growable: false),
+          );
+        },
+      ),
+    );
   }
 
   Stream<List<Course>> _getPopularCourseStream() {
     return FirebaseFirestore.instance
         .collection('courses')
+        .where(
+          'category',
+          isEqualTo: injector<AppBloc>().selectedCategory,
+        )
         .limit(5)
         .snapshots()
         .transform(
