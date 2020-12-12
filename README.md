@@ -1,5 +1,7 @@
 # dot_my_concepts
 
+<img src="https://raw.githubusercontent.com/apgapg/flutter_record_lesson/master/assets/logo.png"  alt="dotmyconcepts">
+
 A new Flutter project to record lessons by creating a slide show with audio in background controlled via an event json file.
 
 The animated video created will be played using images and event sequence.
