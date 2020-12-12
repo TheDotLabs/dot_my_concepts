@@ -17,3 +17,7 @@ TODO:
 ```
 flutter pub get && flutter pub run build_runner build --delete-conflicting-outputs
 ```
+
+To generate launcher icon
+
+`flutter pub run flutter_launcher_icons:main -f launcher_icon/flutter_launcher_icons.yaml`
