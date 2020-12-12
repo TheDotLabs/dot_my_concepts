@@ -8,6 +8,7 @@ import 'package:flutter_record_lesson/app/bloc/base/app_bloc.dart';
 import 'package:flutter_record_lesson/core/models/course.dart';
 import 'package:flutter_record_lesson/di/injector.dart';
 import 'package:flutter_record_lesson/models/category.dart';
+import 'package:flutter_record_lesson/modules/common/src/widgets/circular_loading.dart';
 import 'package:flutter_record_lesson/modules/common/src/widgets/empty_text.dart';
 import 'package:flutter_record_lesson/modules/common/src/widgets/section_divider.dart';
 import 'package:flutter_record_lesson/modules/lesson/src/select_unit_page.dart';
@@ -106,7 +107,7 @@ class _FeedPageState extends State<FeedPage>
                       );
                     } else {
                       return Center(
-                        child: CircularProgressIndicator(),
+                        child: CircularLoading(),
                       );
                     }
                   }),
@@ -158,7 +159,7 @@ class _FeedPageState extends State<FeedPage>
                       );
                     } else {
                       return Center(
-                        child: CircularProgressIndicator(),
+                        child: CircularLoading(),
                       );
                     }
                   }),
@@ -211,7 +212,7 @@ class _FeedPageState extends State<FeedPage>
                     );
                   } else {
                     return Center(
-                      child: CircularProgressIndicator(),
+                      child: CircularLoading(),
                     );
                   }
                 },
@@ -253,7 +254,7 @@ class _FeedPageState extends State<FeedPage>
                     );
                   } else {
                     return Center(
-                      child: CircularProgressIndicator(),
+                      child: CircularLoading(),
                     );
                   }
                 },

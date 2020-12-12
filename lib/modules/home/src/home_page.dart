@@ -5,6 +5,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_icons/flutter_icons.dart';
 import 'package:flutter_record_lesson/app/bloc/base/app_bloc.dart';
 import 'package:flutter_record_lesson/models/category.dart';
+import 'package:flutter_record_lesson/modules/common/src/widgets/circular_loading.dart';
 import 'package:flutter_record_lesson/modules/lesson/index.dart';
 import 'package:flutter_record_lesson/modules/profile/index.dart';
 import 'package:flutter_record_lesson/modules/record_lesson/src/lesson_record_page.dart';
@@ -69,7 +70,7 @@ class _HomePageState extends State<HomePage> {
                 );
               } else {
                 return Center(
-                  child: CircularProgressIndicator(),
+                  child: CircularLoading(),
                 );
               }
             }),

@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_record_lesson/core/widgets/no_item_found.dart';
 import 'package:flutter_record_lesson/models/category.dart';
+import 'package:flutter_record_lesson/modules/common/src/widgets/circular_loading.dart';
 import 'package:flutter_record_lesson/modules/lesson/src/select_unit_page.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -78,7 +79,7 @@ class _SubjectPageState extends State<SubjectPage> {
             );
           } else {
             return Center(
-              child: CircularProgressIndicator(),
+              child: CircularLoading(),
             );
           }
         },

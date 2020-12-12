@@ -7,6 +7,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_record_lesson/constants/lesson_constants.dart';
 import 'package:flutter_record_lesson/core/extensions/color_extension.dart';
+import 'package:flutter_record_lesson/modules/common/src/widgets/circular_loading.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:flutter_sound_platform_interface/flutter_sound_platform_interface.dart';
 import 'package:flutter_sound_platform_interface/flutter_sound_recorder_platform_interface.dart';
@@ -100,7 +101,7 @@ class _RecordLessonPageState extends State<RecordLessonPage> {
                       CachedNetworkImage(
                         imageUrl: _imageList[_pageIndex],
                         placeholder: (context, url) =>
-                            Center(child: CircularProgressIndicator()),
+                            Center(child: CircularLoading()),
                         errorWidget: (context, url, error) => Icon(Icons.error),
                       ),
                       if (countDownTimer?.isRunning ?? false)

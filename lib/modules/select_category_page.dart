@@ -7,6 +7,8 @@ import 'package:flutter_record_lesson/app/bloc/base/app_bloc.dart';
 import 'package:flutter_record_lesson/di/injector.dart';
 import 'package:flutter_record_lesson/models/category.dart';
 
+import 'common/src/widgets/circular_loading.dart';
+
 class SelectCategoryPage extends StatefulWidget {
   @override
   _SelectCategoryPageState createState() => _SelectCategoryPageState();
@@ -64,7 +66,7 @@ class _SelectCategoryPageState extends State<SelectCategoryPage> {
               );
             } else {
               return Center(
-                child: CircularProgressIndicator(),
+                child: CircularLoading(),
               );
             }
           }),

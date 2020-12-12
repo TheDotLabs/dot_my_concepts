@@ -108,8 +108,8 @@ class FirebaseUserRepository implements UserRepository {
   }
 
   @override
-  Future<Result<MyUser>> getLoggedInUser(String userId) {
-    return Future.value(Result.success(_userSubject.value));
+  MyUser getLoggedInUser() {
+    return _userSubject.value;
   }
 
   @override

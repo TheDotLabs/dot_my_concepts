@@ -1,3 +1,1 @@
-abstract class AppPrefsHelper{
-
-}
+abstract class AppPrefsHelper {}

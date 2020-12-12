@@ -4,6 +4,7 @@ import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_record_lesson/models/category.dart';
+import 'package:flutter_record_lesson/modules/common/src/widgets/circular_loading.dart';
 import 'package:flutter_record_lesson/modules/record_lesson/src/subject_page.dart';
 
 class CategoryPage extends StatefulWidget {
@@ -71,7 +72,7 @@ class _CategoryPageState extends State<CategoryPage> {
               );
             } else {
               return Center(
-                child: CircularProgressIndicator(),
+                child: CircularLoading(),
               );
             }
           }),

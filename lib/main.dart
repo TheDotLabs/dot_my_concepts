@@ -22,7 +22,7 @@ class MyApp extends StatelessWidget {
     final textTheme = GoogleFonts.latoTextTheme(Theme.of(context).textTheme);
     final newTextTheme = textTheme
         .apply(
-          bodyColor: Colors.blueGrey[900],
+          bodyColor: Colors.grey[700],
           displayColor: Colors.blueGrey[900],
         )
         .copyWith(

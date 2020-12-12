@@ -27,5 +27,7 @@ class AppBlocImpl extends AppBloc {
   }
 
   @override
-  String get selectedCategory => appPrefs.getString(prefsSelectedCategory);
+  String get selectedCategory =>
+      appPrefs.getString(prefsSelectedCategory) ??
+      injector<UserRepository>().getLoggedInUser()?.selectedCategory;
 }

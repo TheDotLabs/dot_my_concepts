@@ -5,7 +5,7 @@ import 'package:rxdart/rxdart.dart';
 abstract class UserRepository {
   Future<Result> registerUser(MyUser user);
 
-  Future<Result<MyUser>> getLoggedInUser(String userId);
+  MyUser getLoggedInUser();
 
   BehaviorSubject<MyUser> getLoggedInUserStream();
 

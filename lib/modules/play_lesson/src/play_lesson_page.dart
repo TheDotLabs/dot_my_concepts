@@ -10,6 +10,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_record_lesson/constants/lesson_constants.dart';
 import 'package:flutter_record_lesson/core/widgets/my_countdown_timer.dart';
 import 'package:flutter_record_lesson/core/widgets/my_error_widget.dart';
+import 'package:flutter_record_lesson/modules/common/src/widgets/circular_loading.dart';
 import 'package:flutter_record_lesson/modules/record_lesson/models/my_event.dart';
 import 'package:flutter_record_lesson/modules/record_lesson/src/painter_controller.dart';
 import 'package:flutter_record_lesson/utils/extensions/behavior_subject.dart';
@@ -107,9 +108,8 @@ class _PlayLessonPageState extends State<PlayLessonPage> {
                                       children: [
                                         CachedNetworkImage(
                                           imageUrl: lesson.images[_imageIndex],
-                                          placeholder: (context, url) => Center(
-                                              child:
-                                                  CircularProgressIndicator()),
+                                          placeholder: (context, url) =>
+                                              Center(child: CircularLoading()),
                                           errorWidget: (context, url, error) =>
                                               Icon(Icons.error),
                                         ),
@@ -368,7 +368,7 @@ class _PlayLessonPageState extends State<PlayLessonPage> {
                 return MyErrorWidget(snapshot.error);
               } else {
                 return Center(
-                  child: CircularProgressIndicator(),
+                  child: CircularLoading(),
                 );
               }
             }),

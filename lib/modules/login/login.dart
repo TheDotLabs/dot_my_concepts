@@ -4,6 +4,7 @@ import 'package:flutter_record_lesson/data/repo/google_login_repository.dart';
 import 'package:flutter_record_lesson/di/injector.dart';
 import 'package:flutter_record_lesson/modules/common/index.dart';
 import 'package:flutter_record_lesson/modules/home/index.dart';
+import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -45,31 +46,49 @@ class _LoginScreenState extends BaseState<LoginScreen> {
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
-            SizedBox(height: 28),
-            Padding(
-              padding: EdgeInsets.symmetric(horizontal: 16),
-              child: RaisedButton(
-                elevation: 3,
-                color: Colors.black,
-                shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(30),
-                ),
-                onPressed: () {
-                  _login(LoginProvider.google);
-                  /*   Navigator.push(context, MaterialPageRoute(builder: (context) {
-                    return IntroScreen();
-                  }));*/
-                },
-                child: Padding(
-                  padding: EdgeInsets.all(20),
-                  child: Text(
-                    'Get started',
-                    style: TextStyle(
-                        fontWeight: FontWeight.bold, color: Colors.white),
-                  ),
-                ),
+            Spacer(),
+            Text(
+              'DotMyConcepts',
+              style: TextStyle(
+                fontSize: 22,
               ),
-            )
+            ),
+            SizedBox(
+              height: 8,
+            ),
+            Text(
+              'Your Teaching Made Easy',
+              style: Theme.of(context).textTheme.bodyText2.copyWith(
+                    fontSize: 12,
+                  ),
+              textAlign: TextAlign.center,
+            ),
+            Spacer(),
+            SignInButton(
+              Buttons.Google,
+              onPressed: () => _login(LoginProvider.google),
+            ),
+            Spacer(),
+            Text(
+              'By signing up you agree to\n'
+              'Terms & Conditions',
+              style: TextStyle(
+                fontSize: 12,
+              ),
+              textAlign: TextAlign.center,
+            ),
+            SizedBox(
+              height: 16,
+            ),
+            Text(
+              '©️${DateTime.now().year}. All Rights Reserved',
+              style: TextStyle(
+                fontSize: 12,
+              ),
+            ),
+            SizedBox(
+              height: 16,
+            ),
           ],
         ),
       ),

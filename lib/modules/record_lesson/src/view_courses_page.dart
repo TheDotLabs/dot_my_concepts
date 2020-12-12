@@ -7,6 +7,7 @@ import 'package:flutter_record_lesson/core/models/course.dart';
 import 'package:flutter_record_lesson/core/widgets/BorderContainer.dart';
 import 'package:flutter_record_lesson/core/widgets/no_item_found.dart';
 import 'package:flutter_record_lesson/models/category.dart';
+import 'package:flutter_record_lesson/modules/common/src/widgets/circular_loading.dart';
 
 class ViewCoursesPage extends StatefulWidget {
   ViewCoursesPage({
@@ -59,7 +60,7 @@ class _ViewCoursesPageState extends State<ViewCoursesPage> {
             );
           } else {
             return Center(
-              child: CircularProgressIndicator(),
+              child: CircularLoading(),
             );
           }
         },

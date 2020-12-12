@@ -41,7 +41,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
         } else if (snapshot.hasError) {
           return Text('Error: ${snapshot.error}');
         } else {
-          return CircularLoading();
+          return Center(child: CircularLoading());
         }
       },
     );
