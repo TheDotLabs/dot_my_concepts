@@ -25,12 +25,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
       builder: (context, snapshot) {
         if (snapshot.hasData && snapshot.data != null) {
           return ListView(
-            padding: const EdgeInsets.symmetric(
-              vertical: 4.0,
-              horizontal: 4,
-            ),
             physics: const BouncingScrollPhysics(),
             children: <Widget>[
+              SectionDivider(),
               ProfileHeader(user: snapshot.data),
               SectionDivider(),
               HelpAndSupportContainer(),

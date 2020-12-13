@@ -38,7 +38,6 @@ class _FeedPageState extends State<FeedPage>
     return Consumer<AppBloc>(builder: (_, appBloc, __) {
       return Scaffold(
         body: SingleChildScrollView(
-          physics: BouncingScrollPhysics(),
           child: Column(
             children: [
               SectionDivider(),

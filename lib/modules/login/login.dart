@@ -5,6 +5,7 @@ import 'package:flutter_record_lesson/di/injector.dart';
 import 'package:flutter_record_lesson/modules/common/index.dart';
 import 'package:flutter_record_lesson/modules/home/index.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
+import 'package:lottie/lottie.dart';
 import 'package:progress_dialog/progress_dialog.dart';
 
 class LoginScreen extends StatefulWidget {
@@ -41,56 +42,87 @@ class _LoginScreenState extends BaseState<LoginScreen> {
     final size = MediaQuery.of(context).size;
     return Scaffold(
       key: scaffoldKey,
-      body: Container(
+      body: Stack(
         alignment: Alignment.center,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: <Widget>[
-            Spacer(),
-            Text(
-              'DotMyConcepts',
-              style: TextStyle(
-                fontSize: 22,
-              ),
+        children: [
+          Opacity(
+            opacity: 0.14,
+            child: Lottie.asset(
+              'assets/lottie/17848-bubbles.json',
             ),
-            SizedBox(
-              height: 8,
-            ),
-            Text(
-              'Your Teaching Made Easy',
-              style: Theme.of(context).textTheme.bodyText2.copyWith(
+          ),
+          Container(
+            alignment: Alignment.center,
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: <Widget>[
+                Spacer(),
+                Image.asset(
+                  'assets/logo.png',
+                  height: 70,
+                ),
+                SizedBox(
+                  height: 16,
+                ),
+                Text(
+                  'DotMyConcepts',
+                  style: TextStyle(
+                    fontSize: 22,
+                  ),
+                ),
+                SizedBox(
+                  height: 8,
+                ),
+                Text(
+                  'Your Teaching Made Easy',
+                  style: Theme.of(context).textTheme.bodyText2.copyWith(
+                        fontSize: 12,
+                      ),
+                  textAlign: TextAlign.center,
+                ),
+                Spacer(),
+                Text(
+                  'Start by signing in with your'
+                  '\nGoogle account',
+                  style: TextStyle(
                     fontSize: 12,
                   ),
-              textAlign: TextAlign.center,
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(
+                  height: 16,
+                ),
+                SignInButton(
+                  Buttons.Google,
+                  onPressed: () => _login(LoginProvider.google),
+                ),
+                Spacer(
+                  flex: 2,
+                ),
+                Text(
+                  'By signing up you agree to\n'
+                  'Terms & Conditions',
+                  style: TextStyle(
+                    fontSize: 12,
+                  ),
+                  textAlign: TextAlign.center,
+                ),
+                SizedBox(
+                  height: 16,
+                ),
+                Text(
+                  '©️${DateTime.now().year}. All Rights Reserved',
+                  style: TextStyle(
+                    fontSize: 12,
+                  ),
+                ),
+                SizedBox(
+                  height: 28,
+                ),
+              ],
             ),
-            Spacer(),
-            SignInButton(
-              Buttons.Google,
-              onPressed: () => _login(LoginProvider.google),
-            ),
-            Spacer(),
-            Text(
-              'By signing up you agree to\n'
-              'Terms & Conditions',
-              style: TextStyle(
-                fontSize: 12,
-              ),
-              textAlign: TextAlign.center,
-            ),
-            SizedBox(
-              height: 16,
-            ),
-            Text(
-              '©️${DateTime.now().year}. All Rights Reserved',
-              style: TextStyle(
-                fontSize: 12,
-              ),
-            ),
-            SizedBox(
-              height: 16,
-            ),
-          ],
-        ),
+          ),
+        ],
       ),
     );
   }
