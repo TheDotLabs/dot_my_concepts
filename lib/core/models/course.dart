@@ -7,6 +7,7 @@ part 'course.g.dart';
 abstract class Course with _$Course {
   factory Course({
     String id,
+    String userId,
     String title,
     String subtitle,
     String cover,

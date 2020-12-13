@@ -68,10 +68,12 @@ class Injector {
     );
 
     // UserRepository
-    injector.registerLazySingleton<UserRepository>(() => FirebaseUserRepository(
-          prefHelper: injector(),
-          firestore: injector(),
-        ));
+    final repo = FirebaseUserRepository(
+      prefHelper: injector(),
+      firestore: injector(),
+    );
+    await repo.init();
+    injector.registerLazySingleton<UserRepository>(() => repo);
   }
 
   Future<void> _initBlocs() async {

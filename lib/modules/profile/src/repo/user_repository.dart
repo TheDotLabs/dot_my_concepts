@@ -3,6 +3,10 @@ import 'package:flutter_record_lesson/modules/profile/index.dart';
 import 'package:rxdart/rxdart.dart';
 
 abstract class UserRepository {
+  bool get hasUserSignedCla;
+
+  bool get isTeacher;
+
   Future<Result> registerUser(MyUser user);
 
   MyUser getLoggedInUser();
@@ -16,6 +20,8 @@ abstract class UserRepository {
   void setUserLoggedIn(bool value);
 
   Future<void> saveSelectedCategory(String id);
+
+  Future<void> setUserSignedCla(bool value);
 
 //  Future<List<User>> getUsers(String userName);
 //

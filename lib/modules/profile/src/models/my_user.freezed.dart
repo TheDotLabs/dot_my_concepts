@@ -25,7 +25,8 @@ class _$MyUserTearOff {
       String provider,
       @JsonKey(includeIfNull: false) String tagline,
       @JsonKey(includeIfNull: false, defaultValue: false) bool isVerified,
-      String selectedCategory}) {
+      String selectedCategory,
+      Teaching teaching}) {
     return _MyUser(
       id: id,
       name: name,
@@ -35,6 +36,7 @@ class _$MyUserTearOff {
       tagline: tagline,
       isVerified: isVerified,
       selectedCategory: selectedCategory,
+      teaching: teaching,
     );
   }
 
@@ -62,6 +64,7 @@ mixin _$MyUser {
   @JsonKey(includeIfNull: false, defaultValue: false)
   bool get isVerified;
   String get selectedCategory;
+  Teaching get teaching;
 
   Map<String, dynamic> toJson();
   $MyUserCopyWith<MyUser> get copyWith;
@@ -79,7 +82,10 @@ abstract class $MyUserCopyWith<$Res> {
       String provider,
       @JsonKey(includeIfNull: false) String tagline,
       @JsonKey(includeIfNull: false, defaultValue: false) bool isVerified,
-      String selectedCategory});
+      String selectedCategory,
+      Teaching teaching});
+
+  $TeachingCopyWith<$Res> get teaching;
 }
 
 /// @nodoc
@@ -100,6 +106,7 @@ class _$MyUserCopyWithImpl<$Res> implements $MyUserCopyWith<$Res> {
     Object tagline = freezed,
     Object isVerified = freezed,
     Object selectedCategory = freezed,
+    Object teaching = freezed,
   }) {
     return _then(_value.copyWith(
       id: id == freezed ? _value.id : id as String,
@@ -113,7 +120,18 @@ class _$MyUserCopyWithImpl<$Res> implements $MyUserCopyWith<$Res> {
       selectedCategory: selectedCategory == freezed
           ? _value.selectedCategory
           : selectedCategory as String,
+      teaching: teaching == freezed ? _value.teaching : teaching as Teaching,
     ));
+  }
+
+  @override
+  $TeachingCopyWith<$Res> get teaching {
+    if (_value.teaching == null) {
+      return null;
+    }
+    return $TeachingCopyWith<$Res>(_value.teaching, (value) {
+      return _then(_value.copyWith(teaching: value));
+    });
   }
 }
 
@@ -130,7 +148,11 @@ abstract class _$MyUserCopyWith<$Res> implements $MyUserCopyWith<$Res> {
       String provider,
       @JsonKey(includeIfNull: false) String tagline,
       @JsonKey(includeIfNull: false, defaultValue: false) bool isVerified,
-      String selectedCategory});
+      String selectedCategory,
+      Teaching teaching});
+
+  @override
+  $TeachingCopyWith<$Res> get teaching;
 }
 
 /// @nodoc
@@ -152,6 +174,7 @@ class __$MyUserCopyWithImpl<$Res> extends _$MyUserCopyWithImpl<$Res>
     Object tagline = freezed,
     Object isVerified = freezed,
     Object selectedCategory = freezed,
+    Object teaching = freezed,
   }) {
     return _then(_MyUser(
       id: id == freezed ? _value.id : id as String,
@@ -165,6 +188,7 @@ class __$MyUserCopyWithImpl<$Res> extends _$MyUserCopyWithImpl<$Res>
       selectedCategory: selectedCategory == freezed
           ? _value.selectedCategory
           : selectedCategory as String,
+      teaching: teaching == freezed ? _value.teaching : teaching as Teaching,
     ));
   }
 }
@@ -181,7 +205,8 @@ class _$_MyUser implements _MyUser {
       this.provider,
       @JsonKey(includeIfNull: false) this.tagline,
       @JsonKey(includeIfNull: false, defaultValue: false) this.isVerified,
-      this.selectedCategory});
+      this.selectedCategory,
+      this.teaching});
 
   factory _$_MyUser.fromJson(Map<String, dynamic> json) =>
       _$_$_MyUserFromJson(json);
@@ -206,10 +231,12 @@ class _$_MyUser implements _MyUser {
   final bool isVerified;
   @override
   final String selectedCategory;
+  @override
+  final Teaching teaching;
 
   @override
   String toString() {
-    return 'MyUser(id: $id, name: $name, email: $email, avatar: $avatar, provider: $provider, tagline: $tagline, isVerified: $isVerified, selectedCategory: $selectedCategory)';
+    return 'MyUser(id: $id, name: $name, email: $email, avatar: $avatar, provider: $provider, tagline: $tagline, isVerified: $isVerified, selectedCategory: $selectedCategory, teaching: $teaching)';
   }
 
   @override
@@ -235,7 +262,10 @@ class _$_MyUser implements _MyUser {
                     .equals(other.isVerified, isVerified)) &&
             (identical(other.selectedCategory, selectedCategory) ||
                 const DeepCollectionEquality()
-                    .equals(other.selectedCategory, selectedCategory)));
+                    .equals(other.selectedCategory, selectedCategory)) &&
+            (identical(other.teaching, teaching) ||
+                const DeepCollectionEquality()
+                    .equals(other.teaching, teaching)));
   }
 
   @override
@@ -248,7 +278,8 @@ class _$_MyUser implements _MyUser {
       const DeepCollectionEquality().hash(provider) ^
       const DeepCollectionEquality().hash(tagline) ^
       const DeepCollectionEquality().hash(isVerified) ^
-      const DeepCollectionEquality().hash(selectedCategory);
+      const DeepCollectionEquality().hash(selectedCategory) ^
+      const DeepCollectionEquality().hash(teaching);
 
   @override
   _$MyUserCopyWith<_MyUser> get copyWith =>
@@ -269,7 +300,8 @@ abstract class _MyUser implements MyUser {
       String provider,
       @JsonKey(includeIfNull: false) String tagline,
       @JsonKey(includeIfNull: false, defaultValue: false) bool isVerified,
-      String selectedCategory}) = _$_MyUser;
+      String selectedCategory,
+      Teaching teaching}) = _$_MyUser;
 
   factory _MyUser.fromJson(Map<String, dynamic> json) = _$_MyUser.fromJson;
 
@@ -294,5 +326,200 @@ abstract class _MyUser implements MyUser {
   @override
   String get selectedCategory;
   @override
+  Teaching get teaching;
+  @override
   _$MyUserCopyWith<_MyUser> get copyWith;
+}
+
+Teaching _$TeachingFromJson(Map<String, dynamic> json) {
+  return _Teaching.fromJson(json);
+}
+
+/// @nodoc
+class _$TeachingTearOff {
+  const _$TeachingTearOff();
+
+// ignore: unused_element
+  _Teaching call(
+      {@JsonKey(defaultValue: false) bool isTeacher,
+      @JsonKey(defaultValue: false) bool hasSignedCLA,
+      @JsonKey(defaultValue: false) bool isVerified}) {
+    return _Teaching(
+      isTeacher: isTeacher,
+      hasSignedCLA: hasSignedCLA,
+      isVerified: isVerified,
+    );
+  }
+
+// ignore: unused_element
+  Teaching fromJson(Map<String, Object> json) {
+    return Teaching.fromJson(json);
+  }
+}
+
+/// @nodoc
+// ignore: unused_element
+const $Teaching = _$TeachingTearOff();
+
+/// @nodoc
+mixin _$Teaching {
+  @JsonKey(defaultValue: false)
+  bool get isTeacher;
+  @JsonKey(defaultValue: false)
+  bool get hasSignedCLA;
+  @JsonKey(defaultValue: false)
+  bool get isVerified;
+
+  Map<String, dynamic> toJson();
+  $TeachingCopyWith<Teaching> get copyWith;
+}
+
+/// @nodoc
+abstract class $TeachingCopyWith<$Res> {
+  factory $TeachingCopyWith(Teaching value, $Res Function(Teaching) then) =
+      _$TeachingCopyWithImpl<$Res>;
+  $Res call(
+      {@JsonKey(defaultValue: false) bool isTeacher,
+      @JsonKey(defaultValue: false) bool hasSignedCLA,
+      @JsonKey(defaultValue: false) bool isVerified});
+}
+
+/// @nodoc
+class _$TeachingCopyWithImpl<$Res> implements $TeachingCopyWith<$Res> {
+  _$TeachingCopyWithImpl(this._value, this._then);
+
+  final Teaching _value;
+  // ignore: unused_field
+  final $Res Function(Teaching) _then;
+
+  @override
+  $Res call({
+    Object isTeacher = freezed,
+    Object hasSignedCLA = freezed,
+    Object isVerified = freezed,
+  }) {
+    return _then(_value.copyWith(
+      isTeacher: isTeacher == freezed ? _value.isTeacher : isTeacher as bool,
+      hasSignedCLA:
+          hasSignedCLA == freezed ? _value.hasSignedCLA : hasSignedCLA as bool,
+      isVerified:
+          isVerified == freezed ? _value.isVerified : isVerified as bool,
+    ));
+  }
+}
+
+/// @nodoc
+abstract class _$TeachingCopyWith<$Res> implements $TeachingCopyWith<$Res> {
+  factory _$TeachingCopyWith(_Teaching value, $Res Function(_Teaching) then) =
+      __$TeachingCopyWithImpl<$Res>;
+  @override
+  $Res call(
+      {@JsonKey(defaultValue: false) bool isTeacher,
+      @JsonKey(defaultValue: false) bool hasSignedCLA,
+      @JsonKey(defaultValue: false) bool isVerified});
+}
+
+/// @nodoc
+class __$TeachingCopyWithImpl<$Res> extends _$TeachingCopyWithImpl<$Res>
+    implements _$TeachingCopyWith<$Res> {
+  __$TeachingCopyWithImpl(_Teaching _value, $Res Function(_Teaching) _then)
+      : super(_value, (v) => _then(v as _Teaching));
+
+  @override
+  _Teaching get _value => super._value as _Teaching;
+
+  @override
+  $Res call({
+    Object isTeacher = freezed,
+    Object hasSignedCLA = freezed,
+    Object isVerified = freezed,
+  }) {
+    return _then(_Teaching(
+      isTeacher: isTeacher == freezed ? _value.isTeacher : isTeacher as bool,
+      hasSignedCLA:
+          hasSignedCLA == freezed ? _value.hasSignedCLA : hasSignedCLA as bool,
+      isVerified:
+          isVerified == freezed ? _value.isVerified : isVerified as bool,
+    ));
+  }
+}
+
+@JsonSerializable()
+
+/// @nodoc
+class _$_Teaching implements _Teaching {
+  _$_Teaching(
+      {@JsonKey(defaultValue: false) this.isTeacher,
+      @JsonKey(defaultValue: false) this.hasSignedCLA,
+      @JsonKey(defaultValue: false) this.isVerified});
+
+  factory _$_Teaching.fromJson(Map<String, dynamic> json) =>
+      _$_$_TeachingFromJson(json);
+
+  @override
+  @JsonKey(defaultValue: false)
+  final bool isTeacher;
+  @override
+  @JsonKey(defaultValue: false)
+  final bool hasSignedCLA;
+  @override
+  @JsonKey(defaultValue: false)
+  final bool isVerified;
+
+  @override
+  String toString() {
+    return 'Teaching(isTeacher: $isTeacher, hasSignedCLA: $hasSignedCLA, isVerified: $isVerified)';
+  }
+
+  @override
+  bool operator ==(dynamic other) {
+    return identical(this, other) ||
+        (other is _Teaching &&
+            (identical(other.isTeacher, isTeacher) ||
+                const DeepCollectionEquality()
+                    .equals(other.isTeacher, isTeacher)) &&
+            (identical(other.hasSignedCLA, hasSignedCLA) ||
+                const DeepCollectionEquality()
+                    .equals(other.hasSignedCLA, hasSignedCLA)) &&
+            (identical(other.isVerified, isVerified) ||
+                const DeepCollectionEquality()
+                    .equals(other.isVerified, isVerified)));
+  }
+
+  @override
+  int get hashCode =>
+      runtimeType.hashCode ^
+      const DeepCollectionEquality().hash(isTeacher) ^
+      const DeepCollectionEquality().hash(hasSignedCLA) ^
+      const DeepCollectionEquality().hash(isVerified);
+
+  @override
+  _$TeachingCopyWith<_Teaching> get copyWith =>
+      __$TeachingCopyWithImpl<_Teaching>(this, _$identity);
+
+  @override
+  Map<String, dynamic> toJson() {
+    return _$_$_TeachingToJson(this);
+  }
+}
+
+abstract class _Teaching implements Teaching {
+  factory _Teaching(
+      {@JsonKey(defaultValue: false) bool isTeacher,
+      @JsonKey(defaultValue: false) bool hasSignedCLA,
+      @JsonKey(defaultValue: false) bool isVerified}) = _$_Teaching;
+
+  factory _Teaching.fromJson(Map<String, dynamic> json) = _$_Teaching.fromJson;
+
+  @override
+  @JsonKey(defaultValue: false)
+  bool get isTeacher;
+  @override
+  @JsonKey(defaultValue: false)
+  bool get hasSignedCLA;
+  @override
+  @JsonKey(defaultValue: false)
+  bool get isVerified;
+  @override
+  _$TeachingCopyWith<_Teaching> get copyWith;
 }

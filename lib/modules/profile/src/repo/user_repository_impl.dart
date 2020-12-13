@@ -13,47 +13,21 @@ class FirebaseUserRepository implements UserRepository {
   FirebaseUserRepository({
     @required this.prefHelper,
     @required this.firestore,
-  }) {
-    init();
-  }
-
+  });
   final AppPrefs prefHelper;
   final FirebaseFirestore firestore;
 
   static const _prefsUserLogin = "prefsUserLogin";
   final _userSubject = BehaviorSubject<MyUser>.seeded(null);
 
-  @override
-  Future<Result> registerUser(MyUser user) async {
-    try {
-      final userDoc = await firestore.collection('users').doc(user.id).get();
-      if (userDoc.exists) {
-        await firestore.collection('users').doc(user.id).update({
-          'updatedAt': DateTime.now().millisecondsSinceEpoch ~/ 1000,
-        });
-        setUserLoggedIn(true);
-        return Result.success();
-      } else {
-        final epoch = DateTime.now().millisecondsSinceEpoch ~/ 1000;
-        await firestore.collection('users').doc(user.id).set({
-          ...user.toJson(),
-          'createdAt': epoch,
-          'updatedAt': epoch,
-        });
-        setUserLoggedIn(true);
-        init();
-        return Result.success(null);
-      }
-    } catch (e, s) {
-      logger.e(e, s);
-      return Result.error('${e.message}');
-    }
-  }
-
   Future<void> init() async {
     try {
       final firebaseUser = FirebaseAuth.instance.currentUser;
       if (firebaseUser != null) {
+        final userDoc =
+            await firestore.collection('users').doc(firebaseUser.uid).get();
+        _userSubject.add(MyUser.fromJson(userDoc.data()));
+
         firestore
             .collection('users')
             .doc(firebaseUser.uid)
@@ -81,30 +55,33 @@ class FirebaseUserRepository implements UserRepository {
   }
 
   @override
-  BehaviorSubject<MyUser> getLoggedInUserStream() {
-    return _userSubject.stream;
-    /*try {
-      final userId = FirebaseAuth.instance.currentUser?.uid;
-      if (userId == null) {
-        throw Exception('No logged in user found');
+  Future<Result> registerUser(MyUser user) async {
+    try {
+      final userDoc = await firestore.collection('users').doc(user.id).get();
+      if (userDoc.exists) {
+        await firestore.collection('users').doc(user.id).update({
+          'updatedAt': DateTime.now().millisecondsSinceEpoch ~/ 1000,
+        });
+      } else {
+        final epoch = DateTime.now().millisecondsSinceEpoch ~/ 1000;
+        await firestore.collection('users').doc(user.id).set({
+          ...user.toJson(),
+          'createdAt': epoch,
+          'updatedAt': epoch,
+        });
       }
-      final result = firestore
-          .collection('users')
-          .doc(userId)
-          .snapshots()
-          .transform<MyUser>(
-              StreamTransformer.fromHandlers(handleData: (data, sink) {
-            sink.add(MyUser.fromJson(data.data()));
-          }))
-          .asBroadcastStream()
-          .shareValue();
-      return result;
+      setUserLoggedIn(true);
+      await init();
+      return Result.success();
     } catch (e, s) {
       logger.e(e, s);
-      logoutUser();
-      stream.sink.addError(e);
-      return stream;
-    }*/
+      return Result.error('${e.message}');
+    }
+  }
+
+  @override
+  BehaviorSubject<MyUser> getLoggedInUserStream() {
+    return _userSubject.stream;
   }
 
   @override
@@ -146,4 +123,26 @@ class FirebaseUserRepository implements UserRepository {
       logger.e(e, s);
     }
   }
+
+  @override
+  Future<void> setUserSignedCla(bool value) async {
+    try {
+      await firestore.collection('users').doc(_userSubject.value.id).update({
+        'teaching': {
+          ..._userSubject.value.teaching?.toJson() ?? {},
+          'hasSignedCLA': true,
+        },
+        'updatedAt': DateTime.now().millisecondsSinceEpoch ~/ 1000,
+      });
+    } catch (e, s) {
+      logger.e(e, s);
+    }
+  }
+
+  @override
+  bool get hasUserSignedCla =>
+      _userSubject.value.teaching?.hasSignedCLA ?? false;
+
+  @override
+  bool get isTeacher => hasUserSignedCla;
 }

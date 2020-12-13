@@ -19,12 +19,14 @@ class _$CourseTearOff {
 // ignore: unused_element
   _Course call(
       {String id,
+      String userId,
       String title,
       String subtitle,
       String cover,
       List<String> lessons}) {
     return _Course(
       id: id,
+      userId: userId,
       title: title,
       subtitle: subtitle,
       cover: cover,
@@ -45,6 +47,7 @@ const $Course = _$CourseTearOff();
 /// @nodoc
 mixin _$Course {
   String get id;
+  String get userId;
   String get title;
   String get subtitle;
   String get cover;
@@ -60,6 +63,7 @@ abstract class $CourseCopyWith<$Res> {
       _$CourseCopyWithImpl<$Res>;
   $Res call(
       {String id,
+      String userId,
       String title,
       String subtitle,
       String cover,
@@ -77,6 +81,7 @@ class _$CourseCopyWithImpl<$Res> implements $CourseCopyWith<$Res> {
   @override
   $Res call({
     Object id = freezed,
+    Object userId = freezed,
     Object title = freezed,
     Object subtitle = freezed,
     Object cover = freezed,
@@ -84,6 +89,7 @@ class _$CourseCopyWithImpl<$Res> implements $CourseCopyWith<$Res> {
   }) {
     return _then(_value.copyWith(
       id: id == freezed ? _value.id : id as String,
+      userId: userId == freezed ? _value.userId : userId as String,
       title: title == freezed ? _value.title : title as String,
       subtitle: subtitle == freezed ? _value.subtitle : subtitle as String,
       cover: cover == freezed ? _value.cover : cover as String,
@@ -99,6 +105,7 @@ abstract class _$CourseCopyWith<$Res> implements $CourseCopyWith<$Res> {
   @override
   $Res call(
       {String id,
+      String userId,
       String title,
       String subtitle,
       String cover,
@@ -117,6 +124,7 @@ class __$CourseCopyWithImpl<$Res> extends _$CourseCopyWithImpl<$Res>
   @override
   $Res call({
     Object id = freezed,
+    Object userId = freezed,
     Object title = freezed,
     Object subtitle = freezed,
     Object cover = freezed,
@@ -124,6 +132,7 @@ class __$CourseCopyWithImpl<$Res> extends _$CourseCopyWithImpl<$Res>
   }) {
     return _then(_Course(
       id: id == freezed ? _value.id : id as String,
+      userId: userId == freezed ? _value.userId : userId as String,
       title: title == freezed ? _value.title : title as String,
       subtitle: subtitle == freezed ? _value.subtitle : subtitle as String,
       cover: cover == freezed ? _value.cover : cover as String,
@@ -136,13 +145,21 @@ class __$CourseCopyWithImpl<$Res> extends _$CourseCopyWithImpl<$Res>
 
 /// @nodoc
 class _$_Course implements _Course {
-  _$_Course({this.id, this.title, this.subtitle, this.cover, this.lessons});
+  _$_Course(
+      {this.id,
+      this.userId,
+      this.title,
+      this.subtitle,
+      this.cover,
+      this.lessons});
 
   factory _$_Course.fromJson(Map<String, dynamic> json) =>
       _$_$_CourseFromJson(json);
 
   @override
   final String id;
+  @override
+  final String userId;
   @override
   final String title;
   @override
@@ -154,7 +171,7 @@ class _$_Course implements _Course {
 
   @override
   String toString() {
-    return 'Course(id: $id, title: $title, subtitle: $subtitle, cover: $cover, lessons: $lessons)';
+    return 'Course(id: $id, userId: $userId, title: $title, subtitle: $subtitle, cover: $cover, lessons: $lessons)';
   }
 
   @override
@@ -163,6 +180,8 @@ class _$_Course implements _Course {
         (other is _Course &&
             (identical(other.id, id) ||
                 const DeepCollectionEquality().equals(other.id, id)) &&
+            (identical(other.userId, userId) ||
+                const DeepCollectionEquality().equals(other.userId, userId)) &&
             (identical(other.title, title) ||
                 const DeepCollectionEquality().equals(other.title, title)) &&
             (identical(other.subtitle, subtitle) ||
@@ -178,6 +197,7 @@ class _$_Course implements _Course {
   int get hashCode =>
       runtimeType.hashCode ^
       const DeepCollectionEquality().hash(id) ^
+      const DeepCollectionEquality().hash(userId) ^
       const DeepCollectionEquality().hash(title) ^
       const DeepCollectionEquality().hash(subtitle) ^
       const DeepCollectionEquality().hash(cover) ^
@@ -196,6 +216,7 @@ class _$_Course implements _Course {
 abstract class _Course implements Course {
   factory _Course(
       {String id,
+      String userId,
       String title,
       String subtitle,
       String cover,
@@ -205,6 +226,8 @@ abstract class _Course implements Course {
 
   @override
   String get id;
+  @override
+  String get userId;
   @override
   String get title;
   @override

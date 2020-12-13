@@ -21,13 +21,23 @@ class AppBlocImpl extends AppBloc {
 
   @override
   void onCategorySelection(Category category) {
-    appPrefs.setString(prefsSelectedCategory, category.id);
-    notifyListeners();
     injector<UserRepository>().saveSelectedCategory(category.id);
+    notifyListeners();
   }
 
   @override
   String get selectedCategory =>
-      appPrefs.getString(prefsSelectedCategory) ??
       injector<UserRepository>().getLoggedInUser()?.selectedCategory;
+
+  @override
+  void saveUserSignedCla() {
+    injector<UserRepository>().setUserSignedCla(true);
+  }
+
+  @override
+  // TODO: implement hasUserSignedCla
+  bool get hasUserSignedCla => injector<UserRepository>().hasUserSignedCla;
+
+  @override
+  bool get isTeacher => injector<UserRepository>().isTeacher;
 }

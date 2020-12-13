@@ -14,7 +14,20 @@ abstract class MyUser with _$MyUser {
     @JsonKey(includeIfNull: false) String tagline,
     @JsonKey(includeIfNull: false, defaultValue: false) bool isVerified,
     String selectedCategory,
+    Teaching teaching,
   }) = _MyUser;
 
   factory MyUser.fromJson(Map<String, dynamic> json) => _$MyUserFromJson(json);
+}
+
+@freezed
+abstract class Teaching with _$Teaching {
+  factory Teaching({
+    @JsonKey(defaultValue: false) bool isTeacher,
+    @JsonKey(defaultValue: false) bool hasSignedCLA,
+    @JsonKey(defaultValue: false) bool isVerified,
+  }) = _Teaching;
+
+  factory Teaching.fromJson(Map<String, dynamic> json) =>
+      _$TeachingFromJson(json);
 }

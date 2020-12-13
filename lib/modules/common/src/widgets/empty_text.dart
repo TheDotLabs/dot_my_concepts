@@ -13,6 +13,7 @@ class EmptyText extends StatelessWidget {
         fontStyle: FontStyle.italic,
         fontSize: 12,
       ),
+      textAlign: TextAlign.center,
     );
   }
 }

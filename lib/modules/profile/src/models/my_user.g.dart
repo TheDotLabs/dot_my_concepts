@@ -16,6 +16,9 @@ _$_MyUser _$_$_MyUserFromJson(Map<String, dynamic> json) {
     tagline: json['tagline'] as String,
     isVerified: json['isVerified'] as bool ?? false,
     selectedCategory: json['selectedCategory'] as String,
+    teaching: json['teaching'] == null
+        ? null
+        : Teaching.fromJson(json['teaching'] as Map<String, dynamic>),
   );
 }
 
@@ -37,5 +40,21 @@ Map<String, dynamic> _$_$_MyUserToJson(_$_MyUser instance) {
   writeNotNull('tagline', instance.tagline);
   writeNotNull('isVerified', instance.isVerified);
   val['selectedCategory'] = instance.selectedCategory;
+  val['teaching'] = instance.teaching;
   return val;
 }
+
+_$_Teaching _$_$_TeachingFromJson(Map<String, dynamic> json) {
+  return _$_Teaching(
+    isTeacher: json['isTeacher'] as bool ?? false,
+    hasSignedCLA: json['hasSignedCLA'] as bool ?? false,
+    isVerified: json['isVerified'] as bool ?? false,
+  );
+}
+
+Map<String, dynamic> _$_$_TeachingToJson(_$_Teaching instance) =>
+    <String, dynamic>{
+      'isTeacher': instance.isTeacher,
+      'hasSignedCLA': instance.hasSignedCLA,
+      'isVerified': instance.isVerified,
+    };

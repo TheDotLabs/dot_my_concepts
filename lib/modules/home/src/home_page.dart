@@ -8,8 +8,9 @@ import 'package:flutter_record_lesson/models/category.dart';
 import 'package:flutter_record_lesson/modules/common/src/widgets/circular_loading.dart';
 import 'package:flutter_record_lesson/modules/lesson/index.dart';
 import 'package:flutter_record_lesson/modules/profile/index.dart';
-import 'package:flutter_record_lesson/modules/record_lesson/src/lesson_record_page.dart';
+import 'package:flutter_record_lesson/modules/start_teaching/src/start_teaching_page.dart';
 import 'package:flutter_record_lesson/modules/select_category_page.dart';
+import 'package:flutter_record_lesson/modules/start_teaching/src/teaching_page.dart';
 import 'package:provider/provider.dart';
 
 class HomePage extends StatefulWidget {
@@ -20,7 +21,7 @@ class HomePage extends StatefulWidget {
 class _HomePageState extends State<HomePage> {
   final _pages = <Widget>[
     FeedPage(),
-    LessonRecordPage(),
+    TeachingPage(),
     ProfileScreen(),
   ];
   final _pageController = PageController(keepPage: true);
@@ -100,7 +101,7 @@ class _HomePageState extends State<HomePage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(SimpleLineIcons.camrecorder),
-            label: "Record",
+            label: "Teach",
           ),
           BottomNavigationBarItem(
             icon: Icon(SimpleLineIcons.user),
