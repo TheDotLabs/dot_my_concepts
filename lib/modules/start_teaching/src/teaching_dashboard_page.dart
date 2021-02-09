@@ -92,23 +92,15 @@ class _TeachingDashboardPageState extends State<TeachingDashboardPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Theme(
-                  data: Theme.of(context).copyWith(
-                    buttonTheme: ButtonThemeData(
-                      height: 48,
-                      textTheme: ButtonTextTheme.primary,
-                    ),
-                  ),
-                  child: RaisedButton(
-                    onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (_) => CategoryPage(),
-                        ),
-                      );
-                    },
-                    child: Text('Add New Lesson'),
-                  ),
+                RaisedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => CategoryPage(),
+                      ),
+                    );
+                  },
+                  child: Text('Add New Lesson'),
                 ),
               ],
             ),
@@ -127,23 +119,15 @@ class _TeachingDashboardPageState extends State<TeachingDashboardPage> {
             Row(
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
-                Theme(
-                  data: Theme.of(context).copyWith(
-                    buttonTheme: ButtonThemeData(
-                      height: 48,
-                      textTheme: ButtonTextTheme.primary,
-                    ),
-                  ),
-                  child: RaisedButton(
-                    onPressed: () {
-                      Navigator.of(context).push(
-                        MaterialPageRoute(
-                          builder: (_) => CategoryPage(),
-                        ),
-                      );
-                    },
-                    child: Text('Start New Course'),
-                  ),
+                RaisedButton(
+                  onPressed: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (_) => CategoryPage(),
+                      ),
+                    );
+                  },
+                  child: Text('Start New Course'),
                 ),
               ],
             ),

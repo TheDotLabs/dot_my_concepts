@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_record_lesson/core/widgets/BorderContainer.dart';
 import 'package:flutter_record_lesson/models/category.dart';
+import 'package:flutter_record_lesson/modules/record_lesson/src/record_lesson.dart';
 import 'package:rxdart/rxdart.dart';
-
-import 'record_lesson.dart';
 
 class ChapterPage extends StatefulWidget {
   final MyUnit unit;

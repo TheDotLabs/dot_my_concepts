@@ -6,9 +6,8 @@ import 'package:flutter_record_lesson/core/widgets/no_item_found.dart';
 import 'package:flutter_record_lesson/models/category.dart';
 import 'package:flutter_record_lesson/modules/common/src/widgets/circular_loading.dart';
 import 'package:flutter_record_lesson/modules/lesson/src/select_unit_page.dart';
+import 'package:flutter_record_lesson/modules/record_lesson/src/select_images_page.dart';
 import 'package:rxdart/rxdart.dart';
-
-import 'record_lesson.dart';
 
 class SubjectPage extends StatefulWidget {
   final Category category;
@@ -115,12 +114,7 @@ class _SubjectPageState extends State<SubjectPage> {
   }) {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (_) => RecordLessonPage(
-            /*category: category,
-          subject: subject,
-          unit: unit,
-          chapter: chapter,*/
-            ),
+        builder: (_) => SelectImagePage(),
       ),
     );
   }

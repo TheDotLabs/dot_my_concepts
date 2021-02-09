@@ -47,6 +47,7 @@ dependencies:
   equatable: ^1.2.5
   flutter_icons: ^1.1.0
   flutter_signin_button: ^1.1.0
+  image_picker: ^0.6.7+22
 
   firebase_auth: ^0.18.0+1
   google_sign_in: ^4.5.3

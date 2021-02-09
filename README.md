@@ -10,6 +10,10 @@ Source of Inspiration - Unacademy Educator App
 
 <img src="https://raw.githubusercontent.com/apgapg/flutter_record_lesson/master/res/s1.png"  height="500"> <img src="https://raw.githubusercontent.com/apgapg/flutter_record_lesson/master/res/s2.png"  height="500"> <img src="https://raw.githubusercontent.com/apgapg/flutter_record_lesson/master/res/s3.png"  height="500"> <img src="https://raw.githubusercontent.com/apgapg/flutter_record_lesson/master/res/s4.png"  height="500"> <img src="https://raw.githubusercontent.com/apgapg/flutter_record_lesson/master/res/s5.png"  height="500"> <img src="https://raw.githubusercontent.com/apgapg/flutter_record_lesson/master/res/s6.png"  height="500">
 
+## Adding Images
+
+<img src="https://raw.githubusercontent.com/apgapg/flutter_record_lesson/master/res/s7.png"  height="500"> <img src="https://raw.githubusercontent.com/apgapg/flutter_record_lesson/master/res/s8.png"  height="500">
+
 ## Getting Started
 
 TODO:

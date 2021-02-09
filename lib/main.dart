@@ -70,6 +70,10 @@ class MyApp extends StatelessWidget {
             iconTheme: Theme.of(context).iconTheme,
           ),
           scaffoldBackgroundColor: Colors.white,
+          buttonTheme: ButtonThemeData(
+            height: 48,
+            textTheme: ButtonTextTheme.primary,
+          ),
           dividerTheme: DividerThemeData(
             color: Colors.black38,
             space: 1,
