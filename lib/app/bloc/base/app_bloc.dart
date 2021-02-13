@@ -6,7 +6,7 @@ abstract class AppBloc extends ChangeNotifier {
 
   bool get isTeacher;
 
-  void onCategorySelection(Category category);
+  void onCategorySelection(MyCategory category);
 
   String get selectedCategory;
 

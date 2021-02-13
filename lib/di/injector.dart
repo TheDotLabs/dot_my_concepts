@@ -3,7 +3,10 @@ import 'package:fa_flutter_core/fa_flutter_core.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter_record_lesson/app/bloc/app_bloc_impl.dart';
 import 'package:flutter_record_lesson/app/bloc/base/app_bloc.dart';
+import 'package:flutter_record_lesson/data/local/app_db.dart';
+import 'package:flutter_record_lesson/data/local/sembast_app_db.dart';
 import 'package:flutter_record_lesson/data/repo/google_login_repository.dart';
+import 'package:flutter_record_lesson/modules/common/src/bloc/record_lesson_bloc.dart';
 import 'package:flutter_record_lesson/modules/profile/index.dart';
 import 'package:flutter_record_lesson/utils/log_utils.dart';
 import 'package:get_it/get_it.dart';
@@ -74,6 +77,11 @@ class Injector {
     );
     await repo.init();
     injector.registerLazySingleton<UserRepository>(() => repo);
+
+    /// DbHelper;
+    final appDb = SembastAppDb();
+    await appDb.initialise();
+    injector.registerSingleton<AppDb>(appDb);
   }
 
   Future<void> _initBlocs() async {
@@ -85,6 +93,11 @@ class Injector {
     //await appBloc.init();
     injector.registerSingleton<AppBloc>(
       appBloc,
+    );
+
+    // GoogleLoginRepository
+    injector.registerLazySingleton<RecordLessonBloc>(
+      () => RecordLessonBloc(),
     );
   }
 }

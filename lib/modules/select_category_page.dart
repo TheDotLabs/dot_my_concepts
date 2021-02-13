@@ -26,7 +26,7 @@ class _SelectCategoryPageState extends State<SelectCategoryPage> {
       appBar: AppBar(
         title: Text('Select Category'),
       ),
-      body: StreamBuilder<List<Category>>(
+      body: StreamBuilder<List<MyCategory>>(
           stream: _getStream(),
           builder: (context, snapshot) {
             if (snapshot.hasData && snapshot.data != null) {
@@ -78,19 +78,19 @@ class _SelectCategoryPageState extends State<SelectCategoryPage> {
     super.dispose();
   }
 
-  Stream<List<Category>> _getStream() {
+  Stream<List<MyCategory>> _getStream() {
     return FirebaseFirestore.instance
         .collection('categories')
         .snapshots()
         .transform(StreamTransformer.fromHandlers(handleData: (snapshot, sink) {
       final list = snapshot.docs
-          .map((e) => Category.fromJson(e.data()).copyWith(id: e.id))
+          .map((e) => MyCategory.fromJson(e.data()).copyWith(id: e.id))
           .toList(growable: false);
       return sink.add(list);
     }));
   }
 
-  void _onCategorySelect(Category e) {
+  void _onCategorySelect(MyCategory e) {
     injector<AppBloc>().onCategorySelection(e);
     Navigator.of(context).pop();
   }

@@ -4,17 +4,17 @@ part 'category.freezed.dart';
 part 'category.g.dart';
 
 @freezed
-abstract class Category with _$Category {
-  factory Category({
+abstract class MyCategory with _$MyCategory {
+  factory MyCategory({
     @JsonKey(defaultValue: "0") String id,
     String title,
     String description,
     String image,
     List<MySubject> subjects,
-  }) = _Category;
+  }) = _MyCategory;
 
-  factory Category.fromJson(Map<String, dynamic> json) =>
-      _$CategoryFromJson(json);
+  factory MyCategory.fromJson(Map<String, dynamic> json) =>
+      _$MyCategoryFromJson(json);
 }
 
 @freezed

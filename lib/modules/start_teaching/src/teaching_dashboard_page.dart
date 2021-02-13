@@ -7,7 +7,8 @@ import 'package:flutter_record_lesson/core/models/course.dart';
 import 'package:flutter_record_lesson/di/injector.dart';
 import 'package:flutter_record_lesson/modules/common/index.dart';
 import 'package:flutter_record_lesson/modules/profile/index.dart';
-import 'package:flutter_record_lesson/modules/record_lesson/src/category_page.dart';
+import 'package:flutter_record_lesson/modules/record_lesson/src/nested_course_creation.dart';
+import 'package:flutter_record_lesson/modules/record_lesson/src/select_course_page.dart';
 
 class TeachingDashboardPage extends StatefulWidget {
   @override
@@ -15,7 +16,7 @@ class TeachingDashboardPage extends StatefulWidget {
 }
 
 class _TeachingDashboardPageState extends State<TeachingDashboardPage> {
-  final Stream<List<Course>> _coursesStream = FirebaseFirestore.instance
+  final Stream<List<MyCourse>> _coursesStream = FirebaseFirestore.instance
       .collection('courses')
       .where('userId',
           isEqualTo: injector<UserRepository>().getLoggedInUser().id)
@@ -25,7 +26,7 @@ class _TeachingDashboardPageState extends State<TeachingDashboardPage> {
       handleData: (snapshots, sink) {
         return sink.add(
           snapshots.docs
-              .map((e) => Course.fromJson(e.data()).copyWith(id: e.id))
+              .map((e) => MyCourse.fromJson(e.data()).copyWith(id: e.id))
               .toList(growable: false),
         );
       },
@@ -48,7 +49,7 @@ class _TeachingDashboardPageState extends State<TeachingDashboardPage> {
                   fontSize: 14,
                 ),
               ),
-              trailing: StreamBuilder<List<Course>>(
+              trailing: StreamBuilder<List<MyCourse>>(
                   stream: _getUserCoursesStream(),
                   builder: (context, snapshot) {
                     if (snapshot.hasData && snapshot.data != null)
@@ -66,7 +67,7 @@ class _TeachingDashboardPageState extends State<TeachingDashboardPage> {
                   fontSize: 14,
                 ),
               ),
-              trailing: StreamBuilder<List<Course>>(
+              trailing: StreamBuilder<List<MyCourse>>(
                   stream: _getUserCoursesStream(),
                   builder: (context, snapshot) {
                     if (snapshot.hasData && snapshot.data != null) {
@@ -96,7 +97,7 @@ class _TeachingDashboardPageState extends State<TeachingDashboardPage> {
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (_) => CategoryPage(),
+                        builder: (_) => SelectCoursePage(),
                       ),
                     );
                   },
@@ -123,7 +124,7 @@ class _TeachingDashboardPageState extends State<TeachingDashboardPage> {
                   onPressed: () {
                     Navigator.of(context).push(
                       MaterialPageRoute(
-                        builder: (_) => CategoryPage(),
+                        builder: (_) => NestedCourseCreation(),
                       ),
                     );
                   },
@@ -141,7 +142,7 @@ class _TeachingDashboardPageState extends State<TeachingDashboardPage> {
     );
   }
 
-  Stream<List<Course>> _getUserCoursesStream() {
+  Stream<List<MyCourse>> _getUserCoursesStream() {
     return _coursesStream;
   }
 }

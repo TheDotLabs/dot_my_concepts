@@ -2,6 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_record_lesson/core/widgets/BorderContainer.dart';
+import 'package:flutter_record_lesson/modules/record_lesson/src/record_lesson.dart';
 import 'package:flutter_record_lesson/utils/log_utils.dart';
 import 'package:image_picker/image_picker.dart';
 import 'package:lottie/lottie.dart';
@@ -208,7 +209,13 @@ class _SelectImagePageState extends State<SelectImagePage> {
     );
   }
 
-  void _onProceedTap() {}
+  void _onProceedTap() {
+    Navigator.of(context).push(
+      MaterialPageRoute(
+        builder: (_) => RecordLessonPage(),
+      ),
+    );
+  }
 
   void _onReorder(int oldIndex, int newIndex) {
     final child = _selectedImages.elementAt(oldIndex);

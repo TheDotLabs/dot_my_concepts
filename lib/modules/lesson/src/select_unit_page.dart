@@ -1,10 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_record_lesson/core/widgets/no_item_found.dart';
 import 'package:flutter_record_lesson/models/category.dart';
+import 'package:flutter_record_lesson/modules/common/src/widgets/box_header.dart';
 import 'package:rxdart/rxdart.dart';
 
 typedef ChapterSelectCallback = void Function({
-  Category category,
+  MyCategory category,
   MySubject subject,
   MyUnit unit,
   MyChapter chapter,
@@ -12,7 +13,7 @@ typedef ChapterSelectCallback = void Function({
 
 class SelectUnitPage extends StatefulWidget {
   final MySubject subject;
-  final Category category;
+  final MyCategory category;
   final ChapterSelectCallback onTap;
 
   SelectUnitPage({
@@ -51,18 +52,7 @@ class _SelectUnitPageState extends State<SelectUnitPage> {
                   ..._getList().map(
                     (unit) => Column(
                       children: [
-                        Container(
-                          margin: EdgeInsets.all(8.0),
-                          padding: const EdgeInsets.all(8.0),
-                          decoration: BoxDecoration(
-                            color: Colors.blueGrey[50],
-                            borderRadius: BorderRadius.circular(4),
-                          ),
-                          child: Text(
-                            unit.title.toUpperCase(),
-                            style: Theme.of(context).textTheme.overline,
-                          ),
-                        ),
+                        BoxHeader(unit.title.toUpperCase()),
                         if (unit.chapters != null && unit.chapters.isNotEmpty)
                           ..._getChapterList(unit.chapters).map(
                             (chapter) => Container(

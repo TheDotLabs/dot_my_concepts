@@ -6,13 +6,19 @@ import 'package:flutter_record_lesson/core/widgets/no_item_found.dart';
 import 'package:flutter_record_lesson/models/category.dart';
 import 'package:flutter_record_lesson/modules/common/src/widgets/circular_loading.dart';
 import 'package:flutter_record_lesson/modules/lesson/src/select_unit_page.dart';
-import 'package:flutter_record_lesson/modules/record_lesson/src/select_images_page.dart';
+import 'package:flutter_record_lesson/modules/record_lesson/src/create_lesson_page.dart';
 import 'package:rxdart/rxdart.dart';
 
-class SubjectPage extends StatefulWidget {
-  final Category category;
+import 'create_course_page.dart';
 
-  SubjectPage({this.category});
+class SubjectPage extends StatefulWidget {
+  const SubjectPage({
+    this.category,
+    this.createCourse = false,
+  });
+
+  final MyCategory category;
+  final bool createCourse;
 
   @override
   _SubjectPageState createState() => _SubjectPageState();
@@ -98,7 +104,7 @@ class _SubjectPageState extends State<SubjectPage> {
         .snapshots()
         .transform(StreamTransformer.fromHandlers(handleData: (snapshot, sink) {
       final list = snapshot.docs
-          .map((e) => Category.fromJson(e.data()).copyWith(id: e.id))
+          .map((e) => MyCategory.fromJson(e.data()).copyWith(id: e.id))
           .toList(growable: false);
       return sink.add(
         list.firstWhere((element) => element.id == widget.category.id).subjects,
@@ -107,15 +113,28 @@ class _SubjectPageState extends State<SubjectPage> {
   }
 
   void _onChapterSelect({
-    Category category,
+    MyCategory category,
     MySubject subject,
     MyUnit unit,
     MyChapter chapter,
   }) {
-    Navigator.of(context).push(
-      MaterialPageRoute(
-        builder: (_) => SelectImagePage(),
-      ),
-    );
+    if (widget.createCourse) {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (_) => CreateCoursePage(
+            category: category,
+            subject: subject,
+            unit: unit,
+            chapter: chapter,
+          ),
+        ),
+      );
+    } else {
+      Navigator.of(context).push(
+        MaterialPageRoute(
+          builder: (_) => CreateLessonPage(),
+        ),
+      );
+    }
   }
 }

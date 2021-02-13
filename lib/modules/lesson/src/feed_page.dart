@@ -52,7 +52,7 @@ class _FeedPageState extends State<FeedPage>
                   textAlign: TextAlign.center,
                 ),
               ),
-              StreamBuilder<Category>(
+              StreamBuilder<MyCategory>(
                   stream:
                       _getCategoryStream(categoryId: appBloc.selectedCategory),
                   builder: (context, snapshot) {
@@ -179,7 +179,7 @@ class _FeedPageState extends State<FeedPage>
                   textAlign: TextAlign.center,
                 ),
               ),
-              StreamBuilder<List<Course>>(
+              StreamBuilder<List<MyCourse>>(
                 stream: _getPopularCourseStream(),
                 builder: (context, snapshot) {
                   if (snapshot.hasData && snapshot.data != null) {
@@ -228,7 +228,7 @@ class _FeedPageState extends State<FeedPage>
                   textAlign: TextAlign.center,
                 ),
               ),
-              StreamBuilder<List<Course>>(
+              StreamBuilder<List<MyCourse>>(
                 stream: _getTeachersStream(),
                 builder: (context, snapshot) {
                   if (snapshot.hasData && snapshot.data != null) {
@@ -299,7 +299,7 @@ class _FeedPageState extends State<FeedPage>
     );
   }
 
-  Stream<List<Course>> _getPopularCourseStream() {
+  Stream<List<MyCourse>> _getPopularCourseStream() {
     return FirebaseFirestore.instance
         .collection('courses')
         .where(
@@ -311,12 +311,12 @@ class _FeedPageState extends State<FeedPage>
         .transform(
             StreamTransformer.fromHandlers(handleData: (snapshots, sink) {
       return sink.add(snapshots.docs
-          .map((e) => Course.fromJson(e.data()).copyWith(id: e.id))
+          .map((e) => MyCourse.fromJson(e.data()).copyWith(id: e.id))
           .toList(growable: false));
     }));
   }
 
-  Stream<List<Course>> _getTeachersStream() {
+  Stream<List<MyCourse>> _getTeachersStream() {
     return FirebaseFirestore.instance
         .collection('courses')
         .limit(5)
@@ -324,18 +324,18 @@ class _FeedPageState extends State<FeedPage>
         .transform(
             StreamTransformer.fromHandlers(handleData: (snapshots, sink) {
       return sink.add(snapshots.docs
-          .map((e) => Course.fromJson(e.data()).copyWith(id: e.id))
+          .map((e) => MyCourse.fromJson(e.data()).copyWith(id: e.id))
           .toList(growable: false));
     }));
   }
 
-  Stream<Category> _getCategoryStream({String categoryId}) {
+  Stream<MyCategory> _getCategoryStream({String categoryId}) {
     return FirebaseFirestore.instance
         .collection('categories')
         .snapshots()
         .transform(StreamTransformer.fromHandlers(handleData: (snapshot, sink) {
       final list = snapshot.docs
-          .map((e) => Category.fromJson(e.data()).copyWith(id: e.id))
+          .map((e) => MyCategory.fromJson(e.data()).copyWith(id: e.id))
           .toList(growable: false);
       return sink.add(
         list.firstWhere(
@@ -347,7 +347,7 @@ class _FeedPageState extends State<FeedPage>
   }
 
   void _onChapterSelect({
-    Category category,
+    MyCategory category,
     MySubject subject,
     MyUnit unit,
     MyChapter chapter,

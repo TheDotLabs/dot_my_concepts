@@ -8,22 +8,22 @@ part of 'category.dart';
 // **************************************************************************
 
 T _$identity<T>(T value) => value;
-Category _$CategoryFromJson(Map<String, dynamic> json) {
-  return _Category.fromJson(json);
+MyCategory _$MyCategoryFromJson(Map<String, dynamic> json) {
+  return _MyCategory.fromJson(json);
 }
 
 /// @nodoc
-class _$CategoryTearOff {
-  const _$CategoryTearOff();
+class _$MyCategoryTearOff {
+  const _$MyCategoryTearOff();
 
 // ignore: unused_element
-  _Category call(
-      {@JsonKey(defaultValue: "0") String id,
+  _MyCategory call(
+      {@JsonKey(defaultValue: '0') String id,
       String title,
       String description,
       String image,
       List<MySubject> subjects}) {
-    return _Category(
+    return _MyCategory(
       id: id,
       title: title,
       description: description,
@@ -33,18 +33,18 @@ class _$CategoryTearOff {
   }
 
 // ignore: unused_element
-  Category fromJson(Map<String, Object> json) {
-    return Category.fromJson(json);
+  MyCategory fromJson(Map<String, Object> json) {
+    return MyCategory.fromJson(json);
   }
 }
 
 /// @nodoc
 // ignore: unused_element
-const $Category = _$CategoryTearOff();
+const $MyCategory = _$MyCategoryTearOff();
 
 /// @nodoc
-mixin _$Category {
-  @JsonKey(defaultValue: "0")
+mixin _$MyCategory {
+  @JsonKey(defaultValue: '0')
   String get id;
   String get title;
   String get description;
@@ -52,15 +52,16 @@ mixin _$Category {
   List<MySubject> get subjects;
 
   Map<String, dynamic> toJson();
-  $CategoryCopyWith<Category> get copyWith;
+  $MyCategoryCopyWith<MyCategory> get copyWith;
 }
 
 /// @nodoc
-abstract class $CategoryCopyWith<$Res> {
-  factory $CategoryCopyWith(Category value, $Res Function(Category) then) =
-      _$CategoryCopyWithImpl<$Res>;
+abstract class $MyCategoryCopyWith<$Res> {
+  factory $MyCategoryCopyWith(
+          MyCategory value, $Res Function(MyCategory) then) =
+      _$MyCategoryCopyWithImpl<$Res>;
   $Res call(
-      {@JsonKey(defaultValue: "0") String id,
+      {@JsonKey(defaultValue: '0') String id,
       String title,
       String description,
       String image,
@@ -68,12 +69,12 @@ abstract class $CategoryCopyWith<$Res> {
 }
 
 /// @nodoc
-class _$CategoryCopyWithImpl<$Res> implements $CategoryCopyWith<$Res> {
-  _$CategoryCopyWithImpl(this._value, this._then);
+class _$MyCategoryCopyWithImpl<$Res> implements $MyCategoryCopyWith<$Res> {
+  _$MyCategoryCopyWithImpl(this._value, this._then);
 
-  final Category _value;
+  final MyCategory _value;
   // ignore: unused_field
-  final $Res Function(Category) _then;
+  final $Res Function(MyCategory) _then;
 
   @override
   $Res call({
@@ -96,12 +97,13 @@ class _$CategoryCopyWithImpl<$Res> implements $CategoryCopyWith<$Res> {
 }
 
 /// @nodoc
-abstract class _$CategoryCopyWith<$Res> implements $CategoryCopyWith<$Res> {
-  factory _$CategoryCopyWith(_Category value, $Res Function(_Category) then) =
-      __$CategoryCopyWithImpl<$Res>;
+abstract class _$MyCategoryCopyWith<$Res> implements $MyCategoryCopyWith<$Res> {
+  factory _$MyCategoryCopyWith(
+          _MyCategory value, $Res Function(_MyCategory) then) =
+      __$MyCategoryCopyWithImpl<$Res>;
   @override
   $Res call(
-      {@JsonKey(defaultValue: "0") String id,
+      {@JsonKey(defaultValue: '0') String id,
       String title,
       String description,
       String image,
@@ -109,13 +111,14 @@ abstract class _$CategoryCopyWith<$Res> implements $CategoryCopyWith<$Res> {
 }
 
 /// @nodoc
-class __$CategoryCopyWithImpl<$Res> extends _$CategoryCopyWithImpl<$Res>
-    implements _$CategoryCopyWith<$Res> {
-  __$CategoryCopyWithImpl(_Category _value, $Res Function(_Category) _then)
-      : super(_value, (v) => _then(v as _Category));
+class __$MyCategoryCopyWithImpl<$Res> extends _$MyCategoryCopyWithImpl<$Res>
+    implements _$MyCategoryCopyWith<$Res> {
+  __$MyCategoryCopyWithImpl(
+      _MyCategory _value, $Res Function(_MyCategory) _then)
+      : super(_value, (v) => _then(v as _MyCategory));
 
   @override
-  _Category get _value => super._value as _Category;
+  _MyCategory get _value => super._value as _MyCategory;
 
   @override
   $Res call({
@@ -125,7 +128,7 @@ class __$CategoryCopyWithImpl<$Res> extends _$CategoryCopyWithImpl<$Res>
     Object image = freezed,
     Object subjects = freezed,
   }) {
-    return _then(_Category(
+    return _then(_MyCategory(
       id: id == freezed ? _value.id : id as String,
       title: title == freezed ? _value.title : title as String,
       description:
@@ -140,19 +143,19 @@ class __$CategoryCopyWithImpl<$Res> extends _$CategoryCopyWithImpl<$Res>
 @JsonSerializable()
 
 /// @nodoc
-class _$_Category implements _Category {
-  _$_Category(
-      {@JsonKey(defaultValue: "0") this.id,
+class _$_MyCategory implements _MyCategory {
+  _$_MyCategory(
+      {@JsonKey(defaultValue: '0') this.id,
       this.title,
       this.description,
       this.image,
       this.subjects});
 
-  factory _$_Category.fromJson(Map<String, dynamic> json) =>
-      _$_$_CategoryFromJson(json);
+  factory _$_MyCategory.fromJson(Map<String, dynamic> json) =>
+      _$_$_MyCategoryFromJson(json);
 
   @override
-  @JsonKey(defaultValue: "0")
+  @JsonKey(defaultValue: '0')
   final String id;
   @override
   final String title;
@@ -165,13 +168,13 @@ class _$_Category implements _Category {
 
   @override
   String toString() {
-    return 'Category(id: $id, title: $title, description: $description, image: $image, subjects: $subjects)';
+    return 'MyCategory(id: $id, title: $title, description: $description, image: $image, subjects: $subjects)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
-        (other is _Category &&
+        (other is _MyCategory &&
             (identical(other.id, id) ||
                 const DeepCollectionEquality().equals(other.id, id)) &&
             (identical(other.title, title) ||
@@ -196,27 +199,28 @@ class _$_Category implements _Category {
       const DeepCollectionEquality().hash(subjects);
 
   @override
-  _$CategoryCopyWith<_Category> get copyWith =>
-      __$CategoryCopyWithImpl<_Category>(this, _$identity);
+  _$MyCategoryCopyWith<_MyCategory> get copyWith =>
+      __$MyCategoryCopyWithImpl<_MyCategory>(this, _$identity);
 
   @override
   Map<String, dynamic> toJson() {
-    return _$_$_CategoryToJson(this);
+    return _$_$_MyCategoryToJson(this);
   }
 }
 
-abstract class _Category implements Category {
-  factory _Category(
-      {@JsonKey(defaultValue: "0") String id,
+abstract class _MyCategory implements MyCategory {
+  factory _MyCategory(
+      {@JsonKey(defaultValue: '0') String id,
       String title,
       String description,
       String image,
-      List<MySubject> subjects}) = _$_Category;
+      List<MySubject> subjects}) = _$_MyCategory;
 
-  factory _Category.fromJson(Map<String, dynamic> json) = _$_Category.fromJson;
+  factory _MyCategory.fromJson(Map<String, dynamic> json) =
+      _$_MyCategory.fromJson;
 
   @override
-  @JsonKey(defaultValue: "0")
+  @JsonKey(defaultValue: '0')
   String get id;
   @override
   String get title;
@@ -227,7 +231,7 @@ abstract class _Category implements Category {
   @override
   List<MySubject> get subjects;
   @override
-  _$CategoryCopyWith<_Category> get copyWith;
+  _$MyCategoryCopyWith<_MyCategory> get copyWith;
 }
 
 MySubject _$MySubjectFromJson(Map<String, dynamic> json) {

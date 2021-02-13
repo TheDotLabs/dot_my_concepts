@@ -20,7 +20,7 @@ class AppBlocImpl extends AppBloc {
   final FirebaseFirestore firestore;
 
   @override
-  void onCategorySelection(Category category) {
+  void onCategorySelection(MyCategory category) {
     injector<UserRepository>().saveSelectedCategory(category.id);
     notifyListeners();
   }

@@ -4,7 +4,7 @@ import 'package:flutter_record_lesson/core/models/course.dart';
 import 'package:flutter_record_lesson/core/widgets/BorderContainer.dart';
 
 class CourseCard extends StatelessWidget {
-  final Course course;
+  final MyCourse course;
 
   CourseCard(this.course);
 

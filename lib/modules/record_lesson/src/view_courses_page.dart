@@ -17,7 +17,7 @@ class ViewCoursesPage extends StatefulWidget {
     @required this.chapter,
   });
 
-  final Category category;
+  final MyCategory category;
   final MySubject subject;
   final MyUnit unit;
   final MyChapter chapter;
@@ -33,7 +33,7 @@ class _ViewCoursesPageState extends State<ViewCoursesPage> {
       appBar: AppBar(
         title: Text('${widget.chapter.title}'),
       ),
-      body: StreamBuilder<List<Course>>(
+      body: StreamBuilder<List<MyCourse>>(
         stream: _getCoursesStream(),
         builder: (context, snapshot) {
           if (snapshot.hasData && snapshot.data != null)
@@ -68,7 +68,7 @@ class _ViewCoursesPageState extends State<ViewCoursesPage> {
     );
   }
 
-  Stream<List<Course>> _getCoursesStream() {
+  Stream<List<MyCourse>> _getCoursesStream() {
     return FirebaseFirestore.instance
         .collection('courses')
         .where(
@@ -93,7 +93,7 @@ class _ViewCoursesPageState extends State<ViewCoursesPage> {
         handleData: (snapshots, sink) {
           return sink.add(
             snapshots.docs
-                .map((e) => Course.fromJson(e.data()).copyWith(id: e.id))
+                .map((e) => MyCourse.fromJson(e.data()).copyWith(id: e.id))
                 .toList(growable: false),
           );
         },
@@ -105,7 +105,7 @@ class _ViewCoursesPageState extends State<ViewCoursesPage> {
 class _CourseCard extends StatelessWidget {
   _CourseCard({this.course});
 
-  final Course course;
+  final MyCourse course;
 
   @override
   Widget build(BuildContext context) {

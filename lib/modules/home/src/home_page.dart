@@ -8,7 +8,6 @@ import 'package:flutter_record_lesson/models/category.dart';
 import 'package:flutter_record_lesson/modules/common/src/widgets/circular_loading.dart';
 import 'package:flutter_record_lesson/modules/lesson/index.dart';
 import 'package:flutter_record_lesson/modules/profile/index.dart';
-import 'package:flutter_record_lesson/modules/start_teaching/src/start_teaching_page.dart';
 import 'package:flutter_record_lesson/modules/select_category_page.dart';
 import 'package:flutter_record_lesson/modules/start_teaching/src/teaching_page.dart';
 import 'package:provider/provider.dart';
@@ -32,7 +31,7 @@ class _HomePageState extends State<HomePage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: StreamBuilder<List<Category>>(
+        title: StreamBuilder<List<MyCategory>>(
             stream: _getStream(),
             builder: (context, snapshot) {
               if (snapshot.hasData && snapshot.data != null) {
@@ -112,13 +111,13 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Stream<List<Category>> _getStream() {
+  Stream<List<MyCategory>> _getStream() {
     return FirebaseFirestore.instance
         .collection('categories')
         .snapshots()
         .transform(StreamTransformer.fromHandlers(handleData: (snapshot, sink) {
       final list = snapshot.docs
-          .map((e) => Category.fromJson(e.data()).copyWith(id: e.id))
+          .map((e) => MyCategory.fromJson(e.data()).copyWith(id: e.id))
           .toList(growable: false);
       return sink.add(list);
     }));

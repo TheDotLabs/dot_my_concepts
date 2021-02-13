@@ -10,6 +10,12 @@ import 'package:flutter_record_lesson/modules/record_lesson/src/subject_page.dar
 class CategoryPage extends StatefulWidget {
   @override
   _CategoryPageState createState() => _CategoryPageState();
+
+  const CategoryPage({
+    this.createCourse = false,
+  });
+
+  final bool createCourse;
 }
 
 class _CategoryPageState extends State<CategoryPage> {
@@ -22,9 +28,9 @@ class _CategoryPageState extends State<CategoryPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Select Category'),
+        title: Text('Select MyCategory'),
       ),
-      body: StreamBuilder<List<Category>>(
+      body: StreamBuilder<List<MyCategory>>(
           stream: _getStream(),
           builder: (context, snapshot) {
             if (snapshot.hasData && snapshot.data != null) {
@@ -57,6 +63,7 @@ class _CategoryPageState extends State<CategoryPage> {
                             MaterialPageRoute(
                               builder: (_) => SubjectPage(
                                 category: e,
+                                createCourse: widget.createCourse,
                               ),
                             ),
                           );
@@ -84,13 +91,13 @@ class _CategoryPageState extends State<CategoryPage> {
     super.dispose();
   }
 
-  Stream<List<Category>> _getStream() {
+  Stream<List<MyCategory>> _getStream() {
     return FirebaseFirestore.instance
         .collection('categories')
         .snapshots()
         .transform(StreamTransformer.fromHandlers(handleData: (snapshot, sink) {
       final list = snapshot.docs
-          .map((e) => Category.fromJson(e.data()).copyWith(id: e.id))
+          .map((e) => MyCategory.fromJson(e.data()).copyWith(id: e.id))
           .toList(growable: false);
       return sink.add(list);
     }));
