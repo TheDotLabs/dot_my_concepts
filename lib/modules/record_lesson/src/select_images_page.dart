@@ -212,7 +212,11 @@ class _SelectImagePageState extends State<SelectImagePage> {
   void _onProceedTap() {
     Navigator.of(context).push(
       MaterialPageRoute(
-        builder: (_) => RecordLessonPage(),
+        builder: (_) => RecordLessonPage(
+          images: _selectedImages.map((e) => e.path).toList(
+                growable: false,
+              ),
+        ),
       ),
     );
   }

@@ -110,6 +110,7 @@ class _CreateLessonPageState extends State<CreateLessonPage> {
                               injector<RecordLessonBloc>().createNewLesson(
                                 name: name.text,
                                 description: description.text,
+                                course: widget.course,
                               );
                               Navigator.of(context).push(
                                 MaterialPageRoute(

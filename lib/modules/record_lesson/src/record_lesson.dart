@@ -1,13 +1,15 @@
 import 'dart:convert';
 import 'dart:io';
 
-import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_record_lesson/constants/lesson_constants.dart';
 import 'package:flutter_record_lesson/core/extensions/color_extension.dart';
-import 'package:flutter_record_lesson/modules/common/src/widgets/circular_loading.dart';
+import 'package:flutter_record_lesson/di/injector.dart';
+import 'package:flutter_record_lesson/modules/common/src/bloc/record_lesson_bloc.dart';
+import 'package:flutter_record_lesson/utils/log_utils.dart';
+import 'package:flutter_record_lesson/utils/toast_utils.dart';
 import 'package:flutter_sound/flutter_sound.dart';
 import 'package:flutter_sound_platform_interface/flutter_sound_platform_interface.dart';
 import 'package:flutter_sound_platform_interface/flutter_sound_recorder_platform_interface.dart';
@@ -21,15 +23,15 @@ import 'painter_controller.dart';
 class RecordLessonPage extends StatefulWidget {
   @override
   _RecordLessonPageState createState() => _RecordLessonPageState();
+
+  RecordLessonPage({this.images});
+
+  final List<String> images;
 }
 
 class _RecordLessonPageState extends State<RecordLessonPage> {
   int _pageIndex = 0;
-  final _imageList = [
-    "https://storage.googleapis.com/teaching-6b309.appspot.com/Physics/Rotational%20Mechanics/0NGIMFPU254QUVDPFA5C/0NGIMFPU254QUVDPFA5C%20solution_2.jpeg",
-    "https://storage.googleapis.com/teaching-6b309.appspot.com/Physics/Rotational%20Mechanics/0NGIMFPU254QUVDPFA5C/0NGIMFPU254QUVDPFA5C%20solution_4.jpeg",
-    "https://storage.googleapis.com/teaching-6b309.appspot.com/Physics/Rotational%20Mechanics/0NGIMFPU254QUVDPFA5C/0NGIMFPU254QUVDPFA5C%20solution_5.jpeg",
-  ];
+  List<File> _imageList = <File>[];
 
   final _eventList = <MyEvent>[];
 
@@ -54,6 +56,8 @@ class _RecordLessonPageState extends State<RecordLessonPage> {
   @override
   void initState() {
     super.initState();
+    _imageList
+        .addAll(widget.images.map((e) => File(e)).toList(growable: false));
     _initPaintController();
   }
 
@@ -98,13 +102,14 @@ class _RecordLessonPageState extends State<RecordLessonPage> {
                 child: IntrinsicHeight(
                   child: Stack(
                     children: [
-                      CachedNetworkImage(
-                        imageUrl: _imageList[_pageIndex],
-                        placeholder: (context, url) =>
-                            Center(child: CircularLoading()),
-                        errorWidget: (context, url, error) => Icon(Icons.error),
+                      Image.file(
+                        _imageList[_pageIndex],
+                        // imageUrl: _imageList[_pageIndex],
+                        // placeholder: (context, url) =>
+                        //     Center(child: CircularLoading()),
+                        // errorWidget: (context, url, error) => Icon(Icons.error),
                       ),
-                      if (countDownTimer?.isRunning ?? false)
+                      if (_isRecording)
                         Container(
                           key: _paintKey,
                           child: Painter(
@@ -221,22 +226,29 @@ class _RecordLessonPageState extends State<RecordLessonPage> {
         myRecorder.closeAudioSession();
         myRecorder = null;
       }
+      final currentLesson = injector<RecordLessonBloc>().currentLesson;
+      final _uploadedImages = <String>[];
+      for (var i = 0; i < _imageList.length; i++) {
+        final storageReference = FirebaseStorage.instance
+            .ref()
+            .child('lessons/${currentLesson.id}/$i.jpg');
+        await storageReference.putFile(_imageList.elementAt(i),
+            SettableMetadata(contentType: 'image/jpeg'));
+        final imageUrl = await storageReference.getDownloadURL();
+        _uploadedImages.add(imageUrl);
+      }
 
-      final lessonRef = FirebaseFirestore.instance.collection('lessons').doc();
-      final lesson = Lesson(
+      final lesson = currentLesson.copyWith(
         events: _eventList,
         duration: DateTime.now().millisecondsSinceEpoch - startEpoch,
-        id: lessonRef.id,
-        name: "Sample Title",
-        description: "Sample description of the video",
-        images: _imageList,
+        images: _uploadedImages,
       );
-      final map = Lesson(events: _eventList, id: lessonRef.id).toJson();
-      final jsonString = jsonEncode(map);
+      final jsonString = jsonEncode(lesson.toJson());
 
       /// MP3 audio
-      final storageReference1 =
-          FirebaseStorage().ref().child('lessons/${lessonRef.id}/audio.aac');
+      final storageReference1 = FirebaseStorage.instance
+          .ref()
+          .child('lessons/${lesson.id}/audio.aac');
       await storageReference1.putFile(
           outputFile, SettableMetadata(contentType: 'audio/aac'));
 
@@ -246,49 +258,59 @@ class _RecordLessonPageState extends State<RecordLessonPage> {
       /// Events
       final storageReference = FirebaseStorage.instance
           .ref()
-          .child('lessons/${lessonRef.id}/events.json');
+          .child('lessons/${lesson.id}/events.json');
       await storageReference.putData(utf8.encode(jsonString),
           SettableMetadata(contentType: 'application/json'));
       final jsonUrl = await storageReference.getDownloadURL();
       print(jsonUrl);
 
+      final lessonRef =
+          FirebaseFirestore.instance.collection('lessons').doc(lesson.id);
+
       await lessonRef.set({
-        ...lesson.copyWith(events: null).toJson(),
+        ...lesson.copyWith().toJson(),
       }, SetOptions(merge: true));
 
-      print('Lesson Uploaded');
+      logger.i('Lesson Uploaded');
     } catch (e, s) {
-      print(e);
+      logger.e(e, s);
     }
   }
 
-  void _startRecord() async {
-    myRecorder = await FlutterSoundRecorder().openAudioSession();
+  Future<void> _startRecord() async {
+    try {
+      myRecorder = await FlutterSoundRecorder().openAudioSession();
 
-    startEpoch = DateTime.now().millisecondsSinceEpoch;
-    remainingDurationNotifier.value =
-        Duration(seconds: LessonConstants.totalSeconds);
-    final tempDir = await getTemporaryDirectory();
-    outputFile = File('${tempDir.path}/flutter_sound-tmp.aac');
+      startEpoch = DateTime.now().millisecondsSinceEpoch;
+      remainingDurationNotifier.value =
+          Duration(seconds: LessonConstants.totalSeconds);
+      final tempDir = await getTemporaryDirectory();
+      outputFile = File('${tempDir.path}/flutter_sound-tmp.aac');
 
-    // Request Microphone permission if needed
-    final status = await Permission.microphone.request();
-    if (status != PermissionStatus.granted)
-      throw RecordingPermissionException("Microphone permission not granted");
+      // Request Microphone permission if needed
+      final status = await Permission.microphone.request();
+      if (status != PermissionStatus.granted)
+        throw RecordingPermissionException("Microphone permission not granted");
 
-    await myRecorder.startRecorder(
-      toFile: outputFile.path,
-      codec: Codec.aacADTS,
-      audioSource: AudioSource.defaultSource,
-    );
+      await myRecorder.startRecorder(
+        toFile: outputFile.path,
+        codec: Codec.aacADTS,
+        audioSource: AudioSource.defaultSource,
+      );
 
-    countDownTimer = new CountdownTimer(
-      Duration(seconds: LessonConstants.totalSeconds),
-      Duration(seconds: 1),
-    );
-    countDownTimer.listen((event) {
-      remainingDurationNotifier.value = event.remaining;
-    });
+      countDownTimer = new CountdownTimer(
+        Duration(seconds: LessonConstants.totalSeconds),
+        Duration(seconds: 1),
+      );
+      countDownTimer.listen((event) {
+        setState(() {
+          remainingDurationNotifier.value = event.remaining;
+        });
+      });
+    } catch (e, s) {
+      logger.e(e, s);
+      ToastUtils.show(e.toString());
+    }
   }
 
   void reset() {

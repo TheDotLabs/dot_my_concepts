@@ -13,9 +13,9 @@ class RecordLessonBloc extends BaseBloc {
   @override
   void dispose() {}
 
-  void createNewLesson({String name, String description}) {
+  void createNewLesson({String name, String description, MyCourse course}) {
     logger.i(
-      'Creating new lesson: {name: $name, description: $description}...',
+      'Creating new lesson: {name: $name, description: $description, course: $course}...',
     );
 
     final uid = FirebaseFirestore.instance.collection('lessons').doc().id;
@@ -23,6 +23,9 @@ class RecordLessonBloc extends BaseBloc {
       id: uid,
       name: name,
       description: description,
+      category: course.categoryId,
+      chapter: course.chapterId,
+      unit: course.unitId,
     );
 
     logger.i('Created new lesson: ${currentLesson.toString()}');

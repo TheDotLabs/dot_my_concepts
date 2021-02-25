@@ -37,7 +37,7 @@ dependencies:
   rxdart: ^0.24.1
   path: ^1.7.0
   timer_count_down: ^1.0.4+1
-  flutter_sound: ^6.4.3+44
+  flutter_sound: ^7.7.0+1
   permission_handler: ^5.0.1+1
   audioplayers: ^0.17.0
   google_fonts: ^1.1.1
