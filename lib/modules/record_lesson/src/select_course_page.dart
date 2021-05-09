@@ -4,6 +4,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_record_lesson/core/models/course.dart';
 import 'package:flutter_record_lesson/di/injector.dart';
+import 'package:flutter_record_lesson/modules/common/index.dart';
 import 'package:flutter_record_lesson/modules/common/src/widgets/circular_loading.dart';
 import 'package:flutter_record_lesson/modules/profile/index.dart';
 import 'package:flutter_record_lesson/modules/record_lesson/src/create_lesson_page.dart';
@@ -45,44 +46,51 @@ class _SelectCoursePageState extends State<SelectCoursePage> {
                   vertical: 0,
                 ),
                 children: [
-                  ...ListTile.divideTiles(context: context, tiles: [
-                    ...list.map(
-                      (e) => ListTile(
-                        contentPadding: EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 12,
-                        ),
-                        /*leading: CachedNetworkImage(
-                          imageUrl: e.image,
-                          height: 40,
-                          width: 40,
-                        ),*/
-                        trailing: Icon(Icons.keyboard_arrow_right),
-                        title: Text(
-                          e.title!,
-                        ),
-                        subtitle: Column(
-                          crossAxisAlignment: CrossAxisAlignment.start,
+                  SectionDivider(),
+                  ...list
+                      .map(
+                        (e) => Column(
+                          mainAxisSize: MainAxisSize.min,
                           children: [
-                            Text(e.subtitle ?? "--"),
-                            Container(
-                              child: TagsRow(e),
-                              margin: EdgeInsets.only(top: 8),
+                            ListTile(
+                              contentPadding: EdgeInsets.symmetric(
+                                horizontal: 16,
+                                vertical: 12,
+                              ),
+                              /*leading: CachedNetworkImage(
+                              imageUrl: e.image,
+                              height: 40,
+                              width: 40,
+                            ),*/
+                              trailing: Icon(Icons.keyboard_arrow_right),
+                              title: Text(
+                                e.title!,
+                              ),
+                              subtitle: Column(
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(e.subtitle ?? "--"),
+                                  Container(
+                                    child: TagsRow(e),
+                                    margin: EdgeInsets.only(top: 8),
+                                  ),
+                                ],
+                              ),
+                              onTap: () {
+                                Navigator.of(context).push(
+                                  MaterialPageRoute(
+                                    builder: (_) => CreateLessonPage(
+                                      course: e,
+                                    ),
+                                  ),
+                                );
+                              },
                             ),
+                            SectionDivider(),
                           ],
                         ),
-                        onTap: () {
-                          Navigator.of(context).push(
-                            MaterialPageRoute(
-                              builder: (_) => CreateLessonPage(
-                                course: e,
-                              ),
-                            ),
-                          );
-                        },
-                      ),
-                    )
-                  ]).toList(),
+                      )
+                      .toList(),
                   Container(
                     margin: EdgeInsets.symmetric(vertical: 32),
                     child: Row(

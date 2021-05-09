@@ -2,6 +2,7 @@ import 'package:fa_flutter_core/fa_flutter_core.dart';
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_record_lesson/core/models/course.dart';
+import 'package:flutter_record_lesson/core/widgets/BorderContainer.dart';
 import 'package:flutter_record_lesson/di/injector.dart';
 import 'package:flutter_record_lesson/modules/common/src/bloc/record_lesson_bloc.dart';
 import 'package:flutter_record_lesson/modules/record_lesson/src/select_images_page.dart';
@@ -27,26 +28,26 @@ class _CreateLessonPageState extends State<CreateLessonPage> {
       ),
       body: SingleChildScrollView(
         padding: EdgeInsets.symmetric(
-          horizontal: 16,
+          horizontal: 12,
+          vertical: 16,
         ),
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            ListTile(
-              title: Text(widget.course!.title ?? "--"),
-              subtitle: Text(
-                widget.course!.subtitle ?? "--",
-                maxLines: 1,
-                overflow: TextOverflow.ellipsis,
+            BorderContainer(
+              child: ListTile(
+                title: Text(widget.course!.title ?? "--"),
               ),
-              contentPadding: EdgeInsets.symmetric(horizontal: 0, vertical: 4),
+            ),
+            SizedBox(
+              height: 16,
             ),
             Padding(
               padding: const EdgeInsets.symmetric(
                 vertical: 4.0,
               ),
               child: Text(
-                'NAME',
+                'LESSON NAME',
                 style: Theme.of(context).textTheme.overline,
               ),
             ),
@@ -57,6 +58,7 @@ class _CreateLessonPageState extends State<CreateLessonPage> {
                   vertical: 0,
                   horizontal: 2,
                 ),
+                hintText: 'For Eg. Introduction',
               ),
               maxLength: 100,
               maxLines: 2,
@@ -68,7 +70,7 @@ class _CreateLessonPageState extends State<CreateLessonPage> {
             Padding(
               padding: const EdgeInsets.symmetric(vertical: 4.0),
               child: Text(
-                'Description'.toUpperCase(),
+                'LESSON Description'.toUpperCase(),
                 style: Theme.of(context).textTheme.overline,
               ),
             ),
@@ -79,6 +81,7 @@ class _CreateLessonPageState extends State<CreateLessonPage> {
                   vertical: 8,
                   horizontal: 2,
                 ),
+                hintText: 'A short description of the lesson',
               ),
               maxLength: 200,
               minLines: 2,
