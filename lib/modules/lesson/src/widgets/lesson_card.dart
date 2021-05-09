@@ -23,34 +23,37 @@ class LessonCard extends StatelessWidget {
           ),
         );
       },
-      child: BorderContainer(
-        child: Container(
-          width: MediaQuery.of(context).size.width / 1.6,
-          child: Column(
-            children: [
-              CategoryHeader(lesson),
-              Expanded(
-                child: lesson.images == null
-                    ? Container()
-                    : CachedNetworkImage(
-                        imageUrl: lesson.images[0],
-                        fit: BoxFit.cover,
+      child: Container(
+        margin: EdgeInsets.symmetric(horizontal: 8),
+        child: BorderContainer(
+          child: Container(
+            width: MediaQuery.of(context).size.width / 1.35,
+            child: Column(
+              children: [
+                CategoryHeader(lesson),
+                Expanded(
+                  child: lesson.images == null
+                      ? Container()
+                      : CachedNetworkImage(
+                          imageUrl: lesson.images![0],
+                          fit: BoxFit.cover,
+                        ),
+                ),
+                Column(
+                  children: [
+                    Padding(
+                      padding: const EdgeInsets.all(12.0),
+                      child: Text(
+                        "${lesson.name ?? "---"}",
+                        style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                              fontWeight: FontWeight.w700,
+                            ),
                       ),
-              ),
-              Column(
-                children: [
-                  Padding(
-                    padding: const EdgeInsets.all(12.0),
-                    child: Text(
-                      "${lesson.name ?? "---"}",
-                      style: Theme.of(context).textTheme.bodyText1.copyWith(
-                            fontWeight: FontWeight.w700,
-                          ),
                     ),
-                  ),
-                ],
-              )
-            ],
+                  ],
+                )
+              ],
+            ),
           ),
         ),
       ),

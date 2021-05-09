@@ -7,10 +7,10 @@ class LoginButton extends StatelessWidget {
   final VoidCallback onClick;
 
   const LoginButton({
-    Key key,
-    @required this.label,
-    @required this.onClick,
-    @required this.assetName,
+    Key? key,
+    required this.label,
+    required this.onClick,
+    required this.assetName,
   }) : super(key: key);
 
   @override

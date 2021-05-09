@@ -20,7 +20,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   @override
   Widget build(BuildContext context) {
-    return StreamBuilder<MyUser>(
+    return StreamBuilder<MyUser?>(
       stream: injector<UserRepository>().getLoggedInUserStream(),
       builder: (context, snapshot) {
         if (snapshot.hasData && snapshot.data != null) {
@@ -46,9 +46,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
 }
 
 class ProfileHeader extends StatelessWidget {
-  final MyUser user;
+  final MyUser? user;
 
-  const ProfileHeader({Key key, @required this.user}) : super(key: key);
+  const ProfileHeader({Key? key, required this.user}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -61,21 +61,21 @@ class ProfileHeader extends StatelessWidget {
             SizedBox(width: 16.0),
             CircleAvatar(
               radius: (size.height * 0.1) / 2,
-              backgroundImage: CachedNetworkImageProvider(user.avatar ?? '-'),
+              backgroundImage: CachedNetworkImageProvider(user!.avatar ?? '-'),
             ),
             SizedBox(width: 16.0),
             Column(
               crossAxisAlignment: CrossAxisAlignment.start,
               children: <Widget>[
                 Text(
-                  user.name ?? "--",
+                  user!.name ?? "--",
                   style: TextStyle(
                     fontSize: 16.0,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
                 Text(
-                  user.email ?? "--",
+                  user!.email ?? "--",
                   style: TextStyle(color: Colors.black54),
                 ),
               ],
@@ -125,7 +125,7 @@ class HelpAndSupportContainer extends StatelessWidget {
 class ProfileContainer extends StatelessWidget {
   final Widget child;
 
-  const ProfileContainer({Key key, @required this.child}) : super(key: key);
+  const ProfileContainer({Key? key, required this.child}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {

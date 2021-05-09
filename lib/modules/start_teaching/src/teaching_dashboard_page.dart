@@ -19,7 +19,7 @@ class _TeachingDashboardPageState extends State<TeachingDashboardPage> {
   final Stream<List<MyCourse>> _coursesStream = FirebaseFirestore.instance
       .collection('courses')
       .where('userId',
-          isEqualTo: injector<UserRepository>().getLoggedInUser().id)
+          isEqualTo: injector<UserRepository>().getLoggedInUser()!.id)
       .snapshots()
       .transform(
     StreamTransformer.fromHandlers(
@@ -54,7 +54,7 @@ class _TeachingDashboardPageState extends State<TeachingDashboardPage> {
                   builder: (context, snapshot) {
                     if (snapshot.hasData && snapshot.data != null)
                       return Text(
-                        '${snapshot.data.length}',
+                        '${snapshot.data!.length}',
                       );
                     else
                       return Text('--');
@@ -72,7 +72,7 @@ class _TeachingDashboardPageState extends State<TeachingDashboardPage> {
                   builder: (context, snapshot) {
                     if (snapshot.hasData && snapshot.data != null) {
                       return Text(
-                        '${snapshot.data.fold<int>(0, (previousValue, element) => previousValue + (element?.lessons?.length ?? 0))}',
+                        '${snapshot.data!.fold<int>(0, (previousValue, element) => previousValue + (element.lessons?.length ?? 0))}',
                       );
                     } else
                       return Text('--');

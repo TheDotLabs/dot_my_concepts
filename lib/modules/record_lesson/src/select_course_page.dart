@@ -38,7 +38,7 @@ class _SelectCoursePageState extends State<SelectCoursePage> {
         stream: _getStream(),
         builder: (context, snapshot) {
           if (snapshot.hasData && snapshot.data != null) {
-            final list = snapshot.data;
+            final list = snapshot.data!;
             return Container(
               child: ListView(
                 padding: EdgeInsets.symmetric(
@@ -59,7 +59,7 @@ class _SelectCoursePageState extends State<SelectCoursePage> {
                         ),*/
                         trailing: Icon(Icons.keyboard_arrow_right),
                         title: Text(
-                          e.title,
+                          e.title!,
                         ),
                         subtitle: Column(
                           crossAxisAlignment: CrossAxisAlignment.start,
@@ -106,7 +106,7 @@ class _SelectCoursePageState extends State<SelectCoursePage> {
             );
           } else if (snapshot.hasError) {
             return Center(
-              child: Text(snapshot.error),
+              child: Text(snapshot.error as String),
             );
           } else {
             return Center(
@@ -128,7 +128,7 @@ class _SelectCoursePageState extends State<SelectCoursePage> {
         .collection('courses')
         .where(
           'userId',
-          isEqualTo: injector<UserRepository>().getLoggedInUser().id,
+          isEqualTo: injector<UserRepository>().getLoggedInUser()!.id,
         )
         .snapshots()
         .transform(

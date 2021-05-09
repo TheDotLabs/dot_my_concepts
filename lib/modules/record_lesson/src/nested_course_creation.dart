@@ -8,7 +8,7 @@ class NestedCourseCreation extends StatefulWidget {
 }
 
 class _NestedCourseCreationState extends State<NestedCourseCreation> {
-  Widget initialPage;
+  late Widget initialPage;
   final key = GlobalKey<NavigatorState>();
 
   @override
@@ -22,7 +22,7 @@ class _NestedCourseCreationState extends State<NestedCourseCreation> {
   @override
   Widget build(BuildContext context) {
     return WillPopScope(
-      onWillPop: () async => !await key.currentState.maybePop(),
+      onWillPop: () async => !await key.currentState!.maybePop(),
       child: Navigator(
         key: key,
         onGenerateInitialRoutes: (state, string) => [

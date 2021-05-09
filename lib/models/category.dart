@@ -6,11 +6,11 @@ part 'category.g.dart';
 @freezed
 abstract class MyCategory with _$MyCategory {
   factory MyCategory({
-    @JsonKey(defaultValue: "0") String id,
-    String title,
-    String description,
-    String image,
-    List<MySubject> subjects,
+    @Default("0") String? id,
+    String? title,
+    String? description,
+    String? image,
+    List<MySubject>? subjects,
   }) = _MyCategory;
 
   factory MyCategory.fromJson(Map<String, dynamic> json) =>
@@ -20,10 +20,10 @@ abstract class MyCategory with _$MyCategory {
 @freezed
 abstract class MySubject with _$MySubject {
   factory MySubject({
-    @JsonKey(defaultValue: 0) String id,
-    String title,
-    String description,
-    List<MyUnit> units,
+    @JsonKey(defaultValue: 0) String? id,
+    String? title,
+    String? description,
+    List<MyUnit>? units,
   }) = _MySubject;
 
   factory MySubject.fromJson(Map<String, dynamic> json) =>
@@ -33,10 +33,10 @@ abstract class MySubject with _$MySubject {
 @freezed
 abstract class MyUnit with _$MyUnit {
   factory MyUnit({
-    @JsonKey(defaultValue: 0) String id,
-    String title,
-    String description,
-    List<MyChapter> chapters,
+    @JsonKey(defaultValue: 0) String? id,
+    String? title,
+    String? description,
+    List<MyChapter>? chapters,
   }) = _MyUnit;
 
   factory MyUnit.fromJson(Map<String, dynamic> json) => _$MyUnitFromJson(json);
@@ -45,9 +45,9 @@ abstract class MyUnit with _$MyUnit {
 @freezed
 abstract class MyChapter with _$MyChapter {
   factory MyChapter({
-    @JsonKey(defaultValue: 0) String id,
-    String title,
-    String description,
+    @JsonKey(defaultValue: 0) String? id,
+    String? title,
+    String? description,
   }) = _MyChapter;
 
   factory MyChapter.fromJson(Map<String, dynamic> json) =>

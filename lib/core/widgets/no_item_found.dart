@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
 class NoItemFound extends StatelessWidget {
-  final String msg;
+  final String? msg;
 
   NoItemFound({this.msg});
 

@@ -18,7 +18,7 @@ class _SignClaPageState extends State<SignClaPage> {
   ];
 
   get _allQAAccepted =>
-      _qaList.where((element) => element.value).length == _qaList.length;
+      _qaList.where((element) => element.value!).length == _qaList.length;
 
   @override
   void initState() {
@@ -54,7 +54,7 @@ class _SignClaPageState extends State<SignClaPage> {
           ..._qaList.map(
             (e) => CheckboxListTile(
               title: Text(
-                e.title,
+                e.title!,
                 style: TextStyle(
                   fontSize: 14,
                   fontWeight: FontWeight.normal,
@@ -74,7 +74,7 @@ class _SignClaPageState extends State<SignClaPage> {
           Padding(
             padding: const EdgeInsets.all(16.0),
             child: Text(
-              "${_qaList.where((element) => element.value).length}/${_qaList.length} accepted",
+              "${_qaList.where((element) => element.value!).length}/${_qaList.length} accepted",
               textAlign: TextAlign.center,
               style: TextStyle(
                 fontWeight: FontWeight.bold,
@@ -124,8 +124,8 @@ class _SignClaPageState extends State<SignClaPage> {
 }
 
 class QA {
-  final String title;
-  bool value;
+  final String? title;
+  bool? value;
 
   QA({
     this.title,

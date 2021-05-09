@@ -35,7 +35,7 @@ class _HomePageState extends State<HomePage> {
             stream: _getStream(),
             builder: (context, snapshot) {
               if (snapshot.hasData && snapshot.data != null) {
-                final list = snapshot.data;
+                final list = snapshot.data!;
                 final selectedCategory =
                     context.watch<AppBloc>().selectedCategory ?? list[0].id;
                 final category = list.firstWhere(
@@ -52,7 +52,7 @@ class _HomePageState extends State<HomePage> {
                       mainAxisSize: MainAxisSize.min,
                       children: [
                         Text(
-                          category.title,
+                          category.title!,
                           overflow: TextOverflow.ellipsis,
                           maxLines: 1,
                         ),
@@ -66,7 +66,7 @@ class _HomePageState extends State<HomePage> {
                 );
               } else if (snapshot.hasError) {
                 return Center(
-                  child: Text(snapshot.error?.toString()),
+                  child: Text(snapshot.error?.toString() ?? "--"),
                 );
               } else {
                 return Center(

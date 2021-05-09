@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
 
 part of 'my_user.dart';
 
@@ -8,6 +8,10 @@ part of 'my_user.dart';
 // **************************************************************************
 
 T _$identity<T>(T value) => value;
+
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+
 MyUser _$MyUserFromJson(Map<String, dynamic> json) {
   return _MyUser.fromJson(json);
 }
@@ -16,17 +20,16 @@ MyUser _$MyUserFromJson(Map<String, dynamic> json) {
 class _$MyUserTearOff {
   const _$MyUserTearOff();
 
-// ignore: unused_element
   _MyUser call(
-      {String id,
-      @JsonKey(includeIfNull: false) String name,
-      String email,
-      @JsonKey(includeIfNull: false) String avatar,
-      String provider,
-      @JsonKey(includeIfNull: false) String tagline,
-      @JsonKey(includeIfNull: false, defaultValue: false) bool isVerified,
-      String selectedCategory,
-      Teaching teaching}) {
+      {String? id,
+      @JsonKey(includeIfNull: false) String? name,
+      String? email,
+      @JsonKey(includeIfNull: false) String? avatar,
+      String? provider,
+      @JsonKey(includeIfNull: false) String? tagline,
+      @JsonKey(includeIfNull: false, defaultValue: false) bool? isVerified,
+      String? selectedCategory,
+      Teaching? teaching}) {
     return _MyUser(
       id: id,
       name: name,
@@ -40,34 +43,33 @@ class _$MyUserTearOff {
     );
   }
 
-// ignore: unused_element
   MyUser fromJson(Map<String, Object> json) {
     return MyUser.fromJson(json);
   }
 }
 
 /// @nodoc
-// ignore: unused_element
 const $MyUser = _$MyUserTearOff();
 
 /// @nodoc
 mixin _$MyUser {
-  String get id;
+  String? get id => throw _privateConstructorUsedError;
   @JsonKey(includeIfNull: false)
-  String get name;
-  String get email;
+  String? get name => throw _privateConstructorUsedError;
+  String? get email => throw _privateConstructorUsedError;
   @JsonKey(includeIfNull: false)
-  String get avatar;
-  String get provider;
+  String? get avatar => throw _privateConstructorUsedError;
+  String? get provider => throw _privateConstructorUsedError;
   @JsonKey(includeIfNull: false)
-  String get tagline;
+  String? get tagline => throw _privateConstructorUsedError;
   @JsonKey(includeIfNull: false, defaultValue: false)
-  bool get isVerified;
-  String get selectedCategory;
-  Teaching get teaching;
+  bool? get isVerified => throw _privateConstructorUsedError;
+  String? get selectedCategory => throw _privateConstructorUsedError;
+  Teaching? get teaching => throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson();
-  $MyUserCopyWith<MyUser> get copyWith;
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $MyUserCopyWith<MyUser> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -75,17 +77,17 @@ abstract class $MyUserCopyWith<$Res> {
   factory $MyUserCopyWith(MyUser value, $Res Function(MyUser) then) =
       _$MyUserCopyWithImpl<$Res>;
   $Res call(
-      {String id,
-      @JsonKey(includeIfNull: false) String name,
-      String email,
-      @JsonKey(includeIfNull: false) String avatar,
-      String provider,
-      @JsonKey(includeIfNull: false) String tagline,
-      @JsonKey(includeIfNull: false, defaultValue: false) bool isVerified,
-      String selectedCategory,
-      Teaching teaching});
+      {String? id,
+      @JsonKey(includeIfNull: false) String? name,
+      String? email,
+      @JsonKey(includeIfNull: false) String? avatar,
+      String? provider,
+      @JsonKey(includeIfNull: false) String? tagline,
+      @JsonKey(includeIfNull: false, defaultValue: false) bool? isVerified,
+      String? selectedCategory,
+      Teaching? teaching});
 
-  $TeachingCopyWith<$Res> get teaching;
+  $TeachingCopyWith<$Res>? get teaching;
 }
 
 /// @nodoc
@@ -98,38 +100,63 @@ class _$MyUserCopyWithImpl<$Res> implements $MyUserCopyWith<$Res> {
 
   @override
   $Res call({
-    Object id = freezed,
-    Object name = freezed,
-    Object email = freezed,
-    Object avatar = freezed,
-    Object provider = freezed,
-    Object tagline = freezed,
-    Object isVerified = freezed,
-    Object selectedCategory = freezed,
-    Object teaching = freezed,
+    Object? id = freezed,
+    Object? name = freezed,
+    Object? email = freezed,
+    Object? avatar = freezed,
+    Object? provider = freezed,
+    Object? tagline = freezed,
+    Object? isVerified = freezed,
+    Object? selectedCategory = freezed,
+    Object? teaching = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed ? _value.id : id as String,
-      name: name == freezed ? _value.name : name as String,
-      email: email == freezed ? _value.email : email as String,
-      avatar: avatar == freezed ? _value.avatar : avatar as String,
-      provider: provider == freezed ? _value.provider : provider as String,
-      tagline: tagline == freezed ? _value.tagline : tagline as String,
-      isVerified:
-          isVerified == freezed ? _value.isVerified : isVerified as bool,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
+      name: name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      email: email == freezed
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String?,
+      avatar: avatar == freezed
+          ? _value.avatar
+          : avatar // ignore: cast_nullable_to_non_nullable
+              as String?,
+      provider: provider == freezed
+          ? _value.provider
+          : provider // ignore: cast_nullable_to_non_nullable
+              as String?,
+      tagline: tagline == freezed
+          ? _value.tagline
+          : tagline // ignore: cast_nullable_to_non_nullable
+              as String?,
+      isVerified: isVerified == freezed
+          ? _value.isVerified
+          : isVerified // ignore: cast_nullable_to_non_nullable
+              as bool?,
       selectedCategory: selectedCategory == freezed
           ? _value.selectedCategory
-          : selectedCategory as String,
-      teaching: teaching == freezed ? _value.teaching : teaching as Teaching,
+          : selectedCategory // ignore: cast_nullable_to_non_nullable
+              as String?,
+      teaching: teaching == freezed
+          ? _value.teaching
+          : teaching // ignore: cast_nullable_to_non_nullable
+              as Teaching?,
     ));
   }
 
   @override
-  $TeachingCopyWith<$Res> get teaching {
+  $TeachingCopyWith<$Res>? get teaching {
     if (_value.teaching == null) {
       return null;
     }
-    return $TeachingCopyWith<$Res>(_value.teaching, (value) {
+
+    return $TeachingCopyWith<$Res>(_value.teaching!, (value) {
       return _then(_value.copyWith(teaching: value));
     });
   }
@@ -141,18 +168,18 @@ abstract class _$MyUserCopyWith<$Res> implements $MyUserCopyWith<$Res> {
       __$MyUserCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String id,
-      @JsonKey(includeIfNull: false) String name,
-      String email,
-      @JsonKey(includeIfNull: false) String avatar,
-      String provider,
-      @JsonKey(includeIfNull: false) String tagline,
-      @JsonKey(includeIfNull: false, defaultValue: false) bool isVerified,
-      String selectedCategory,
-      Teaching teaching});
+      {String? id,
+      @JsonKey(includeIfNull: false) String? name,
+      String? email,
+      @JsonKey(includeIfNull: false) String? avatar,
+      String? provider,
+      @JsonKey(includeIfNull: false) String? tagline,
+      @JsonKey(includeIfNull: false, defaultValue: false) bool? isVerified,
+      String? selectedCategory,
+      Teaching? teaching});
 
   @override
-  $TeachingCopyWith<$Res> get teaching;
+  $TeachingCopyWith<$Res>? get teaching;
 }
 
 /// @nodoc
@@ -166,36 +193,59 @@ class __$MyUserCopyWithImpl<$Res> extends _$MyUserCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object id = freezed,
-    Object name = freezed,
-    Object email = freezed,
-    Object avatar = freezed,
-    Object provider = freezed,
-    Object tagline = freezed,
-    Object isVerified = freezed,
-    Object selectedCategory = freezed,
-    Object teaching = freezed,
+    Object? id = freezed,
+    Object? name = freezed,
+    Object? email = freezed,
+    Object? avatar = freezed,
+    Object? provider = freezed,
+    Object? tagline = freezed,
+    Object? isVerified = freezed,
+    Object? selectedCategory = freezed,
+    Object? teaching = freezed,
   }) {
     return _then(_MyUser(
-      id: id == freezed ? _value.id : id as String,
-      name: name == freezed ? _value.name : name as String,
-      email: email == freezed ? _value.email : email as String,
-      avatar: avatar == freezed ? _value.avatar : avatar as String,
-      provider: provider == freezed ? _value.provider : provider as String,
-      tagline: tagline == freezed ? _value.tagline : tagline as String,
-      isVerified:
-          isVerified == freezed ? _value.isVerified : isVerified as bool,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
+      name: name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      email: email == freezed
+          ? _value.email
+          : email // ignore: cast_nullable_to_non_nullable
+              as String?,
+      avatar: avatar == freezed
+          ? _value.avatar
+          : avatar // ignore: cast_nullable_to_non_nullable
+              as String?,
+      provider: provider == freezed
+          ? _value.provider
+          : provider // ignore: cast_nullable_to_non_nullable
+              as String?,
+      tagline: tagline == freezed
+          ? _value.tagline
+          : tagline // ignore: cast_nullable_to_non_nullable
+              as String?,
+      isVerified: isVerified == freezed
+          ? _value.isVerified
+          : isVerified // ignore: cast_nullable_to_non_nullable
+              as bool?,
       selectedCategory: selectedCategory == freezed
           ? _value.selectedCategory
-          : selectedCategory as String,
-      teaching: teaching == freezed ? _value.teaching : teaching as Teaching,
+          : selectedCategory // ignore: cast_nullable_to_non_nullable
+              as String?,
+      teaching: teaching == freezed
+          ? _value.teaching
+          : teaching // ignore: cast_nullable_to_non_nullable
+              as Teaching?,
     ));
   }
 }
 
-@JsonSerializable()
-
 /// @nodoc
+@JsonSerializable()
 class _$_MyUser implements _MyUser {
   _$_MyUser(
       {this.id,
@@ -212,27 +262,27 @@ class _$_MyUser implements _MyUser {
       _$_$_MyUserFromJson(json);
 
   @override
-  final String id;
+  final String? id;
   @override
   @JsonKey(includeIfNull: false)
-  final String name;
+  final String? name;
   @override
-  final String email;
-  @override
-  @JsonKey(includeIfNull: false)
-  final String avatar;
-  @override
-  final String provider;
+  final String? email;
   @override
   @JsonKey(includeIfNull: false)
-  final String tagline;
+  final String? avatar;
+  @override
+  final String? provider;
+  @override
+  @JsonKey(includeIfNull: false)
+  final String? tagline;
   @override
   @JsonKey(includeIfNull: false, defaultValue: false)
-  final bool isVerified;
+  final bool? isVerified;
   @override
-  final String selectedCategory;
+  final String? selectedCategory;
   @override
-  final Teaching teaching;
+  final Teaching? teaching;
 
   @override
   String toString() {
@@ -281,6 +331,7 @@ class _$_MyUser implements _MyUser {
       const DeepCollectionEquality().hash(selectedCategory) ^
       const DeepCollectionEquality().hash(teaching);
 
+  @JsonKey(ignore: true)
   @override
   _$MyUserCopyWith<_MyUser> get copyWith =>
       __$MyUserCopyWithImpl<_MyUser>(this, _$identity);
@@ -293,42 +344,43 @@ class _$_MyUser implements _MyUser {
 
 abstract class _MyUser implements MyUser {
   factory _MyUser(
-      {String id,
-      @JsonKey(includeIfNull: false) String name,
-      String email,
-      @JsonKey(includeIfNull: false) String avatar,
-      String provider,
-      @JsonKey(includeIfNull: false) String tagline,
-      @JsonKey(includeIfNull: false, defaultValue: false) bool isVerified,
-      String selectedCategory,
-      Teaching teaching}) = _$_MyUser;
+      {String? id,
+      @JsonKey(includeIfNull: false) String? name,
+      String? email,
+      @JsonKey(includeIfNull: false) String? avatar,
+      String? provider,
+      @JsonKey(includeIfNull: false) String? tagline,
+      @JsonKey(includeIfNull: false, defaultValue: false) bool? isVerified,
+      String? selectedCategory,
+      Teaching? teaching}) = _$_MyUser;
 
   factory _MyUser.fromJson(Map<String, dynamic> json) = _$_MyUser.fromJson;
 
   @override
-  String get id;
+  String? get id => throw _privateConstructorUsedError;
   @override
   @JsonKey(includeIfNull: false)
-  String get name;
+  String? get name => throw _privateConstructorUsedError;
   @override
-  String get email;
-  @override
-  @JsonKey(includeIfNull: false)
-  String get avatar;
-  @override
-  String get provider;
+  String? get email => throw _privateConstructorUsedError;
   @override
   @JsonKey(includeIfNull: false)
-  String get tagline;
+  String? get avatar => throw _privateConstructorUsedError;
+  @override
+  String? get provider => throw _privateConstructorUsedError;
+  @override
+  @JsonKey(includeIfNull: false)
+  String? get tagline => throw _privateConstructorUsedError;
   @override
   @JsonKey(includeIfNull: false, defaultValue: false)
-  bool get isVerified;
+  bool? get isVerified => throw _privateConstructorUsedError;
   @override
-  String get selectedCategory;
+  String? get selectedCategory => throw _privateConstructorUsedError;
   @override
-  Teaching get teaching;
+  Teaching? get teaching => throw _privateConstructorUsedError;
   @override
-  _$MyUserCopyWith<_MyUser> get copyWith;
+  @JsonKey(ignore: true)
+  _$MyUserCopyWith<_MyUser> get copyWith => throw _privateConstructorUsedError;
 }
 
 Teaching _$TeachingFromJson(Map<String, dynamic> json) {
@@ -339,11 +391,10 @@ Teaching _$TeachingFromJson(Map<String, dynamic> json) {
 class _$TeachingTearOff {
   const _$TeachingTearOff();
 
-// ignore: unused_element
   _Teaching call(
-      {@JsonKey(defaultValue: false) bool isTeacher,
-      @JsonKey(defaultValue: false) bool hasSignedCLA,
-      @JsonKey(defaultValue: false) bool isVerified}) {
+      {@JsonKey(defaultValue: false) bool? isTeacher,
+      @JsonKey(defaultValue: false) bool? hasSignedCLA,
+      @JsonKey(defaultValue: false) bool? isVerified}) {
     return _Teaching(
       isTeacher: isTeacher,
       hasSignedCLA: hasSignedCLA,
@@ -351,27 +402,27 @@ class _$TeachingTearOff {
     );
   }
 
-// ignore: unused_element
   Teaching fromJson(Map<String, Object> json) {
     return Teaching.fromJson(json);
   }
 }
 
 /// @nodoc
-// ignore: unused_element
 const $Teaching = _$TeachingTearOff();
 
 /// @nodoc
 mixin _$Teaching {
   @JsonKey(defaultValue: false)
-  bool get isTeacher;
+  bool? get isTeacher => throw _privateConstructorUsedError;
   @JsonKey(defaultValue: false)
-  bool get hasSignedCLA;
+  bool? get hasSignedCLA => throw _privateConstructorUsedError;
   @JsonKey(defaultValue: false)
-  bool get isVerified;
+  bool? get isVerified => throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson();
-  $TeachingCopyWith<Teaching> get copyWith;
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $TeachingCopyWith<Teaching> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -379,9 +430,9 @@ abstract class $TeachingCopyWith<$Res> {
   factory $TeachingCopyWith(Teaching value, $Res Function(Teaching) then) =
       _$TeachingCopyWithImpl<$Res>;
   $Res call(
-      {@JsonKey(defaultValue: false) bool isTeacher,
-      @JsonKey(defaultValue: false) bool hasSignedCLA,
-      @JsonKey(defaultValue: false) bool isVerified});
+      {@JsonKey(defaultValue: false) bool? isTeacher,
+      @JsonKey(defaultValue: false) bool? hasSignedCLA,
+      @JsonKey(defaultValue: false) bool? isVerified});
 }
 
 /// @nodoc
@@ -394,16 +445,23 @@ class _$TeachingCopyWithImpl<$Res> implements $TeachingCopyWith<$Res> {
 
   @override
   $Res call({
-    Object isTeacher = freezed,
-    Object hasSignedCLA = freezed,
-    Object isVerified = freezed,
+    Object? isTeacher = freezed,
+    Object? hasSignedCLA = freezed,
+    Object? isVerified = freezed,
   }) {
     return _then(_value.copyWith(
-      isTeacher: isTeacher == freezed ? _value.isTeacher : isTeacher as bool,
-      hasSignedCLA:
-          hasSignedCLA == freezed ? _value.hasSignedCLA : hasSignedCLA as bool,
-      isVerified:
-          isVerified == freezed ? _value.isVerified : isVerified as bool,
+      isTeacher: isTeacher == freezed
+          ? _value.isTeacher
+          : isTeacher // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      hasSignedCLA: hasSignedCLA == freezed
+          ? _value.hasSignedCLA
+          : hasSignedCLA // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      isVerified: isVerified == freezed
+          ? _value.isVerified
+          : isVerified // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
@@ -414,9 +472,9 @@ abstract class _$TeachingCopyWith<$Res> implements $TeachingCopyWith<$Res> {
       __$TeachingCopyWithImpl<$Res>;
   @override
   $Res call(
-      {@JsonKey(defaultValue: false) bool isTeacher,
-      @JsonKey(defaultValue: false) bool hasSignedCLA,
-      @JsonKey(defaultValue: false) bool isVerified});
+      {@JsonKey(defaultValue: false) bool? isTeacher,
+      @JsonKey(defaultValue: false) bool? hasSignedCLA,
+      @JsonKey(defaultValue: false) bool? isVerified});
 }
 
 /// @nodoc
@@ -430,23 +488,29 @@ class __$TeachingCopyWithImpl<$Res> extends _$TeachingCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object isTeacher = freezed,
-    Object hasSignedCLA = freezed,
-    Object isVerified = freezed,
+    Object? isTeacher = freezed,
+    Object? hasSignedCLA = freezed,
+    Object? isVerified = freezed,
   }) {
     return _then(_Teaching(
-      isTeacher: isTeacher == freezed ? _value.isTeacher : isTeacher as bool,
-      hasSignedCLA:
-          hasSignedCLA == freezed ? _value.hasSignedCLA : hasSignedCLA as bool,
-      isVerified:
-          isVerified == freezed ? _value.isVerified : isVerified as bool,
+      isTeacher: isTeacher == freezed
+          ? _value.isTeacher
+          : isTeacher // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      hasSignedCLA: hasSignedCLA == freezed
+          ? _value.hasSignedCLA
+          : hasSignedCLA // ignore: cast_nullable_to_non_nullable
+              as bool?,
+      isVerified: isVerified == freezed
+          ? _value.isVerified
+          : isVerified // ignore: cast_nullable_to_non_nullable
+              as bool?,
     ));
   }
 }
 
-@JsonSerializable()
-
 /// @nodoc
+@JsonSerializable()
 class _$_Teaching implements _Teaching {
   _$_Teaching(
       {@JsonKey(defaultValue: false) this.isTeacher,
@@ -458,13 +522,13 @@ class _$_Teaching implements _Teaching {
 
   @override
   @JsonKey(defaultValue: false)
-  final bool isTeacher;
+  final bool? isTeacher;
   @override
   @JsonKey(defaultValue: false)
-  final bool hasSignedCLA;
+  final bool? hasSignedCLA;
   @override
   @JsonKey(defaultValue: false)
-  final bool isVerified;
+  final bool? isVerified;
 
   @override
   String toString() {
@@ -493,6 +557,7 @@ class _$_Teaching implements _Teaching {
       const DeepCollectionEquality().hash(hasSignedCLA) ^
       const DeepCollectionEquality().hash(isVerified);
 
+  @JsonKey(ignore: true)
   @override
   _$TeachingCopyWith<_Teaching> get copyWith =>
       __$TeachingCopyWithImpl<_Teaching>(this, _$identity);
@@ -505,21 +570,23 @@ class _$_Teaching implements _Teaching {
 
 abstract class _Teaching implements Teaching {
   factory _Teaching(
-      {@JsonKey(defaultValue: false) bool isTeacher,
-      @JsonKey(defaultValue: false) bool hasSignedCLA,
-      @JsonKey(defaultValue: false) bool isVerified}) = _$_Teaching;
+      {@JsonKey(defaultValue: false) bool? isTeacher,
+      @JsonKey(defaultValue: false) bool? hasSignedCLA,
+      @JsonKey(defaultValue: false) bool? isVerified}) = _$_Teaching;
 
   factory _Teaching.fromJson(Map<String, dynamic> json) = _$_Teaching.fromJson;
 
   @override
   @JsonKey(defaultValue: false)
-  bool get isTeacher;
+  bool? get isTeacher => throw _privateConstructorUsedError;
   @override
   @JsonKey(defaultValue: false)
-  bool get hasSignedCLA;
+  bool? get hasSignedCLA => throw _privateConstructorUsedError;
   @override
   @JsonKey(defaultValue: false)
-  bool get isVerified;
+  bool? get isVerified => throw _privateConstructorUsedError;
   @override
-  _$TeachingCopyWith<_Teaching> get copyWith;
+  @JsonKey(ignore: true)
+  _$TeachingCopyWith<_Teaching> get copyWith =>
+      throw _privateConstructorUsedError;
 }

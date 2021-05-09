@@ -3,38 +3,37 @@ import 'dart:async';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:fa_flutter_core/fa_flutter_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter/cupertino.dart';
-import 'package:flutter_record_lesson/modules/common/index.dart';
 import 'package:flutter_record_lesson/modules/profile/index.dart';
 import 'package:flutter_record_lesson/utils/log_utils.dart';
 import 'package:rxdart/rxdart.dart';
 
 class FirebaseUserRepository implements UserRepository {
   FirebaseUserRepository({
-    @required this.prefHelper,
-    @required this.firestore,
+    required this.prefHelper,
+    required this.firestore,
   });
-  final AppPrefs prefHelper;
-  final FirebaseFirestore firestore;
+
+  final AppPrefs? prefHelper;
+  final FirebaseFirestore? firestore;
 
   static const _prefsUserLogin = "prefsUserLogin";
-  final _userSubject = BehaviorSubject<MyUser>.seeded(null);
+  final _userSubject = BehaviorSubject<MyUser?>.seeded(null);
 
   Future<void> init() async {
     try {
       final firebaseUser = FirebaseAuth.instance.currentUser;
       if (firebaseUser != null) {
         final userDoc =
-            await firestore.collection('users').doc(firebaseUser.uid).get();
-        _userSubject.add(MyUser.fromJson(userDoc.data()));
+            await firestore!.collection('users').doc(firebaseUser.uid).get();
+        _userSubject.add(MyUser.fromJson(userDoc.data()!));
 
-        firestore
+        firestore!
             .collection('users')
             .doc(firebaseUser.uid)
             .snapshots()
             .listen((event) async {
           if (event != null) {
-            _userSubject.add(MyUser.fromJson(event.data()));
+            _userSubject.add(MyUser.fromJson(event.data()!));
             /* final _firebaseMessaging = FirebaseMessaging();
           _firebaseMessaging.setAutoInitEnabled(true);
           _fcmToken = await _firebaseMessaging.getToken();
@@ -57,14 +56,14 @@ class FirebaseUserRepository implements UserRepository {
   @override
   Future<Result> registerUser(MyUser user) async {
     try {
-      final userDoc = await firestore.collection('users').doc(user.id).get();
+      final userDoc = await firestore!.collection('users').doc(user.id).get();
       if (userDoc.exists) {
-        await firestore.collection('users').doc(user.id).update({
+        await firestore!.collection('users').doc(user.id).update({
           'updatedAt': DateTime.now().millisecondsSinceEpoch ~/ 1000,
         });
       } else {
         final epoch = DateTime.now().millisecondsSinceEpoch ~/ 1000;
-        await firestore.collection('users').doc(user.id).set({
+        await firestore!.collection('users').doc(user.id).set({
           ...user.toJson(),
           'createdAt': epoch,
           'updatedAt': epoch,
@@ -72,20 +71,20 @@ class FirebaseUserRepository implements UserRepository {
       }
       setUserLoggedIn(true);
       await init();
-      return Result.success();
+      return Result.success(data: null);
     } catch (e, s) {
       logger.e(e, s);
-      return Result.error('${e.message}');
+      return Result.failure(reason: '${e.toString()}');
     }
   }
 
   @override
-  BehaviorSubject<MyUser> getLoggedInUserStream() {
-    return _userSubject.stream;
+  BehaviorSubject<MyUser?> getLoggedInUserStream() {
+    return _userSubject.stream as BehaviorSubject<MyUser?>;
   }
 
   @override
-  MyUser getLoggedInUser() {
+  MyUser? getLoggedInUser() {
     return _userSubject.value;
   }
 
@@ -93,29 +92,29 @@ class FirebaseUserRepository implements UserRepository {
   Future<Result> logoutUser() async {
     try {
       await FirebaseAuth.instance.signOut();
-      await prefHelper.clear();
+      await prefHelper!.clear();
 
-      return Result.success(null);
+      return Result.success(data: null);
     } catch (e, s) {
       logger.e(e, s);
-      return Result.error('${e.message}');
+      return Result.failure(reason: '${e.toString()}');
     }
   }
 
   @override
   bool getUserLoggedIn() {
-    return prefHelper.getBool(_prefsUserLogin) ?? false;
+    return prefHelper!.getBool(_prefsUserLogin) ?? false;
   }
 
   @override
   void setUserLoggedIn(bool value) {
-    prefHelper.setBool(_prefsUserLogin, value);
+    prefHelper!.setBool(_prefsUserLogin, value);
   }
 
   @override
-  Future<void> saveSelectedCategory(String id) async {
+  Future<void> saveSelectedCategory(String? id) async {
     try {
-      await firestore.collection('users').doc(_userSubject.value.id).update({
+      await firestore!.collection('users').doc(_userSubject.value!.id).update({
         'selectedCategory': id,
         'updatedAt': DateTime.now().millisecondsSinceEpoch ~/ 1000,
       });
@@ -127,9 +126,9 @@ class FirebaseUserRepository implements UserRepository {
   @override
   Future<void> setUserSignedCla(bool value) async {
     try {
-      await firestore.collection('users').doc(_userSubject.value.id).update({
+      await firestore!.collection('users').doc(_userSubject.value!.id).update({
         'teaching': {
-          ..._userSubject.value.teaching?.toJson() ?? {},
+          ..._userSubject.value!.teaching?.toJson() ?? {},
           'hasSignedCLA': true,
         },
         'updatedAt': DateTime.now().millisecondsSinceEpoch ~/ 1000,
@@ -141,7 +140,7 @@ class FirebaseUserRepository implements UserRepository {
 
   @override
   bool get hasUserSignedCla =>
-      _userSubject.value.teaching?.hasSignedCLA ?? false;
+      _userSubject.value!.teaching?.hasSignedCLA ?? false;
 
   @override
   bool get isTeacher => hasUserSignedCla;

@@ -5,21 +5,21 @@ import 'package:flutter_record_lesson/modules/common/src/widgets/box_header.dart
 import 'package:rxdart/rxdart.dart';
 
 typedef ChapterSelectCallback = void Function({
-  MyCategory category,
-  MySubject subject,
-  MyUnit unit,
-  MyChapter chapter,
+  MyCategory? category,
+  MySubject? subject,
+  MyUnit? unit,
+  MyChapter? chapter,
 });
 
 class SelectUnitPage extends StatefulWidget {
   final MySubject subject;
-  final MyCategory category;
+  final MyCategory? category;
   final ChapterSelectCallback onTap;
 
   SelectUnitPage({
-    @required this.subject,
-    @required this.category,
-    @required this.onTap,
+    required this.subject,
+    required this.category,
+    required this.onTap,
   });
 
   @override
@@ -41,7 +41,7 @@ class _SelectUnitPageState extends State<SelectUnitPage> {
         title: Text('Select Chapter'),
       ),
       body: Container(
-        child: (widget.subject.units != null && widget.subject.units.isNotEmpty)
+        child: (widget.subject.units != null && widget.subject.units!.isNotEmpty)
             ? ListView(
                 physics: BouncingScrollPhysics(),
                 padding: EdgeInsets.symmetric(
@@ -52,15 +52,15 @@ class _SelectUnitPageState extends State<SelectUnitPage> {
                   ..._getList().map(
                     (unit) => Column(
                       children: [
-                        BoxHeader(unit.title.toUpperCase()),
-                        if (unit.chapters != null && unit.chapters.isNotEmpty)
-                          ..._getChapterList(unit.chapters).map(
+                        BoxHeader(unit.title!.toUpperCase()),
+                        if (unit.chapters != null && unit.chapters!.isNotEmpty)
+                          ..._getChapterList(unit.chapters!).map(
                             (chapter) => Container(
                               child: ListTile(
                                 dense: true,
-                                title: Text(chapter.title),
+                                title: Text(chapter.title!),
                                 subtitle: chapter.description != null
-                                    ? Text(chapter.description)
+                                    ? Text(chapter.description!)
                                     : null,
                                 onTap: () {
                                   widget.onTap(
@@ -97,21 +97,21 @@ class _SelectUnitPageState extends State<SelectUnitPage> {
 
   @override
   void dispose() {
-    _subject?.close();
+    _subject.close();
     super.dispose();
   }
 
   List<MyUnit> _getList() {
-    final list = List<MyUnit>.from(widget.subject.units);
+    final list = List<MyUnit>.from(widget.subject.units!);
 
-    list.sort((a, b) => int.parse(a.id).compareTo(int.parse(b.id)));
+    list.sort((a, b) => int.parse(a.id!).compareTo(int.parse(b.id!)));
     return list;
   }
 
   List<MyChapter> _getChapterList(List<MyChapter> rawList) {
     final list = List<MyChapter>.from(rawList);
 
-    list.sort((a, b) => int.parse(a.id).compareTo(int.parse(b.id)));
+    list.sort((a, b) => int.parse(a.id!).compareTo(int.parse(b.id!)));
     return list;
   }
 }

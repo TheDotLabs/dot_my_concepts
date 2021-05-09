@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
 
 part of 'category.dart';
 
@@ -8,6 +8,10 @@ part of 'category.dart';
 // **************************************************************************
 
 T _$identity<T>(T value) => value;
+
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+
 MyCategory _$MyCategoryFromJson(Map<String, dynamic> json) {
   return _MyCategory.fromJson(json);
 }
@@ -16,13 +20,12 @@ MyCategory _$MyCategoryFromJson(Map<String, dynamic> json) {
 class _$MyCategoryTearOff {
   const _$MyCategoryTearOff();
 
-// ignore: unused_element
   _MyCategory call(
-      {@JsonKey(defaultValue: '0') String id,
-      String title,
-      String description,
-      String image,
-      List<MySubject> subjects}) {
+      {String? id = "0",
+      String? title,
+      String? description,
+      String? image,
+      List<MySubject>? subjects}) {
     return _MyCategory(
       id: id,
       title: title,
@@ -32,27 +35,26 @@ class _$MyCategoryTearOff {
     );
   }
 
-// ignore: unused_element
   MyCategory fromJson(Map<String, Object> json) {
     return MyCategory.fromJson(json);
   }
 }
 
 /// @nodoc
-// ignore: unused_element
 const $MyCategory = _$MyCategoryTearOff();
 
 /// @nodoc
 mixin _$MyCategory {
-  @JsonKey(defaultValue: '0')
-  String get id;
-  String get title;
-  String get description;
-  String get image;
-  List<MySubject> get subjects;
+  String? get id => throw _privateConstructorUsedError;
+  String? get title => throw _privateConstructorUsedError;
+  String? get description => throw _privateConstructorUsedError;
+  String? get image => throw _privateConstructorUsedError;
+  List<MySubject>? get subjects => throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson();
-  $MyCategoryCopyWith<MyCategory> get copyWith;
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $MyCategoryCopyWith<MyCategory> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -61,11 +63,11 @@ abstract class $MyCategoryCopyWith<$Res> {
           MyCategory value, $Res Function(MyCategory) then) =
       _$MyCategoryCopyWithImpl<$Res>;
   $Res call(
-      {@JsonKey(defaultValue: '0') String id,
-      String title,
-      String description,
-      String image,
-      List<MySubject> subjects});
+      {String? id,
+      String? title,
+      String? description,
+      String? image,
+      List<MySubject>? subjects});
 }
 
 /// @nodoc
@@ -78,20 +80,33 @@ class _$MyCategoryCopyWithImpl<$Res> implements $MyCategoryCopyWith<$Res> {
 
   @override
   $Res call({
-    Object id = freezed,
-    Object title = freezed,
-    Object description = freezed,
-    Object image = freezed,
-    Object subjects = freezed,
+    Object? id = freezed,
+    Object? title = freezed,
+    Object? description = freezed,
+    Object? image = freezed,
+    Object? subjects = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed ? _value.id : id as String,
-      title: title == freezed ? _value.title : title as String,
-      description:
-          description == freezed ? _value.description : description as String,
-      image: image == freezed ? _value.image : image as String,
-      subjects:
-          subjects == freezed ? _value.subjects : subjects as List<MySubject>,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
+      title: title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String?,
+      description: description == freezed
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      image: image == freezed
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as String?,
+      subjects: subjects == freezed
+          ? _value.subjects
+          : subjects // ignore: cast_nullable_to_non_nullable
+              as List<MySubject>?,
     ));
   }
 }
@@ -103,11 +118,11 @@ abstract class _$MyCategoryCopyWith<$Res> implements $MyCategoryCopyWith<$Res> {
       __$MyCategoryCopyWithImpl<$Res>;
   @override
   $Res call(
-      {@JsonKey(defaultValue: '0') String id,
-      String title,
-      String description,
-      String image,
-      List<MySubject> subjects});
+      {String? id,
+      String? title,
+      String? description,
+      String? image,
+      List<MySubject>? subjects});
 }
 
 /// @nodoc
@@ -122,49 +137,57 @@ class __$MyCategoryCopyWithImpl<$Res> extends _$MyCategoryCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object id = freezed,
-    Object title = freezed,
-    Object description = freezed,
-    Object image = freezed,
-    Object subjects = freezed,
+    Object? id = freezed,
+    Object? title = freezed,
+    Object? description = freezed,
+    Object? image = freezed,
+    Object? subjects = freezed,
   }) {
     return _then(_MyCategory(
-      id: id == freezed ? _value.id : id as String,
-      title: title == freezed ? _value.title : title as String,
-      description:
-          description == freezed ? _value.description : description as String,
-      image: image == freezed ? _value.image : image as String,
-      subjects:
-          subjects == freezed ? _value.subjects : subjects as List<MySubject>,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
+      title: title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String?,
+      description: description == freezed
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      image: image == freezed
+          ? _value.image
+          : image // ignore: cast_nullable_to_non_nullable
+              as String?,
+      subjects: subjects == freezed
+          ? _value.subjects
+          : subjects // ignore: cast_nullable_to_non_nullable
+              as List<MySubject>?,
     ));
   }
 }
 
-@JsonSerializable()
-
 /// @nodoc
+@JsonSerializable()
 class _$_MyCategory implements _MyCategory {
   _$_MyCategory(
-      {@JsonKey(defaultValue: '0') this.id,
-      this.title,
-      this.description,
-      this.image,
-      this.subjects});
+      {this.id = "0", this.title, this.description, this.image, this.subjects});
 
   factory _$_MyCategory.fromJson(Map<String, dynamic> json) =>
       _$_$_MyCategoryFromJson(json);
 
+  @JsonKey(defaultValue: "0")
   @override
-  @JsonKey(defaultValue: '0')
-  final String id;
+  final String? id;
   @override
-  final String title;
+  final String? title;
   @override
-  final String description;
+  final String? description;
   @override
-  final String image;
+  final String? image;
   @override
-  final List<MySubject> subjects;
+  final List<MySubject>? subjects;
 
   @override
   String toString() {
@@ -198,6 +221,7 @@ class _$_MyCategory implements _MyCategory {
       const DeepCollectionEquality().hash(image) ^
       const DeepCollectionEquality().hash(subjects);
 
+  @JsonKey(ignore: true)
   @override
   _$MyCategoryCopyWith<_MyCategory> get copyWith =>
       __$MyCategoryCopyWithImpl<_MyCategory>(this, _$identity);
@@ -210,28 +234,29 @@ class _$_MyCategory implements _MyCategory {
 
 abstract class _MyCategory implements MyCategory {
   factory _MyCategory(
-      {@JsonKey(defaultValue: '0') String id,
-      String title,
-      String description,
-      String image,
-      List<MySubject> subjects}) = _$_MyCategory;
+      {String? id,
+      String? title,
+      String? description,
+      String? image,
+      List<MySubject>? subjects}) = _$_MyCategory;
 
   factory _MyCategory.fromJson(Map<String, dynamic> json) =
       _$_MyCategory.fromJson;
 
   @override
-  @JsonKey(defaultValue: '0')
-  String get id;
+  String? get id => throw _privateConstructorUsedError;
   @override
-  String get title;
+  String? get title => throw _privateConstructorUsedError;
   @override
-  String get description;
+  String? get description => throw _privateConstructorUsedError;
   @override
-  String get image;
+  String? get image => throw _privateConstructorUsedError;
   @override
-  List<MySubject> get subjects;
+  List<MySubject>? get subjects => throw _privateConstructorUsedError;
   @override
-  _$MyCategoryCopyWith<_MyCategory> get copyWith;
+  @JsonKey(ignore: true)
+  _$MyCategoryCopyWith<_MyCategory> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 MySubject _$MySubjectFromJson(Map<String, dynamic> json) {
@@ -242,12 +267,11 @@ MySubject _$MySubjectFromJson(Map<String, dynamic> json) {
 class _$MySubjectTearOff {
   const _$MySubjectTearOff();
 
-// ignore: unused_element
   _MySubject call(
-      {@JsonKey(defaultValue: 0) String id,
-      String title,
-      String description,
-      List<MyUnit> units}) {
+      {@JsonKey(defaultValue: 0) String? id,
+      String? title,
+      String? description,
+      List<MyUnit>? units}) {
     return _MySubject(
       id: id,
       title: title,
@@ -256,26 +280,26 @@ class _$MySubjectTearOff {
     );
   }
 
-// ignore: unused_element
   MySubject fromJson(Map<String, Object> json) {
     return MySubject.fromJson(json);
   }
 }
 
 /// @nodoc
-// ignore: unused_element
 const $MySubject = _$MySubjectTearOff();
 
 /// @nodoc
 mixin _$MySubject {
   @JsonKey(defaultValue: 0)
-  String get id;
-  String get title;
-  String get description;
-  List<MyUnit> get units;
+  String? get id => throw _privateConstructorUsedError;
+  String? get title => throw _privateConstructorUsedError;
+  String? get description => throw _privateConstructorUsedError;
+  List<MyUnit>? get units => throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson();
-  $MySubjectCopyWith<MySubject> get copyWith;
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $MySubjectCopyWith<MySubject> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -283,10 +307,10 @@ abstract class $MySubjectCopyWith<$Res> {
   factory $MySubjectCopyWith(MySubject value, $Res Function(MySubject) then) =
       _$MySubjectCopyWithImpl<$Res>;
   $Res call(
-      {@JsonKey(defaultValue: 0) String id,
-      String title,
-      String description,
-      List<MyUnit> units});
+      {@JsonKey(defaultValue: 0) String? id,
+      String? title,
+      String? description,
+      List<MyUnit>? units});
 }
 
 /// @nodoc
@@ -299,17 +323,28 @@ class _$MySubjectCopyWithImpl<$Res> implements $MySubjectCopyWith<$Res> {
 
   @override
   $Res call({
-    Object id = freezed,
-    Object title = freezed,
-    Object description = freezed,
-    Object units = freezed,
+    Object? id = freezed,
+    Object? title = freezed,
+    Object? description = freezed,
+    Object? units = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed ? _value.id : id as String,
-      title: title == freezed ? _value.title : title as String,
-      description:
-          description == freezed ? _value.description : description as String,
-      units: units == freezed ? _value.units : units as List<MyUnit>,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
+      title: title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String?,
+      description: description == freezed
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      units: units == freezed
+          ? _value.units
+          : units // ignore: cast_nullable_to_non_nullable
+              as List<MyUnit>?,
     ));
   }
 }
@@ -321,10 +356,10 @@ abstract class _$MySubjectCopyWith<$Res> implements $MySubjectCopyWith<$Res> {
       __$MySubjectCopyWithImpl<$Res>;
   @override
   $Res call(
-      {@JsonKey(defaultValue: 0) String id,
-      String title,
-      String description,
-      List<MyUnit> units});
+      {@JsonKey(defaultValue: 0) String? id,
+      String? title,
+      String? description,
+      List<MyUnit>? units});
 }
 
 /// @nodoc
@@ -338,24 +373,34 @@ class __$MySubjectCopyWithImpl<$Res> extends _$MySubjectCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object id = freezed,
-    Object title = freezed,
-    Object description = freezed,
-    Object units = freezed,
+    Object? id = freezed,
+    Object? title = freezed,
+    Object? description = freezed,
+    Object? units = freezed,
   }) {
     return _then(_MySubject(
-      id: id == freezed ? _value.id : id as String,
-      title: title == freezed ? _value.title : title as String,
-      description:
-          description == freezed ? _value.description : description as String,
-      units: units == freezed ? _value.units : units as List<MyUnit>,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
+      title: title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String?,
+      description: description == freezed
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      units: units == freezed
+          ? _value.units
+          : units // ignore: cast_nullable_to_non_nullable
+              as List<MyUnit>?,
     ));
   }
 }
 
-@JsonSerializable()
-
 /// @nodoc
+@JsonSerializable()
 class _$_MySubject implements _MySubject {
   _$_MySubject(
       {@JsonKey(defaultValue: 0) this.id,
@@ -368,13 +413,13 @@ class _$_MySubject implements _MySubject {
 
   @override
   @JsonKey(defaultValue: 0)
-  final String id;
+  final String? id;
   @override
-  final String title;
+  final String? title;
   @override
-  final String description;
+  final String? description;
   @override
-  final List<MyUnit> units;
+  final List<MyUnit>? units;
 
   @override
   String toString() {
@@ -404,6 +449,7 @@ class _$_MySubject implements _MySubject {
       const DeepCollectionEquality().hash(description) ^
       const DeepCollectionEquality().hash(units);
 
+  @JsonKey(ignore: true)
   @override
   _$MySubjectCopyWith<_MySubject> get copyWith =>
       __$MySubjectCopyWithImpl<_MySubject>(this, _$identity);
@@ -416,25 +462,27 @@ class _$_MySubject implements _MySubject {
 
 abstract class _MySubject implements MySubject {
   factory _MySubject(
-      {@JsonKey(defaultValue: 0) String id,
-      String title,
-      String description,
-      List<MyUnit> units}) = _$_MySubject;
+      {@JsonKey(defaultValue: 0) String? id,
+      String? title,
+      String? description,
+      List<MyUnit>? units}) = _$_MySubject;
 
   factory _MySubject.fromJson(Map<String, dynamic> json) =
       _$_MySubject.fromJson;
 
   @override
   @JsonKey(defaultValue: 0)
-  String get id;
+  String? get id => throw _privateConstructorUsedError;
   @override
-  String get title;
+  String? get title => throw _privateConstructorUsedError;
   @override
-  String get description;
+  String? get description => throw _privateConstructorUsedError;
   @override
-  List<MyUnit> get units;
+  List<MyUnit>? get units => throw _privateConstructorUsedError;
   @override
-  _$MySubjectCopyWith<_MySubject> get copyWith;
+  @JsonKey(ignore: true)
+  _$MySubjectCopyWith<_MySubject> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 MyUnit _$MyUnitFromJson(Map<String, dynamic> json) {
@@ -445,12 +493,11 @@ MyUnit _$MyUnitFromJson(Map<String, dynamic> json) {
 class _$MyUnitTearOff {
   const _$MyUnitTearOff();
 
-// ignore: unused_element
   _MyUnit call(
-      {@JsonKey(defaultValue: 0) String id,
-      String title,
-      String description,
-      List<MyChapter> chapters}) {
+      {@JsonKey(defaultValue: 0) String? id,
+      String? title,
+      String? description,
+      List<MyChapter>? chapters}) {
     return _MyUnit(
       id: id,
       title: title,
@@ -459,26 +506,25 @@ class _$MyUnitTearOff {
     );
   }
 
-// ignore: unused_element
   MyUnit fromJson(Map<String, Object> json) {
     return MyUnit.fromJson(json);
   }
 }
 
 /// @nodoc
-// ignore: unused_element
 const $MyUnit = _$MyUnitTearOff();
 
 /// @nodoc
 mixin _$MyUnit {
   @JsonKey(defaultValue: 0)
-  String get id;
-  String get title;
-  String get description;
-  List<MyChapter> get chapters;
+  String? get id => throw _privateConstructorUsedError;
+  String? get title => throw _privateConstructorUsedError;
+  String? get description => throw _privateConstructorUsedError;
+  List<MyChapter>? get chapters => throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson();
-  $MyUnitCopyWith<MyUnit> get copyWith;
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $MyUnitCopyWith<MyUnit> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -486,10 +532,10 @@ abstract class $MyUnitCopyWith<$Res> {
   factory $MyUnitCopyWith(MyUnit value, $Res Function(MyUnit) then) =
       _$MyUnitCopyWithImpl<$Res>;
   $Res call(
-      {@JsonKey(defaultValue: 0) String id,
-      String title,
-      String description,
-      List<MyChapter> chapters});
+      {@JsonKey(defaultValue: 0) String? id,
+      String? title,
+      String? description,
+      List<MyChapter>? chapters});
 }
 
 /// @nodoc
@@ -502,18 +548,28 @@ class _$MyUnitCopyWithImpl<$Res> implements $MyUnitCopyWith<$Res> {
 
   @override
   $Res call({
-    Object id = freezed,
-    Object title = freezed,
-    Object description = freezed,
-    Object chapters = freezed,
+    Object? id = freezed,
+    Object? title = freezed,
+    Object? description = freezed,
+    Object? chapters = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed ? _value.id : id as String,
-      title: title == freezed ? _value.title : title as String,
-      description:
-          description == freezed ? _value.description : description as String,
-      chapters:
-          chapters == freezed ? _value.chapters : chapters as List<MyChapter>,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
+      title: title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String?,
+      description: description == freezed
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      chapters: chapters == freezed
+          ? _value.chapters
+          : chapters // ignore: cast_nullable_to_non_nullable
+              as List<MyChapter>?,
     ));
   }
 }
@@ -524,10 +580,10 @@ abstract class _$MyUnitCopyWith<$Res> implements $MyUnitCopyWith<$Res> {
       __$MyUnitCopyWithImpl<$Res>;
   @override
   $Res call(
-      {@JsonKey(defaultValue: 0) String id,
-      String title,
-      String description,
-      List<MyChapter> chapters});
+      {@JsonKey(defaultValue: 0) String? id,
+      String? title,
+      String? description,
+      List<MyChapter>? chapters});
 }
 
 /// @nodoc
@@ -541,25 +597,34 @@ class __$MyUnitCopyWithImpl<$Res> extends _$MyUnitCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object id = freezed,
-    Object title = freezed,
-    Object description = freezed,
-    Object chapters = freezed,
+    Object? id = freezed,
+    Object? title = freezed,
+    Object? description = freezed,
+    Object? chapters = freezed,
   }) {
     return _then(_MyUnit(
-      id: id == freezed ? _value.id : id as String,
-      title: title == freezed ? _value.title : title as String,
-      description:
-          description == freezed ? _value.description : description as String,
-      chapters:
-          chapters == freezed ? _value.chapters : chapters as List<MyChapter>,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
+      title: title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String?,
+      description: description == freezed
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      chapters: chapters == freezed
+          ? _value.chapters
+          : chapters // ignore: cast_nullable_to_non_nullable
+              as List<MyChapter>?,
     ));
   }
 }
 
-@JsonSerializable()
-
 /// @nodoc
+@JsonSerializable()
 class _$_MyUnit implements _MyUnit {
   _$_MyUnit(
       {@JsonKey(defaultValue: 0) this.id,
@@ -572,13 +637,13 @@ class _$_MyUnit implements _MyUnit {
 
   @override
   @JsonKey(defaultValue: 0)
-  final String id;
+  final String? id;
   @override
-  final String title;
+  final String? title;
   @override
-  final String description;
+  final String? description;
   @override
-  final List<MyChapter> chapters;
+  final List<MyChapter>? chapters;
 
   @override
   String toString() {
@@ -609,6 +674,7 @@ class _$_MyUnit implements _MyUnit {
       const DeepCollectionEquality().hash(description) ^
       const DeepCollectionEquality().hash(chapters);
 
+  @JsonKey(ignore: true)
   @override
   _$MyUnitCopyWith<_MyUnit> get copyWith =>
       __$MyUnitCopyWithImpl<_MyUnit>(this, _$identity);
@@ -621,24 +687,25 @@ class _$_MyUnit implements _MyUnit {
 
 abstract class _MyUnit implements MyUnit {
   factory _MyUnit(
-      {@JsonKey(defaultValue: 0) String id,
-      String title,
-      String description,
-      List<MyChapter> chapters}) = _$_MyUnit;
+      {@JsonKey(defaultValue: 0) String? id,
+      String? title,
+      String? description,
+      List<MyChapter>? chapters}) = _$_MyUnit;
 
   factory _MyUnit.fromJson(Map<String, dynamic> json) = _$_MyUnit.fromJson;
 
   @override
   @JsonKey(defaultValue: 0)
-  String get id;
+  String? get id => throw _privateConstructorUsedError;
   @override
-  String get title;
+  String? get title => throw _privateConstructorUsedError;
   @override
-  String get description;
+  String? get description => throw _privateConstructorUsedError;
   @override
-  List<MyChapter> get chapters;
+  List<MyChapter>? get chapters => throw _privateConstructorUsedError;
   @override
-  _$MyUnitCopyWith<_MyUnit> get copyWith;
+  @JsonKey(ignore: true)
+  _$MyUnitCopyWith<_MyUnit> get copyWith => throw _privateConstructorUsedError;
 }
 
 MyChapter _$MyChapterFromJson(Map<String, dynamic> json) {
@@ -649,9 +716,10 @@ MyChapter _$MyChapterFromJson(Map<String, dynamic> json) {
 class _$MyChapterTearOff {
   const _$MyChapterTearOff();
 
-// ignore: unused_element
   _MyChapter call(
-      {@JsonKey(defaultValue: 0) String id, String title, String description}) {
+      {@JsonKey(defaultValue: 0) String? id,
+      String? title,
+      String? description}) {
     return _MyChapter(
       id: id,
       title: title,
@@ -659,25 +727,25 @@ class _$MyChapterTearOff {
     );
   }
 
-// ignore: unused_element
   MyChapter fromJson(Map<String, Object> json) {
     return MyChapter.fromJson(json);
   }
 }
 
 /// @nodoc
-// ignore: unused_element
 const $MyChapter = _$MyChapterTearOff();
 
 /// @nodoc
 mixin _$MyChapter {
   @JsonKey(defaultValue: 0)
-  String get id;
-  String get title;
-  String get description;
+  String? get id => throw _privateConstructorUsedError;
+  String? get title => throw _privateConstructorUsedError;
+  String? get description => throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson();
-  $MyChapterCopyWith<MyChapter> get copyWith;
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $MyChapterCopyWith<MyChapter> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -685,7 +753,9 @@ abstract class $MyChapterCopyWith<$Res> {
   factory $MyChapterCopyWith(MyChapter value, $Res Function(MyChapter) then) =
       _$MyChapterCopyWithImpl<$Res>;
   $Res call(
-      {@JsonKey(defaultValue: 0) String id, String title, String description});
+      {@JsonKey(defaultValue: 0) String? id,
+      String? title,
+      String? description});
 }
 
 /// @nodoc
@@ -698,15 +768,23 @@ class _$MyChapterCopyWithImpl<$Res> implements $MyChapterCopyWith<$Res> {
 
   @override
   $Res call({
-    Object id = freezed,
-    Object title = freezed,
-    Object description = freezed,
+    Object? id = freezed,
+    Object? title = freezed,
+    Object? description = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed ? _value.id : id as String,
-      title: title == freezed ? _value.title : title as String,
-      description:
-          description == freezed ? _value.description : description as String,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
+      title: title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String?,
+      description: description == freezed
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -718,7 +796,9 @@ abstract class _$MyChapterCopyWith<$Res> implements $MyChapterCopyWith<$Res> {
       __$MyChapterCopyWithImpl<$Res>;
   @override
   $Res call(
-      {@JsonKey(defaultValue: 0) String id, String title, String description});
+      {@JsonKey(defaultValue: 0) String? id,
+      String? title,
+      String? description});
 }
 
 /// @nodoc
@@ -732,22 +812,29 @@ class __$MyChapterCopyWithImpl<$Res> extends _$MyChapterCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object id = freezed,
-    Object title = freezed,
-    Object description = freezed,
+    Object? id = freezed,
+    Object? title = freezed,
+    Object? description = freezed,
   }) {
     return _then(_MyChapter(
-      id: id == freezed ? _value.id : id as String,
-      title: title == freezed ? _value.title : title as String,
-      description:
-          description == freezed ? _value.description : description as String,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
+      title: title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String?,
+      description: description == freezed
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
 
-@JsonSerializable()
-
 /// @nodoc
+@JsonSerializable()
 class _$_MyChapter implements _MyChapter {
   _$_MyChapter(
       {@JsonKey(defaultValue: 0) this.id, this.title, this.description});
@@ -757,11 +844,11 @@ class _$_MyChapter implements _MyChapter {
 
   @override
   @JsonKey(defaultValue: 0)
-  final String id;
+  final String? id;
   @override
-  final String title;
+  final String? title;
   @override
-  final String description;
+  final String? description;
 
   @override
   String toString() {
@@ -788,6 +875,7 @@ class _$_MyChapter implements _MyChapter {
       const DeepCollectionEquality().hash(title) ^
       const DeepCollectionEquality().hash(description);
 
+  @JsonKey(ignore: true)
   @override
   _$MyChapterCopyWith<_MyChapter> get copyWith =>
       __$MyChapterCopyWithImpl<_MyChapter>(this, _$identity);
@@ -800,20 +888,22 @@ class _$_MyChapter implements _MyChapter {
 
 abstract class _MyChapter implements MyChapter {
   factory _MyChapter(
-      {@JsonKey(defaultValue: 0) String id,
-      String title,
-      String description}) = _$_MyChapter;
+      {@JsonKey(defaultValue: 0) String? id,
+      String? title,
+      String? description}) = _$_MyChapter;
 
   factory _MyChapter.fromJson(Map<String, dynamic> json) =
       _$_MyChapter.fromJson;
 
   @override
   @JsonKey(defaultValue: 0)
-  String get id;
+  String? get id => throw _privateConstructorUsedError;
   @override
-  String get title;
+  String? get title => throw _privateConstructorUsedError;
   @override
-  String get description;
+  String? get description => throw _privateConstructorUsedError;
   @override
-  _$MyChapterCopyWith<_MyChapter> get copyWith;
+  @JsonKey(ignore: true)
+  _$MyChapterCopyWith<_MyChapter> get copyWith =>
+      throw _privateConstructorUsedError;
 }

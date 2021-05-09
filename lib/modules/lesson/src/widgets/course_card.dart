@@ -28,15 +28,15 @@ class CourseCard extends StatelessWidget {
             children: [
               Expanded(
                 child: CachedNetworkImage(
-                  imageUrl: course.cover,
+                  imageUrl: course.cover!,
                   fit: BoxFit.cover,
                 ),
               ),
               Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: Text(
-                  course.title,
-                  style: Theme.of(context).textTheme.bodyText1.copyWith(
+                  course.title!,
+                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
                         fontWeight: FontWeight.w700,
                       ),
                 ),

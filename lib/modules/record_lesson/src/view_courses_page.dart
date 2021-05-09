@@ -11,16 +11,16 @@ import 'package:flutter_record_lesson/modules/common/src/widgets/circular_loadin
 
 class ViewCoursesPage extends StatefulWidget {
   ViewCoursesPage({
-    @required this.category,
-    @required this.subject,
-    @required this.unit,
-    @required this.chapter,
+    required this.category,
+    required this.subject,
+    required this.unit,
+    required this.chapter,
   });
 
-  final MyCategory category;
-  final MySubject subject;
-  final MyUnit unit;
-  final MyChapter chapter;
+  final MyCategory? category;
+  final MySubject? subject;
+  final MyUnit? unit;
+  final MyChapter? chapter;
 
   @override
   _ViewCoursesPageState createState() => _ViewCoursesPageState();
@@ -31,20 +31,20 @@ class _ViewCoursesPageState extends State<ViewCoursesPage> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('${widget.chapter.title}'),
+        title: Text('${widget.chapter!.title}'),
       ),
       body: StreamBuilder<List<MyCourse>>(
         stream: _getCoursesStream(),
         builder: (context, snapshot) {
           if (snapshot.hasData && snapshot.data != null)
-            return snapshot.data.isNotEmpty
+            return snapshot.data!.isNotEmpty
                 ? ListView(
                     padding: EdgeInsets.symmetric(
                       vertical: 8,
                       horizontal: 8,
                     ),
                     children: [
-                      ...snapshot.data.map(
+                      ...snapshot.data!.map(
                         (e) => _CourseCard(
                           course: e,
                         ),
@@ -56,7 +56,7 @@ class _ViewCoursesPageState extends State<ViewCoursesPage> {
                   );
           else if (snapshot.hasError) {
             return Center(
-              child: Text(snapshot.error),
+              child: Text(snapshot.error as String),
             );
           } else {
             return Center(
@@ -73,19 +73,19 @@ class _ViewCoursesPageState extends State<ViewCoursesPage> {
         .collection('courses')
         .where(
           'category',
-          isEqualTo: widget.category.id,
+          isEqualTo: widget.category!.id,
         )
         .where(
           'subject',
-          isEqualTo: widget.subject.id,
+          isEqualTo: widget.subject!.id,
         )
         .where(
           'unit',
-          isEqualTo: widget.unit.id,
+          isEqualTo: widget.unit!.id,
         )
         .where(
           'chapter',
-          isEqualTo: widget.chapter.id,
+          isEqualTo: widget.chapter!.id,
         )
         .snapshots()
         .transform(
@@ -105,7 +105,7 @@ class _ViewCoursesPageState extends State<ViewCoursesPage> {
 class _CourseCard extends StatelessWidget {
   _CourseCard({this.course});
 
-  final MyCourse course;
+  final MyCourse? course;
 
   @override
   Widget build(BuildContext context) {
@@ -126,15 +126,15 @@ class _CourseCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.stretch,
             children: [
               CachedNetworkImage(
-                imageUrl: course.cover,
+                imageUrl: course!.cover!,
                 fit: BoxFit.cover,
                 height: MediaQuery.of(context).size.height / 4,
               ),
               Padding(
                 padding: const EdgeInsets.all(12.0),
                 child: Text(
-                  course.title,
-                  style: Theme.of(context).textTheme.bodyText1.copyWith(
+                  course!.title!,
+                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
                         fontWeight: FontWeight.w700,
                       ),
                 ),

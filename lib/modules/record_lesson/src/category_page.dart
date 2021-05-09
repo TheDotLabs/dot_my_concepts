@@ -34,7 +34,7 @@ class _CategoryPageState extends State<CategoryPage> {
           stream: _getStream(),
           builder: (context, snapshot) {
             if (snapshot.hasData && snapshot.data != null) {
-              final list = snapshot.data;
+              final list = snapshot.data!;
               return Container(
                 child: ListView(
                   padding: EdgeInsets.symmetric(
@@ -50,14 +50,14 @@ class _CategoryPageState extends State<CategoryPage> {
                           vertical: 8,
                         ),
                         leading: CachedNetworkImage(
-                          imageUrl: e.image,
+                          imageUrl: e.image!,
                           height: 40,
                           width: 40,
                         ),
                         trailing: Icon(Icons.keyboard_arrow_right),
-                        title: Text(e.title),
+                        title: Text(e.title!),
                         subtitle:
-                            e.description != null ? Text(e.description) : null,
+                            e.description != null ? Text(e.description!) : null,
                         onTap: () {
                           Navigator.of(context).push(
                             MaterialPageRoute(
@@ -75,7 +75,7 @@ class _CategoryPageState extends State<CategoryPage> {
               );
             } else if (snapshot.hasError) {
               return Center(
-                child: Text(snapshot.error),
+                child: Text(snapshot.error as String),
               );
             } else {
               return Center(

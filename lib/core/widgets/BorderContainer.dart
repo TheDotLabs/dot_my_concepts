@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class BorderContainer extends StatelessWidget {
   BorderContainer({this.child});
 
-  final Widget child;
+  final Widget? child;
 
   @override
   Widget build(BuildContext context) {

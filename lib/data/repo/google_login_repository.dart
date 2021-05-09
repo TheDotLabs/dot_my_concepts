@@ -1,5 +1,5 @@
+import 'package:fa_flutter_core/fa_flutter_core.dart';
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:flutter_record_lesson/modules/common/index.dart';
 import 'package:flutter_record_lesson/modules/profile/index.dart';
 import 'package:flutter_record_lesson/utils/log_utils.dart';
 import 'package:google_sign_in/google_sign_in.dart';
@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 import '../login_repository.dart';
 
 class GoogleLoginRepository extends LoginRepository {
-  GoogleLoginRepository({@required GoogleSignIn googleSignIn})
+  GoogleLoginRepository({required GoogleSignIn googleSignIn})
       : _googleSignIn = googleSignIn;
 
   final GoogleSignIn _googleSignIn;
@@ -16,7 +16,7 @@ class GoogleLoginRepository extends LoginRepository {
   @override
   Future<Result> login() async {
     try {
-      final googleUser = await _googleSignIn.signIn();
+      final googleUser = await (_googleSignIn.signIn() as Future<GoogleSignInAccount>);
 
       final googleAuth = await googleUser.authentication;
 
@@ -25,7 +25,7 @@ class GoogleLoginRepository extends LoginRepository {
         idToken: googleAuth.idToken,
       );
 
-      final firebaseUser = await getFirebaseUser(credential);
+      final firebaseUser = await (getFirebaseUser(credential) as Future<User>);
       logger.i('User signed in $firebaseUser');
       final user = MyUser(
         id: firebaseUser.uid,
@@ -33,14 +33,14 @@ class GoogleLoginRepository extends LoginRepository {
         email: firebaseUser.email != null
             ? firebaseUser.email.toString()
             : googleUser.email,
-        avatar: firebaseUser.photoURL.replaceAll('s96-c', 's300-c'),
+        avatar: firebaseUser.photoURL!.replaceAll('s96-c', 's300-c'),
         provider: LoginProvider.google.name,
       );
 
       return await registerUser(user);
     } catch (e, s) {
       logger.e(e, s);
-      return Result.error('$e');
+      return Result.failure(reason: '$e');
     }
   }
 
@@ -51,9 +51,9 @@ class GoogleLoginRepository extends LoginRepository {
   Future<Result> logout() async {
     try {
       final result = await _googleSignIn.signOut();
-      return Result.success();
+      return Result.success(data: result);
     } catch (error) {
-      return Result.error('${error.message}');
+      return Result.failure(reason: '${error.toString()}');
     }
   }
 

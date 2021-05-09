@@ -12,7 +12,7 @@ class CreateLessonPage extends StatefulWidget {
 
   const CreateLessonPage({this.course});
 
-  final MyCourse course;
+  final MyCourse? course;
 }
 
 class _CreateLessonPageState extends State<CreateLessonPage> {
@@ -33,9 +33,9 @@ class _CreateLessonPageState extends State<CreateLessonPage> {
           crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
             ListTile(
-              title: Text(widget.course.title ?? "--"),
+              title: Text(widget.course!.title ?? "--"),
               subtitle: Text(
-                widget.course.subtitle ?? "--",
+                widget.course!.subtitle ?? "--",
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
               ),
@@ -61,7 +61,7 @@ class _CreateLessonPageState extends State<CreateLessonPage> {
               maxLength: 100,
               maxLines: 2,
               minLines: 1,
-              style: Theme.of(context).textTheme.subtitle2.copyWith(
+              style: Theme.of(context).textTheme.subtitle2!.copyWith(
                     fontSize: 16,
                   ),
             ),
@@ -83,7 +83,7 @@ class _CreateLessonPageState extends State<CreateLessonPage> {
               maxLength: 200,
               minLines: 2,
               maxLines: 5,
-              style: Theme.of(context).textTheme.subtitle2.copyWith(
+              style: Theme.of(context).textTheme.subtitle2!.copyWith(
                     fontSize: 16,
                   ),
             ),
@@ -110,7 +110,7 @@ class _CreateLessonPageState extends State<CreateLessonPage> {
                               injector<RecordLessonBloc>().createNewLesson(
                                 name: name.text,
                                 description: description.text,
-                                course: widget.course,
+                                course: widget.course!,
                               );
                               Navigator.of(context).push(
                                 MaterialPageRoute(
@@ -136,15 +136,15 @@ class ValueListenableBuilder2<A, B> extends StatelessWidget {
   ValueListenableBuilder2(
     this.first,
     this.second, {
-    Key key,
+    Key? key,
     this.builder,
     this.child,
   }) : super(key: key);
 
   final ValueListenable<A> first;
   final ValueListenable<B> second;
-  final Widget child;
-  final Widget Function(BuildContext context, A a, B b, Widget child) builder;
+  final Widget? child;
+  final Widget Function(BuildContext context, A a, B b, Widget? child)? builder;
 
   @override
   Widget build(BuildContext context) {
@@ -154,7 +154,7 @@ class ValueListenableBuilder2<A, B> extends StatelessWidget {
         return ValueListenableBuilder<B>(
           valueListenable: second,
           builder: (context, b, __) {
-            return builder(context, a, b, child);
+            return builder!(context, a, b, child);
           },
         );
       },

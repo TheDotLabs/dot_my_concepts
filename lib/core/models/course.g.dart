@@ -8,16 +8,17 @@ part of 'course.dart';
 
 _$_MyCourse _$_$_MyCourseFromJson(Map<String, dynamic> json) {
   return _$_MyCourse(
-    id: json['id'] as String,
-    userId: json['userId'] as String,
-    title: json['title'] as String,
-    subtitle: json['subtitle'] as String,
-    cover: json['cover'] as String,
-    categoryId: json['categoryId'] as String,
-    subjectId: json['subjectId'] as String,
-    chapterId: json['chapterId'] as String,
-    unitId: json['unitId'] as String,
-    lessons: (json['lessons'] as List)?.map((e) => e as String)?.toList(),
+    id: json['id'] as String?,
+    userId: json['userId'] as String?,
+    title: json['title'] as String?,
+    subtitle: json['subtitle'] as String?,
+    cover: json['cover'] as String?,
+    categoryId: json['categoryId'] as String?,
+    subjectId: json['subjectId'] as String?,
+    chapterId: json['chapterId'] as String?,
+    unitId: json['unitId'] as String?,
+    lessons:
+        (json['lessons'] as List<dynamic>?)?.map((e) => e as String).toList(),
   );
 }
 

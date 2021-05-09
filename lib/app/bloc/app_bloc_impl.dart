@@ -8,16 +8,16 @@ import 'package:flutter_record_lesson/modules/profile/src/repo/user_repository.d
 import 'base/app_bloc.dart';
 
 class AppBlocImpl extends AppBloc {
-  final AppPrefs appPrefs;
+  final AppPrefs? appPrefs;
 
   static const prefsSelectedCategory = "selected_category";
 
   AppBlocImpl({
-    @required this.appPrefs,
+    required this.appPrefs,
     this.firestore,
   });
 
-  final FirebaseFirestore firestore;
+  final FirebaseFirestore? firestore;
 
   @override
   void onCategorySelection(MyCategory category) {
@@ -26,7 +26,7 @@ class AppBlocImpl extends AppBloc {
   }
 
   @override
-  String get selectedCategory =>
+  String? get selectedCategory =>
       injector<UserRepository>().getLoggedInUser()?.selectedCategory;
 
   @override

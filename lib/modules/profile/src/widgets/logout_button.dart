@@ -47,16 +47,19 @@ class LogoutButton extends StatelessWidget {
               child: Text("Proceed"),
               onPressed: () async {
                 final result = await injector<UserRepository>().logoutUser();
-                result.when(success: (_) {
-                  Navigator.of(context).pushAndRemoveUntil(
-                    MaterialPageRoute(
-                      builder: (_) => LoginScreen(),
-                    ),
-                    (route) => false,
-                  );
-                }, error: (err) {
-                  ToastUtils.show('Something went wrong! $err');
-                });
+                result.when(
+                  success: (_) {
+                    Navigator.of(context).pushAndRemoveUntil(
+                      MaterialPageRoute(
+                        builder: (_) => LoginScreen(),
+                      ),
+                      (route) => false,
+                    );
+                  },
+                  failure: (err) {
+                    ToastUtils.show('Something went wrong! $err');
+                  },
+                );
               },
             ),
           ],

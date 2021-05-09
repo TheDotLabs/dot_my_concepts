@@ -1,4 +1,5 @@
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:fa_flutter_core/fa_flutter_core.dart';
 import 'package:flutter_record_lesson/core/models/course.dart';
 import 'package:flutter_record_lesson/di/injector.dart';
 import 'package:flutter_record_lesson/models/category.dart';
@@ -8,12 +9,12 @@ import 'package:flutter_record_lesson/modules/record_lesson/models/my_event.dart
 import 'package:flutter_record_lesson/utils/log_utils.dart';
 
 class RecordLessonBloc extends BaseBloc {
-  Lesson currentLesson;
+  late Lesson currentLesson;
 
   @override
   void dispose() {}
 
-  void createNewLesson({String name, String description, MyCourse course}) {
+  void createNewLesson({String? name, String? description, required MyCourse course}) {
     logger.i(
       'Creating new lesson: {name: $name, description: $description, course: $course}...',
     );
@@ -32,15 +33,15 @@ class RecordLessonBloc extends BaseBloc {
   }
 
   Future<Result<MyCourse>> createNewCourse({
-    String name,
-    String description,
-    MyCategory category,
-    MySubject subject,
-    MyUnit unit,
-    MyChapter chapter,
+    String? name,
+    String? description,
+    required MyCategory category,
+    required MySubject subject,
+    required MyUnit unit,
+    required MyChapter chapter,
   }) async {
     try {
-      final user = injector<UserRepository>().getLoggedInUser();
+      final user = injector<UserRepository>().getLoggedInUser()!;
       final doc = FirebaseFirestore.instance.collection('courses').doc();
       final course = MyCourse(
         id: doc.id,
@@ -55,10 +56,10 @@ class RecordLessonBloc extends BaseBloc {
       await doc.set(
         course.toJson(),
       );
-      return Result<MyCourse>.success(course);
+      return Result<MyCourse>.success(data: course);
     } catch (e, s) {
       logger.e(e, s);
-      return Result<MyCourse>.error(e.toString());
+      return Result<MyCourse>.failure(reason: e.toString());
     }
   }
 }

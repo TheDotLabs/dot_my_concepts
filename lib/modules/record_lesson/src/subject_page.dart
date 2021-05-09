@@ -17,7 +17,7 @@ class SubjectPage extends StatefulWidget {
     this.createCourse = false,
   });
 
-  final MyCategory category;
+  final MyCategory? category;
   final bool createCourse;
 
   @override
@@ -38,11 +38,11 @@ class _SubjectPageState extends State<SubjectPage> {
       appBar: AppBar(
         title: Text('Select Subject'),
       ),
-      body: StreamBuilder<List<MySubject>>(
+      body: StreamBuilder<List<MySubject>?>(
         stream: _getStream(),
         builder: (context, snapshot) {
           if (snapshot.hasData && snapshot.data != null) {
-            final list = snapshot.data;
+            final list = snapshot.data!;
             return Container(
               child: list.isNotEmpty
                   ? ListView(
@@ -54,10 +54,10 @@ class _SubjectPageState extends State<SubjectPage> {
                         ...list.map(
                           (e) => ListTile(
                             dense: true,
-                            title: Text(e.title),
+                            title: Text(e.title!),
                             trailing: Icon(Icons.keyboard_arrow_right),
                             subtitle: e.description != null
-                                ? Text(e.description)
+                                ? Text(e.description!)
                                 : null,
                             onTap: () {
                               Navigator.of(context).push(
@@ -80,7 +80,7 @@ class _SubjectPageState extends State<SubjectPage> {
             );
           } else if (snapshot.hasError) {
             return Center(
-              child: Text(snapshot.error),
+              child: Text(snapshot.error as String),
             );
           } else {
             return Center(
@@ -94,11 +94,11 @@ class _SubjectPageState extends State<SubjectPage> {
 
   @override
   void dispose() {
-    _subject?.close();
+    _subject.close();
     super.dispose();
   }
 
-  Stream<List<MySubject>> _getStream() {
+  Stream<List<MySubject>?> _getStream() {
     return FirebaseFirestore.instance
         .collection('categories')
         .snapshots()
@@ -107,16 +107,18 @@ class _SubjectPageState extends State<SubjectPage> {
           .map((e) => MyCategory.fromJson(e.data()).copyWith(id: e.id))
           .toList(growable: false);
       return sink.add(
-        list.firstWhere((element) => element.id == widget.category.id).subjects,
+        list
+            .firstWhere((element) => element.id == widget.category!.id)
+            .subjects,
       );
     }));
   }
 
   void _onChapterSelect({
-    MyCategory category,
-    MySubject subject,
-    MyUnit unit,
-    MyChapter chapter,
+    MyCategory? category,
+    MySubject? subject,
+    MyUnit? unit,
+    MyChapter? chapter,
   }) {
     if (widget.createCourse) {
       Navigator.of(context).push(

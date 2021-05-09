@@ -6,16 +6,16 @@ part 'my_event.g.dart';
 @freezed
 abstract class Lesson with _$Lesson {
   factory Lesson({
-    List<MyEvent> events,
-    String id,
-    int duration,
-    String name,
-    String description,
-    List<String> images,
-    String category,
-    String subject,
-    String unit,
-    String chapter,
+    List<MyEvent>? events,
+    String? id,
+    int? duration,
+    String? name,
+    String? description,
+    List<String>? images,
+    String? category,
+    String? subject,
+    String? unit,
+    String? chapter,
   }) = _Lesson;
 
   factory Lesson.fromJson(Map<String, dynamic> json) => _$LessonFromJson(json);
@@ -24,12 +24,12 @@ abstract class Lesson with _$Lesson {
 @freezed
 abstract class MyEvent with _$MyEvent {
   factory MyEvent({
-    @JsonKey(name: 'e') Events event,
-    @JsonKey(name: 'i') int index,
-    @JsonKey(name: 't') int time,
-    @JsonKey(name: 'c') String color,
-    double x,
-    double y,
+    @JsonKey(name: 'e') Events? event,
+    @JsonKey(name: 'i') int? index,
+    @JsonKey(name: 't') int? time,
+    @JsonKey(name: 'c') String? color,
+    double? x,
+    double? y,
   }) = _MyEvent;
 
   factory MyEvent.fromJson(Map<String, dynamic> json) =>

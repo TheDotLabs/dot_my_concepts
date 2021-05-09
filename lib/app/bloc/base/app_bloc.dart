@@ -8,7 +8,7 @@ abstract class AppBloc extends ChangeNotifier {
 
   void onCategorySelection(MyCategory category);
 
-  String get selectedCategory;
+  String? get selectedCategory;
 
   void saveUserSignedCla();
 }

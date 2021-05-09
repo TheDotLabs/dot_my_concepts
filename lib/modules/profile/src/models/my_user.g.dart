@@ -8,14 +8,14 @@ part of 'my_user.dart';
 
 _$_MyUser _$_$_MyUserFromJson(Map<String, dynamic> json) {
   return _$_MyUser(
-    id: json['id'] as String,
-    name: json['name'] as String,
-    email: json['email'] as String,
-    avatar: json['avatar'] as String,
-    provider: json['provider'] as String,
-    tagline: json['tagline'] as String,
-    isVerified: json['isVerified'] as bool ?? false,
-    selectedCategory: json['selectedCategory'] as String,
+    id: json['id'] as String?,
+    name: json['name'] as String?,
+    email: json['email'] as String?,
+    avatar: json['avatar'] as String?,
+    provider: json['provider'] as String?,
+    tagline: json['tagline'] as String?,
+    isVerified: json['isVerified'] as bool? ?? false,
+    selectedCategory: json['selectedCategory'] as String?,
     teaching: json['teaching'] == null
         ? null
         : Teaching.fromJson(json['teaching'] as Map<String, dynamic>),
@@ -46,9 +46,9 @@ Map<String, dynamic> _$_$_MyUserToJson(_$_MyUser instance) {
 
 _$_Teaching _$_$_TeachingFromJson(Map<String, dynamic> json) {
   return _$_Teaching(
-    isTeacher: json['isTeacher'] as bool ?? false,
-    hasSignedCLA: json['hasSignedCLA'] as bool ?? false,
-    isVerified: json['isVerified'] as bool ?? false,
+    isTeacher: json['isTeacher'] as bool? ?? false,
+    hasSignedCLA: json['hasSignedCLA'] as bool? ?? false,
+    isVerified: json['isVerified'] as bool? ?? false,
   );
 }
 

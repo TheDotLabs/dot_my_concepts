@@ -52,7 +52,7 @@ class _FeedPageState extends State<FeedPage>
                   textAlign: TextAlign.center,
                 ),
               ),
-              StreamBuilder<MyCategory>(
+              StreamBuilder<MyCategory?>(
                   stream:
                       _getCategoryStream(categoryId: appBloc.selectedCategory),
                   builder: (context, snapshot) {
@@ -61,15 +61,15 @@ class _FeedPageState extends State<FeedPage>
                         padding: EdgeInsets.fromLTRB(4, 0, 4, 8),
                         child: Column(
                           children: [
-                            if (checkIfListIsNotEmpty(snapshot.data.subjects))
-                              ...snapshot.data.subjects.map(
+                            if (checkIfListIsNotEmpty(snapshot.data!.subjects))
+                              ...snapshot.data!.subjects!.map(
                                 (subject) => ListTile(
                                   dense: true,
                                   contentPadding: EdgeInsets.symmetric(
                                     horizontal: 12,
                                   ),
                                   title: Text(
-                                    subject.title,
+                                    subject.title!,
                                     style: TextStyle(
                                       fontSize: 14,
                                     ),
@@ -102,7 +102,7 @@ class _FeedPageState extends State<FeedPage>
                       );
                     } else if (snapshot.hasError) {
                       return Center(
-                        child: Text(snapshot.error?.toString()),
+                        child: Text(snapshot.error?.toString() ?? "--"),
                       );
                     } else {
                       return Center(
@@ -115,32 +115,24 @@ class _FeedPageState extends State<FeedPage>
                 width: MediaQuery.of(context).size.width,
                 color: Colors.blueGrey[50],
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 8.0,
-                  vertical: 16,
-                ),
-                child: Text(
-                  'Newly Uploaded'.toUpperCase(),
-                  style: Theme.of(context).textTheme.overline,
-                  textAlign: TextAlign.center,
-                ),
+              FeedHeader(
+                title: 'Newly Uploaded',
+                subtitle: 'Freshly uploaded content',
               ),
               StreamBuilder<List<Lesson>>(
                   stream: _getNewlyUploadedStream(),
                   builder: (context, snapshot) {
                     if (snapshot.hasData && snapshot.data != null) {
                       return Container(
-                        height: 180,
+                        height: 240,
                         child: ((checkIfListIsNotEmpty(snapshot.data)))
                             ? ListView(
                                 padding: EdgeInsets.symmetric(
-                                  horizontal: 8,
+                                  horizontal: 4,
                                 ),
                                 scrollDirection: Axis.horizontal,
-                                physics: NeverScrollableScrollPhysics(),
                                 children: [
-                                  ...snapshot.data.map(
+                                  ...snapshot.data!.map(
                                     (e) => LessonCard(e),
                                   )
                                 ],
@@ -154,7 +146,7 @@ class _FeedPageState extends State<FeedPage>
                       );
                     } else if (snapshot.hasError) {
                       return Center(
-                        child: Text(snapshot.error),
+                        child: Text(snapshot.error as String),
                       );
                     } else {
                       return Center(
@@ -168,16 +160,9 @@ class _FeedPageState extends State<FeedPage>
                 width: MediaQuery.of(context).size.width,
                 color: Colors.blueGrey[50],
               ),
-              Padding(
-                padding: const EdgeInsets.symmetric(
-                  horizontal: 8.0,
-                  vertical: 16,
-                ),
-                child: Text(
-                  'POPULAR COURSES'.toUpperCase(),
-                  style: Theme.of(context).textTheme.overline,
-                  textAlign: TextAlign.center,
-                ),
+              FeedHeader(
+                title: 'Popular Courses',
+                subtitle: 'Explore the best in all',
               ),
               StreamBuilder<List<MyCourse>>(
                 stream: _getPopularCourseStream(),
@@ -193,7 +178,7 @@ class _FeedPageState extends State<FeedPage>
                               physics: BouncingScrollPhysics(),
                               scrollDirection: Axis.horizontal,
                               children: [
-                                ...snapshot.data.map(
+                                ...snapshot.data!.map(
                                   (e) => CourseCard(e),
                                 ),
                               ],
@@ -207,7 +192,7 @@ class _FeedPageState extends State<FeedPage>
                     );
                   } else if (snapshot.hasError) {
                     return Center(
-                      child: Text(snapshot.error),
+                      child: Text(snapshot.error as String),
                     );
                   } else {
                     return Center(
@@ -329,7 +314,7 @@ class _FeedPageState extends State<FeedPage>
     }));
   }
 
-  Stream<MyCategory> _getCategoryStream({String categoryId}) {
+  Stream<MyCategory?> _getCategoryStream({String? categoryId}) {
     return FirebaseFirestore.instance
         .collection('categories')
         .snapshots()
@@ -347,10 +332,10 @@ class _FeedPageState extends State<FeedPage>
   }
 
   void _onChapterSelect({
-    MyCategory category,
-    MySubject subject,
-    MyUnit unit,
-    MyChapter chapter,
+    MyCategory? category,
+    MySubject? subject,
+    MyUnit? unit,
+    MyChapter? chapter,
   }) {
     Navigator.of(context).push(
       MaterialPageRoute(
@@ -366,4 +351,34 @@ class _FeedPageState extends State<FeedPage>
 
   @override
   bool get wantKeepAlive => true;
+}
+
+class FeedHeader extends StatelessWidget {
+  const FeedHeader({
+    Key? key,
+    required this.title,
+    required this.subtitle,
+  }) : super(key: key);
+
+  final String title;
+  final String subtitle;
+
+  @override
+  Widget build(BuildContext context) {
+    return ListTile(
+      title: Text(
+        title,
+        style: Theme.of(context).textTheme.overline!.copyWith(
+              fontSize: 16,
+            ),
+        textAlign: TextAlign.start,
+      ),
+      subtitle: Text(
+        subtitle,
+        style: TextStyle(
+          fontSize: 12,
+        ),
+      ),
+    );
+  }
 }

@@ -16,7 +16,7 @@ class MyCountdownTimer extends Stream<MyCountdownTimer> {
   MyCountdownTimer(
     Duration duration,
     this.increment, {
-    Stopwatch stopwatch,
+    Stopwatch? stopwatch,
     this.elapsedTime,
   })  : _duration = duration,
         _stopwatch = stopwatch ?? Stopwatch(),
@@ -28,25 +28,25 @@ class MyCountdownTimer extends Stream<MyCountdownTimer> {
   static const _THRESHOLD_MS = 4;
 
   final Duration _duration;
-  final Duration elapsedTime;
+  final Duration? elapsedTime;
   final Stopwatch _stopwatch;
 
   /// The duration between timer events.
   final Duration increment;
   final StreamController<MyCountdownTimer> _controller;
-  Timer _timer;
+  late Timer _timer;
 
   @override
   StreamSubscription<MyCountdownTimer> listen(
-          void onData(MyCountdownTimer event),
-          {Function onError,
-          void onDone(),
-          bool cancelOnError}) =>
+          void onData(MyCountdownTimer event)?,
+          {Function? onError,
+          void onDone()?,
+          bool? cancelOnError}) =>
       _controller.stream.listen(onData, onError: onError, onDone: onDone);
 
-  Duration get elapsed => _stopwatch.elapsed + elapsedTime;
+  Duration get elapsed => _stopwatch.elapsed + elapsedTime!;
 
-  Duration get remaining => _duration - elapsedTime - _stopwatch.elapsed;
+  Duration get remaining => _duration - elapsedTime! - _stopwatch.elapsed;
 
   bool get isRunning => _stopwatch.isRunning;
 

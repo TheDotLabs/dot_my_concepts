@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
 
 part of 'course.dart';
 
@@ -8,6 +8,10 @@ part of 'course.dart';
 // **************************************************************************
 
 T _$identity<T>(T value) => value;
+
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+
 MyCourse _$MyCourseFromJson(Map<String, dynamic> json) {
   return _MyCourse.fromJson(json);
 }
@@ -16,18 +20,17 @@ MyCourse _$MyCourseFromJson(Map<String, dynamic> json) {
 class _$MyCourseTearOff {
   const _$MyCourseTearOff();
 
-// ignore: unused_element
   _MyCourse call(
-      {String id,
-      String userId,
-      String title,
-      String subtitle,
-      String cover,
-      String categoryId,
-      String subjectId,
-      String chapterId,
-      String unitId,
-      List<String> lessons}) {
+      {String? id,
+      String? userId,
+      String? title,
+      String? subtitle,
+      String? cover,
+      String? categoryId,
+      String? subjectId,
+      String? chapterId,
+      String? unitId,
+      List<String>? lessons}) {
     return _MyCourse(
       id: id,
       userId: userId,
@@ -42,31 +45,31 @@ class _$MyCourseTearOff {
     );
   }
 
-// ignore: unused_element
   MyCourse fromJson(Map<String, Object> json) {
     return MyCourse.fromJson(json);
   }
 }
 
 /// @nodoc
-// ignore: unused_element
 const $MyCourse = _$MyCourseTearOff();
 
 /// @nodoc
 mixin _$MyCourse {
-  String get id;
-  String get userId;
-  String get title;
-  String get subtitle;
-  String get cover;
-  String get categoryId;
-  String get subjectId;
-  String get chapterId;
-  String get unitId;
-  List<String> get lessons;
+  String? get id => throw _privateConstructorUsedError;
+  String? get userId => throw _privateConstructorUsedError;
+  String? get title => throw _privateConstructorUsedError;
+  String? get subtitle => throw _privateConstructorUsedError;
+  String? get cover => throw _privateConstructorUsedError;
+  String? get categoryId => throw _privateConstructorUsedError;
+  String? get subjectId => throw _privateConstructorUsedError;
+  String? get chapterId => throw _privateConstructorUsedError;
+  String? get unitId => throw _privateConstructorUsedError;
+  List<String>? get lessons => throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson();
-  $MyCourseCopyWith<MyCourse> get copyWith;
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $MyCourseCopyWith<MyCourse> get copyWith =>
+      throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -74,16 +77,16 @@ abstract class $MyCourseCopyWith<$Res> {
   factory $MyCourseCopyWith(MyCourse value, $Res Function(MyCourse) then) =
       _$MyCourseCopyWithImpl<$Res>;
   $Res call(
-      {String id,
-      String userId,
-      String title,
-      String subtitle,
-      String cover,
-      String categoryId,
-      String subjectId,
-      String chapterId,
-      String unitId,
-      List<String> lessons});
+      {String? id,
+      String? userId,
+      String? title,
+      String? subtitle,
+      String? cover,
+      String? categoryId,
+      String? subjectId,
+      String? chapterId,
+      String? unitId,
+      List<String>? lessons});
 }
 
 /// @nodoc
@@ -96,29 +99,58 @@ class _$MyCourseCopyWithImpl<$Res> implements $MyCourseCopyWith<$Res> {
 
   @override
   $Res call({
-    Object id = freezed,
-    Object userId = freezed,
-    Object title = freezed,
-    Object subtitle = freezed,
-    Object cover = freezed,
-    Object categoryId = freezed,
-    Object subjectId = freezed,
-    Object chapterId = freezed,
-    Object unitId = freezed,
-    Object lessons = freezed,
+    Object? id = freezed,
+    Object? userId = freezed,
+    Object? title = freezed,
+    Object? subtitle = freezed,
+    Object? cover = freezed,
+    Object? categoryId = freezed,
+    Object? subjectId = freezed,
+    Object? chapterId = freezed,
+    Object? unitId = freezed,
+    Object? lessons = freezed,
   }) {
     return _then(_value.copyWith(
-      id: id == freezed ? _value.id : id as String,
-      userId: userId == freezed ? _value.userId : userId as String,
-      title: title == freezed ? _value.title : title as String,
-      subtitle: subtitle == freezed ? _value.subtitle : subtitle as String,
-      cover: cover == freezed ? _value.cover : cover as String,
-      categoryId:
-          categoryId == freezed ? _value.categoryId : categoryId as String,
-      subjectId: subjectId == freezed ? _value.subjectId : subjectId as String,
-      chapterId: chapterId == freezed ? _value.chapterId : chapterId as String,
-      unitId: unitId == freezed ? _value.unitId : unitId as String,
-      lessons: lessons == freezed ? _value.lessons : lessons as List<String>,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
+      userId: userId == freezed
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      title: title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String?,
+      subtitle: subtitle == freezed
+          ? _value.subtitle
+          : subtitle // ignore: cast_nullable_to_non_nullable
+              as String?,
+      cover: cover == freezed
+          ? _value.cover
+          : cover // ignore: cast_nullable_to_non_nullable
+              as String?,
+      categoryId: categoryId == freezed
+          ? _value.categoryId
+          : categoryId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      subjectId: subjectId == freezed
+          ? _value.subjectId
+          : subjectId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      chapterId: chapterId == freezed
+          ? _value.chapterId
+          : chapterId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      unitId: unitId == freezed
+          ? _value.unitId
+          : unitId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      lessons: lessons == freezed
+          ? _value.lessons
+          : lessons // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
     ));
   }
 }
@@ -129,16 +161,16 @@ abstract class _$MyCourseCopyWith<$Res> implements $MyCourseCopyWith<$Res> {
       __$MyCourseCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String id,
-      String userId,
-      String title,
-      String subtitle,
-      String cover,
-      String categoryId,
-      String subjectId,
-      String chapterId,
-      String unitId,
-      List<String> lessons});
+      {String? id,
+      String? userId,
+      String? title,
+      String? subtitle,
+      String? cover,
+      String? categoryId,
+      String? subjectId,
+      String? chapterId,
+      String? unitId,
+      List<String>? lessons});
 }
 
 /// @nodoc
@@ -152,36 +184,64 @@ class __$MyCourseCopyWithImpl<$Res> extends _$MyCourseCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object id = freezed,
-    Object userId = freezed,
-    Object title = freezed,
-    Object subtitle = freezed,
-    Object cover = freezed,
-    Object categoryId = freezed,
-    Object subjectId = freezed,
-    Object chapterId = freezed,
-    Object unitId = freezed,
-    Object lessons = freezed,
+    Object? id = freezed,
+    Object? userId = freezed,
+    Object? title = freezed,
+    Object? subtitle = freezed,
+    Object? cover = freezed,
+    Object? categoryId = freezed,
+    Object? subjectId = freezed,
+    Object? chapterId = freezed,
+    Object? unitId = freezed,
+    Object? lessons = freezed,
   }) {
     return _then(_MyCourse(
-      id: id == freezed ? _value.id : id as String,
-      userId: userId == freezed ? _value.userId : userId as String,
-      title: title == freezed ? _value.title : title as String,
-      subtitle: subtitle == freezed ? _value.subtitle : subtitle as String,
-      cover: cover == freezed ? _value.cover : cover as String,
-      categoryId:
-          categoryId == freezed ? _value.categoryId : categoryId as String,
-      subjectId: subjectId == freezed ? _value.subjectId : subjectId as String,
-      chapterId: chapterId == freezed ? _value.chapterId : chapterId as String,
-      unitId: unitId == freezed ? _value.unitId : unitId as String,
-      lessons: lessons == freezed ? _value.lessons : lessons as List<String>,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
+      userId: userId == freezed
+          ? _value.userId
+          : userId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      title: title == freezed
+          ? _value.title
+          : title // ignore: cast_nullable_to_non_nullable
+              as String?,
+      subtitle: subtitle == freezed
+          ? _value.subtitle
+          : subtitle // ignore: cast_nullable_to_non_nullable
+              as String?,
+      cover: cover == freezed
+          ? _value.cover
+          : cover // ignore: cast_nullable_to_non_nullable
+              as String?,
+      categoryId: categoryId == freezed
+          ? _value.categoryId
+          : categoryId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      subjectId: subjectId == freezed
+          ? _value.subjectId
+          : subjectId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      chapterId: chapterId == freezed
+          ? _value.chapterId
+          : chapterId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      unitId: unitId == freezed
+          ? _value.unitId
+          : unitId // ignore: cast_nullable_to_non_nullable
+              as String?,
+      lessons: lessons == freezed
+          ? _value.lessons
+          : lessons // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
     ));
   }
 }
 
-@JsonSerializable()
-
 /// @nodoc
+@JsonSerializable()
 class _$_MyCourse implements _MyCourse {
   _$_MyCourse(
       {this.id,
@@ -199,25 +259,25 @@ class _$_MyCourse implements _MyCourse {
       _$_$_MyCourseFromJson(json);
 
   @override
-  final String id;
+  final String? id;
   @override
-  final String userId;
+  final String? userId;
   @override
-  final String title;
+  final String? title;
   @override
-  final String subtitle;
+  final String? subtitle;
   @override
-  final String cover;
+  final String? cover;
   @override
-  final String categoryId;
+  final String? categoryId;
   @override
-  final String subjectId;
+  final String? subjectId;
   @override
-  final String chapterId;
+  final String? chapterId;
   @override
-  final String unitId;
+  final String? unitId;
   @override
-  final List<String> lessons;
+  final List<String>? lessons;
 
   @override
   String toString() {
@@ -268,6 +328,7 @@ class _$_MyCourse implements _MyCourse {
       const DeepCollectionEquality().hash(unitId) ^
       const DeepCollectionEquality().hash(lessons);
 
+  @JsonKey(ignore: true)
   @override
   _$MyCourseCopyWith<_MyCourse> get copyWith =>
       __$MyCourseCopyWithImpl<_MyCourse>(this, _$identity);
@@ -280,39 +341,41 @@ class _$_MyCourse implements _MyCourse {
 
 abstract class _MyCourse implements MyCourse {
   factory _MyCourse(
-      {String id,
-      String userId,
-      String title,
-      String subtitle,
-      String cover,
-      String categoryId,
-      String subjectId,
-      String chapterId,
-      String unitId,
-      List<String> lessons}) = _$_MyCourse;
+      {String? id,
+      String? userId,
+      String? title,
+      String? subtitle,
+      String? cover,
+      String? categoryId,
+      String? subjectId,
+      String? chapterId,
+      String? unitId,
+      List<String>? lessons}) = _$_MyCourse;
 
   factory _MyCourse.fromJson(Map<String, dynamic> json) = _$_MyCourse.fromJson;
 
   @override
-  String get id;
+  String? get id => throw _privateConstructorUsedError;
   @override
-  String get userId;
+  String? get userId => throw _privateConstructorUsedError;
   @override
-  String get title;
+  String? get title => throw _privateConstructorUsedError;
   @override
-  String get subtitle;
+  String? get subtitle => throw _privateConstructorUsedError;
   @override
-  String get cover;
+  String? get cover => throw _privateConstructorUsedError;
   @override
-  String get categoryId;
+  String? get categoryId => throw _privateConstructorUsedError;
   @override
-  String get subjectId;
+  String? get subjectId => throw _privateConstructorUsedError;
   @override
-  String get chapterId;
+  String? get chapterId => throw _privateConstructorUsedError;
   @override
-  String get unitId;
+  String? get unitId => throw _privateConstructorUsedError;
   @override
-  List<String> get lessons;
+  List<String>? get lessons => throw _privateConstructorUsedError;
   @override
-  _$MyCourseCopyWith<_MyCourse> get copyWith;
+  @JsonKey(ignore: true)
+  _$MyCourseCopyWith<_MyCourse> get copyWith =>
+      throw _privateConstructorUsedError;
 }

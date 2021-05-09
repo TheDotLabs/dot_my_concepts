@@ -52,7 +52,7 @@ class TeacherCard extends StatelessWidget {
               ),
               Text(
                 '22 Courses',
-                style: Theme.of(context).textTheme.bodyText1.copyWith(
+                style: Theme.of(context).textTheme.bodyText1!.copyWith(
                       fontSize: 12,
                     ),
                 textAlign: TextAlign.center,
@@ -62,7 +62,7 @@ class TeacherCard extends StatelessWidget {
               ),
               Text(
                 'Ayush P Gupta',
-                style: Theme.of(context).textTheme.bodyText1.copyWith(
+                style: Theme.of(context).textTheme.bodyText1!.copyWith(
                       fontWeight: FontWeight.w700,
                     ),
                 textAlign: TextAlign.center,

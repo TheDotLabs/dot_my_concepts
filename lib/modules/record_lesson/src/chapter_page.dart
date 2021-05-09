@@ -7,7 +7,7 @@ import 'package:rxdart/rxdart.dart';
 class ChapterPage extends StatefulWidget {
   final MyUnit unit;
 
-  ChapterPage({@required this.unit});
+  ChapterPage({required this.unit});
 
   @override
   _ChapterPageState createState() => _ChapterPageState();
@@ -33,16 +33,16 @@ class _ChapterPageState extends State<ChapterPage> {
             horizontal: 8,
           ),
           children: [
-            ...widget.unit.chapters.map(
+            ...widget.unit.chapters!.map(
               (e) => Container(
                 margin: EdgeInsets.symmetric(
                   vertical: 8,
                 ),
                 child: BorderContainer(
                   child: ListTile(
-                    title: Text(e.title),
+                    title: Text(e.title!),
                     subtitle:
-                        e.description != null ? Text(e.description) : null,
+                        e.description != null ? Text(e.description!) : null,
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(

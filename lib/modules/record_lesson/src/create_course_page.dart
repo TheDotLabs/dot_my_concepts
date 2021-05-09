@@ -18,10 +18,10 @@ class CreateCoursePage extends StatefulWidget {
     this.chapter,
   });
 
-  final MyCategory category;
-  final MySubject subject;
-  final MyUnit unit;
-  final MyChapter chapter;
+  final MyCategory? category;
+  final MySubject? subject;
+  final MyUnit? unit;
+  final MyChapter? chapter;
 }
 
 class _CreateCoursePageState extends State<CreateCoursePage> {
@@ -62,7 +62,7 @@ class _CreateCoursePageState extends State<CreateCoursePage> {
               maxLength: 100,
               maxLines: 2,
               minLines: 1,
-              style: Theme.of(context).textTheme.subtitle2.copyWith(
+              style: Theme.of(context).textTheme.subtitle2!.copyWith(
                     fontSize: 16,
                   ),
             ),
@@ -84,7 +84,7 @@ class _CreateCoursePageState extends State<CreateCoursePage> {
               maxLength: 200,
               minLines: 2,
               maxLines: 5,
-              style: Theme.of(context).textTheme.subtitle2.copyWith(
+              style: Theme.of(context).textTheme.subtitle2!.copyWith(
                     fontSize: 16,
                   ),
             ),
@@ -116,10 +116,10 @@ class _CreateCoursePageState extends State<CreateCoursePage> {
                                   .createNewCourse(
                                 name: name.text,
                                 description: description.text,
-                                category: widget.category,
-                                subject: widget.subject,
-                                unit: widget.unit,
-                                chapter: widget.chapter,
+                                category: widget.category!,
+                                subject: widget.subject!,
+                                unit: widget.unit!,
+                                chapter: widget.chapter!,
                               );
                               await Future.delayed(Duration(seconds: 2));
                               await Future.wait([
@@ -130,7 +130,7 @@ class _CreateCoursePageState extends State<CreateCoursePage> {
                                   Navigator.of(context, rootNavigator: true)
                                       .pop();
                                 },
-                                error: (reason) {
+                                failure: (reason) {
                                   ToastUtils.show(reason);
                                 },
                               );
@@ -159,15 +159,15 @@ class ValueListenableBuilder2<A, B> extends StatelessWidget {
   ValueListenableBuilder2(
     this.first,
     this.second, {
-    Key key,
+    Key? key,
     this.builder,
     this.child,
   }) : super(key: key);
 
   final ValueListenable<A> first;
   final ValueListenable<B> second;
-  final Widget child;
-  final Widget Function(BuildContext context, A a, B b, Widget child) builder;
+  final Widget? child;
+  final Widget Function(BuildContext context, A a, B b, Widget? child)? builder;
 
   @override
   Widget build(BuildContext context) {
@@ -177,7 +177,7 @@ class ValueListenableBuilder2<A, B> extends StatelessWidget {
         return ValueListenableBuilder<B>(
           valueListenable: second,
           builder: (context, b, __) {
-            return builder(context, a, b, child);
+            return builder!(context, a, b, child);
           },
         );
       },

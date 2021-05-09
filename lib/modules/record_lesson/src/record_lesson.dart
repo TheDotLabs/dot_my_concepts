@@ -1,5 +1,6 @@
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_storage/firebase_storage.dart';
@@ -26,7 +27,7 @@ class RecordLessonPage extends StatefulWidget {
 
   RecordLessonPage({this.images});
 
-  final List<String> images;
+  final List<String>? images;
 }
 
 class _RecordLessonPageState extends State<RecordLessonPage> {
@@ -35,17 +36,17 @@ class _RecordLessonPageState extends State<RecordLessonPage> {
 
   final _eventList = <MyEvent>[];
 
-  PainterController _paintController;
+  PainterController? _paintController;
 
-  CountdownTimer countDownTimer;
+  CountdownTimer? countDownTimer;
 
-  int startEpoch;
+  late int startEpoch;
 
   final _paintKey = GlobalKey();
 
-  FlutterSoundRecorder myRecorder;
+  FlutterSoundRecorder? myRecorder;
 
-  File outputFile;
+  late File outputFile;
 
   get _isRecording => countDownTimer?.isRunning ?? false;
 
@@ -57,7 +58,7 @@ class _RecordLessonPageState extends State<RecordLessonPage> {
   void initState() {
     super.initState();
     _imageList
-        .addAll(widget.images.map((e) => File(e)).toList(growable: false));
+        .addAll(widget.images!.map((e) => File(e)).toList(growable: false));
     _initPaintController();
   }
 
@@ -79,7 +80,7 @@ class _RecordLessonPageState extends State<RecordLessonPage> {
   }
 
   void _setPointerColor(Color color) {
-    _paintController.setPointerColor(color);
+    _paintController!.setPointerColor(color);
     _addEvent(name: Events.pointerColor, color: Colors.blue.withOpacity(0.4));
   }
 
@@ -194,13 +195,13 @@ class _RecordLessonPageState extends State<RecordLessonPage> {
   }
 
   void _addEvent({
-    Events name,
-    int index,
-    double x,
-    double y,
-    Color color,
+    Events? name,
+    int? index,
+    double? x,
+    double? y,
+    Color? color,
   }) {
-    RenderBox box = _paintKey.currentContext.findRenderObject();
+    RenderBox box = _paintKey.currentContext!.findRenderObject() as RenderBox;
     final height = box.size.height;
     final width = box.size.width;
     _eventList.add(
@@ -210,7 +211,7 @@ class _RecordLessonPageState extends State<RecordLessonPage> {
         time: DateTime.now().millisecondsSinceEpoch - startEpoch,
         x: double.parse(((x ?? 0) / width).toStringAsFixed(6)),
         y: double.parse(((y ?? 0) / height).toStringAsFixed(6)),
-        color: color.hexCode(),
+        color: color?.hexCode(),
       ),
     );
   }
@@ -218,12 +219,12 @@ class _RecordLessonPageState extends State<RecordLessonPage> {
   Future<void> _onStopRecord() async {
     try {
       setState(() {
-        countDownTimer.cancel();
-        _paintController.clear();
+        countDownTimer!.cancel();
+        _paintController!.clear();
       });
-      await myRecorder.stopRecorder();
+      await myRecorder!.stopRecorder();
       if (myRecorder != null) {
-        myRecorder.closeAudioSession();
+        myRecorder!.closeAudioSession();
         myRecorder = null;
       }
       final currentLesson = injector<RecordLessonBloc>().currentLesson;
@@ -259,7 +260,7 @@ class _RecordLessonPageState extends State<RecordLessonPage> {
       final storageReference = FirebaseStorage.instance
           .ref()
           .child('lessons/${lesson.id}/events.json');
-      await storageReference.putData(utf8.encode(jsonString),
+      await storageReference.putData(utf8.encode(jsonString) as Uint8List,
           SettableMetadata(contentType: 'application/json'));
       final jsonUrl = await storageReference.getDownloadURL();
       print(jsonUrl);
@@ -292,7 +293,7 @@ class _RecordLessonPageState extends State<RecordLessonPage> {
       if (status != PermissionStatus.granted)
         throw RecordingPermissionException("Microphone permission not granted");
 
-      await myRecorder.startRecorder(
+      await myRecorder!.startRecorder(
         toFile: outputFile.path,
         codec: Codec.aacADTS,
         audioSource: AudioSource.defaultSource,
@@ -302,7 +303,7 @@ class _RecordLessonPageState extends State<RecordLessonPage> {
         Duration(seconds: LessonConstants.totalSeconds),
         Duration(seconds: 1),
       );
-      countDownTimer.listen((event) {
+      countDownTimer!.listen((event) {
         setState(() {
           remainingDurationNotifier.value = event.remaining;
         });
@@ -319,7 +320,7 @@ class _RecordLessonPageState extends State<RecordLessonPage> {
           Duration(seconds: LessonConstants.totalSeconds);
       countDownTimer?.cancel();
       countDownTimer = null;
-      _paintController.clear();
+      _paintController!.clear();
       myRecorder = null;
     });
   }

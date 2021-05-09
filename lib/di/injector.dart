@@ -52,8 +52,7 @@ class Injector {
     );*/
 
     /// SharedPreferences
-    final appsPrefs =
-        isMobile ? SharedAppPrefs() : JsonAppPrefs(name: 'app_prefs');
+    final appsPrefs = SharedAppPrefs();
     await appsPrefs.initialise();
     injector.registerSingleton<AppPrefs>(appsPrefs);
     //final appPrefsHelper = AppPrefsHelperImpl(appPrefs: injector());

@@ -1,5 +1,5 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
-// ignore_for_file: deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies
+// ignore_for_file: unused_element, deprecated_member_use, deprecated_member_use_from_same_package, use_function_type_syntax_for_parameters, unnecessary_const, avoid_init_to_null, invalid_override_different_default_values_named, prefer_expression_function_bodies, annotate_overrides
 
 part of 'my_event.dart';
 
@@ -8,6 +8,10 @@ part of 'my_event.dart';
 // **************************************************************************
 
 T _$identity<T>(T value) => value;
+
+final _privateConstructorUsedError = UnsupportedError(
+    'It seems like you constructed your class using `MyClass._()`. This constructor is only meant to be used by freezed and you are not supposed to need it nor use it.\nPlease check the documentation here for more informations: https://github.com/rrousselGit/freezed#custom-getters-and-methods');
+
 Lesson _$LessonFromJson(Map<String, dynamic> json) {
   return _Lesson.fromJson(json);
 }
@@ -16,18 +20,17 @@ Lesson _$LessonFromJson(Map<String, dynamic> json) {
 class _$LessonTearOff {
   const _$LessonTearOff();
 
-// ignore: unused_element
   _Lesson call(
-      {List<MyEvent> events,
-      String id,
-      int duration,
-      String name,
-      String description,
-      List<String> images,
-      String category,
-      String subject,
-      String unit,
-      String chapter}) {
+      {List<MyEvent>? events,
+      String? id,
+      int? duration,
+      String? name,
+      String? description,
+      List<String>? images,
+      String? category,
+      String? subject,
+      String? unit,
+      String? chapter}) {
     return _Lesson(
       events: events,
       id: id,
@@ -42,31 +45,30 @@ class _$LessonTearOff {
     );
   }
 
-// ignore: unused_element
   Lesson fromJson(Map<String, Object> json) {
     return Lesson.fromJson(json);
   }
 }
 
 /// @nodoc
-// ignore: unused_element
 const $Lesson = _$LessonTearOff();
 
 /// @nodoc
 mixin _$Lesson {
-  List<MyEvent> get events;
-  String get id;
-  int get duration;
-  String get name;
-  String get description;
-  List<String> get images;
-  String get category;
-  String get subject;
-  String get unit;
-  String get chapter;
+  List<MyEvent>? get events => throw _privateConstructorUsedError;
+  String? get id => throw _privateConstructorUsedError;
+  int? get duration => throw _privateConstructorUsedError;
+  String? get name => throw _privateConstructorUsedError;
+  String? get description => throw _privateConstructorUsedError;
+  List<String>? get images => throw _privateConstructorUsedError;
+  String? get category => throw _privateConstructorUsedError;
+  String? get subject => throw _privateConstructorUsedError;
+  String? get unit => throw _privateConstructorUsedError;
+  String? get chapter => throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson();
-  $LessonCopyWith<Lesson> get copyWith;
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $LessonCopyWith<Lesson> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -74,16 +76,16 @@ abstract class $LessonCopyWith<$Res> {
   factory $LessonCopyWith(Lesson value, $Res Function(Lesson) then) =
       _$LessonCopyWithImpl<$Res>;
   $Res call(
-      {List<MyEvent> events,
-      String id,
-      int duration,
-      String name,
-      String description,
-      List<String> images,
-      String category,
-      String subject,
-      String unit,
-      String chapter});
+      {List<MyEvent>? events,
+      String? id,
+      int? duration,
+      String? name,
+      String? description,
+      List<String>? images,
+      String? category,
+      String? subject,
+      String? unit,
+      String? chapter});
 }
 
 /// @nodoc
@@ -96,29 +98,58 @@ class _$LessonCopyWithImpl<$Res> implements $LessonCopyWith<$Res> {
 
   @override
   $Res call({
-    Object events = freezed,
-    Object id = freezed,
-    Object duration = freezed,
-    Object name = freezed,
-    Object description = freezed,
-    Object images = freezed,
-    Object category = freezed,
-    Object subject = freezed,
-    Object unit = freezed,
-    Object chapter = freezed,
+    Object? events = freezed,
+    Object? id = freezed,
+    Object? duration = freezed,
+    Object? name = freezed,
+    Object? description = freezed,
+    Object? images = freezed,
+    Object? category = freezed,
+    Object? subject = freezed,
+    Object? unit = freezed,
+    Object? chapter = freezed,
   }) {
     return _then(_value.copyWith(
-      events: events == freezed ? _value.events : events as List<MyEvent>,
-      id: id == freezed ? _value.id : id as String,
-      duration: duration == freezed ? _value.duration : duration as int,
-      name: name == freezed ? _value.name : name as String,
-      description:
-          description == freezed ? _value.description : description as String,
-      images: images == freezed ? _value.images : images as List<String>,
-      category: category == freezed ? _value.category : category as String,
-      subject: subject == freezed ? _value.subject : subject as String,
-      unit: unit == freezed ? _value.unit : unit as String,
-      chapter: chapter == freezed ? _value.chapter : chapter as String,
+      events: events == freezed
+          ? _value.events
+          : events // ignore: cast_nullable_to_non_nullable
+              as List<MyEvent>?,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
+      duration: duration == freezed
+          ? _value.duration
+          : duration // ignore: cast_nullable_to_non_nullable
+              as int?,
+      name: name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      description: description == freezed
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      images: images == freezed
+          ? _value.images
+          : images // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      category: category == freezed
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as String?,
+      subject: subject == freezed
+          ? _value.subject
+          : subject // ignore: cast_nullable_to_non_nullable
+              as String?,
+      unit: unit == freezed
+          ? _value.unit
+          : unit // ignore: cast_nullable_to_non_nullable
+              as String?,
+      chapter: chapter == freezed
+          ? _value.chapter
+          : chapter // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
@@ -129,16 +160,16 @@ abstract class _$LessonCopyWith<$Res> implements $LessonCopyWith<$Res> {
       __$LessonCopyWithImpl<$Res>;
   @override
   $Res call(
-      {List<MyEvent> events,
-      String id,
-      int duration,
-      String name,
-      String description,
-      List<String> images,
-      String category,
-      String subject,
-      String unit,
-      String chapter});
+      {List<MyEvent>? events,
+      String? id,
+      int? duration,
+      String? name,
+      String? description,
+      List<String>? images,
+      String? category,
+      String? subject,
+      String? unit,
+      String? chapter});
 }
 
 /// @nodoc
@@ -152,36 +183,64 @@ class __$LessonCopyWithImpl<$Res> extends _$LessonCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object events = freezed,
-    Object id = freezed,
-    Object duration = freezed,
-    Object name = freezed,
-    Object description = freezed,
-    Object images = freezed,
-    Object category = freezed,
-    Object subject = freezed,
-    Object unit = freezed,
-    Object chapter = freezed,
+    Object? events = freezed,
+    Object? id = freezed,
+    Object? duration = freezed,
+    Object? name = freezed,
+    Object? description = freezed,
+    Object? images = freezed,
+    Object? category = freezed,
+    Object? subject = freezed,
+    Object? unit = freezed,
+    Object? chapter = freezed,
   }) {
     return _then(_Lesson(
-      events: events == freezed ? _value.events : events as List<MyEvent>,
-      id: id == freezed ? _value.id : id as String,
-      duration: duration == freezed ? _value.duration : duration as int,
-      name: name == freezed ? _value.name : name as String,
-      description:
-          description == freezed ? _value.description : description as String,
-      images: images == freezed ? _value.images : images as List<String>,
-      category: category == freezed ? _value.category : category as String,
-      subject: subject == freezed ? _value.subject : subject as String,
-      unit: unit == freezed ? _value.unit : unit as String,
-      chapter: chapter == freezed ? _value.chapter : chapter as String,
+      events: events == freezed
+          ? _value.events
+          : events // ignore: cast_nullable_to_non_nullable
+              as List<MyEvent>?,
+      id: id == freezed
+          ? _value.id
+          : id // ignore: cast_nullable_to_non_nullable
+              as String?,
+      duration: duration == freezed
+          ? _value.duration
+          : duration // ignore: cast_nullable_to_non_nullable
+              as int?,
+      name: name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String?,
+      description: description == freezed
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String?,
+      images: images == freezed
+          ? _value.images
+          : images // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      category: category == freezed
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as String?,
+      subject: subject == freezed
+          ? _value.subject
+          : subject // ignore: cast_nullable_to_non_nullable
+              as String?,
+      unit: unit == freezed
+          ? _value.unit
+          : unit // ignore: cast_nullable_to_non_nullable
+              as String?,
+      chapter: chapter == freezed
+          ? _value.chapter
+          : chapter // ignore: cast_nullable_to_non_nullable
+              as String?,
     ));
   }
 }
 
-@JsonSerializable()
-
 /// @nodoc
+@JsonSerializable()
 class _$_Lesson implements _Lesson {
   _$_Lesson(
       {this.events,
@@ -199,25 +258,25 @@ class _$_Lesson implements _Lesson {
       _$_$_LessonFromJson(json);
 
   @override
-  final List<MyEvent> events;
+  final List<MyEvent>? events;
   @override
-  final String id;
+  final String? id;
   @override
-  final int duration;
+  final int? duration;
   @override
-  final String name;
+  final String? name;
   @override
-  final String description;
+  final String? description;
   @override
-  final List<String> images;
+  final List<String>? images;
   @override
-  final String category;
+  final String? category;
   @override
-  final String subject;
+  final String? subject;
   @override
-  final String unit;
+  final String? unit;
   @override
-  final String chapter;
+  final String? chapter;
 
   @override
   String toString() {
@@ -268,6 +327,7 @@ class _$_Lesson implements _Lesson {
       const DeepCollectionEquality().hash(unit) ^
       const DeepCollectionEquality().hash(chapter);
 
+  @JsonKey(ignore: true)
   @override
   _$LessonCopyWith<_Lesson> get copyWith =>
       __$LessonCopyWithImpl<_Lesson>(this, _$identity);
@@ -280,41 +340,42 @@ class _$_Lesson implements _Lesson {
 
 abstract class _Lesson implements Lesson {
   factory _Lesson(
-      {List<MyEvent> events,
-      String id,
-      int duration,
-      String name,
-      String description,
-      List<String> images,
-      String category,
-      String subject,
-      String unit,
-      String chapter}) = _$_Lesson;
+      {List<MyEvent>? events,
+      String? id,
+      int? duration,
+      String? name,
+      String? description,
+      List<String>? images,
+      String? category,
+      String? subject,
+      String? unit,
+      String? chapter}) = _$_Lesson;
 
   factory _Lesson.fromJson(Map<String, dynamic> json) = _$_Lesson.fromJson;
 
   @override
-  List<MyEvent> get events;
+  List<MyEvent>? get events => throw _privateConstructorUsedError;
   @override
-  String get id;
+  String? get id => throw _privateConstructorUsedError;
   @override
-  int get duration;
+  int? get duration => throw _privateConstructorUsedError;
   @override
-  String get name;
+  String? get name => throw _privateConstructorUsedError;
   @override
-  String get description;
+  String? get description => throw _privateConstructorUsedError;
   @override
-  List<String> get images;
+  List<String>? get images => throw _privateConstructorUsedError;
   @override
-  String get category;
+  String? get category => throw _privateConstructorUsedError;
   @override
-  String get subject;
+  String? get subject => throw _privateConstructorUsedError;
   @override
-  String get unit;
+  String? get unit => throw _privateConstructorUsedError;
   @override
-  String get chapter;
+  String? get chapter => throw _privateConstructorUsedError;
   @override
-  _$LessonCopyWith<_Lesson> get copyWith;
+  @JsonKey(ignore: true)
+  _$LessonCopyWith<_Lesson> get copyWith => throw _privateConstructorUsedError;
 }
 
 MyEvent _$MyEventFromJson(Map<String, dynamic> json) {
@@ -325,14 +386,13 @@ MyEvent _$MyEventFromJson(Map<String, dynamic> json) {
 class _$MyEventTearOff {
   const _$MyEventTearOff();
 
-// ignore: unused_element
   _MyEvent call(
-      {@JsonKey(name: 'e') Events event,
-      @JsonKey(name: 'i') int index,
-      @JsonKey(name: 't') int time,
-      @JsonKey(name: 'c') String color,
-      double x,
-      double y}) {
+      {@JsonKey(name: 'e') Events? event,
+      @JsonKey(name: 'i') int? index,
+      @JsonKey(name: 't') int? time,
+      @JsonKey(name: 'c') String? color,
+      double? x,
+      double? y}) {
     return _MyEvent(
       event: event,
       index: index,
@@ -343,31 +403,30 @@ class _$MyEventTearOff {
     );
   }
 
-// ignore: unused_element
   MyEvent fromJson(Map<String, Object> json) {
     return MyEvent.fromJson(json);
   }
 }
 
 /// @nodoc
-// ignore: unused_element
 const $MyEvent = _$MyEventTearOff();
 
 /// @nodoc
 mixin _$MyEvent {
   @JsonKey(name: 'e')
-  Events get event;
+  Events? get event => throw _privateConstructorUsedError;
   @JsonKey(name: 'i')
-  int get index;
+  int? get index => throw _privateConstructorUsedError;
   @JsonKey(name: 't')
-  int get time;
+  int? get time => throw _privateConstructorUsedError;
   @JsonKey(name: 'c')
-  String get color;
-  double get x;
-  double get y;
+  String? get color => throw _privateConstructorUsedError;
+  double? get x => throw _privateConstructorUsedError;
+  double? get y => throw _privateConstructorUsedError;
 
-  Map<String, dynamic> toJson();
-  $MyEventCopyWith<MyEvent> get copyWith;
+  Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
+  @JsonKey(ignore: true)
+  $MyEventCopyWith<MyEvent> get copyWith => throw _privateConstructorUsedError;
 }
 
 /// @nodoc
@@ -375,12 +434,12 @@ abstract class $MyEventCopyWith<$Res> {
   factory $MyEventCopyWith(MyEvent value, $Res Function(MyEvent) then) =
       _$MyEventCopyWithImpl<$Res>;
   $Res call(
-      {@JsonKey(name: 'e') Events event,
-      @JsonKey(name: 'i') int index,
-      @JsonKey(name: 't') int time,
-      @JsonKey(name: 'c') String color,
-      double x,
-      double y});
+      {@JsonKey(name: 'e') Events? event,
+      @JsonKey(name: 'i') int? index,
+      @JsonKey(name: 't') int? time,
+      @JsonKey(name: 'c') String? color,
+      double? x,
+      double? y});
 }
 
 /// @nodoc
@@ -393,20 +452,38 @@ class _$MyEventCopyWithImpl<$Res> implements $MyEventCopyWith<$Res> {
 
   @override
   $Res call({
-    Object event = freezed,
-    Object index = freezed,
-    Object time = freezed,
-    Object color = freezed,
-    Object x = freezed,
-    Object y = freezed,
+    Object? event = freezed,
+    Object? index = freezed,
+    Object? time = freezed,
+    Object? color = freezed,
+    Object? x = freezed,
+    Object? y = freezed,
   }) {
     return _then(_value.copyWith(
-      event: event == freezed ? _value.event : event as Events,
-      index: index == freezed ? _value.index : index as int,
-      time: time == freezed ? _value.time : time as int,
-      color: color == freezed ? _value.color : color as String,
-      x: x == freezed ? _value.x : x as double,
-      y: y == freezed ? _value.y : y as double,
+      event: event == freezed
+          ? _value.event
+          : event // ignore: cast_nullable_to_non_nullable
+              as Events?,
+      index: index == freezed
+          ? _value.index
+          : index // ignore: cast_nullable_to_non_nullable
+              as int?,
+      time: time == freezed
+          ? _value.time
+          : time // ignore: cast_nullable_to_non_nullable
+              as int?,
+      color: color == freezed
+          ? _value.color
+          : color // ignore: cast_nullable_to_non_nullable
+              as String?,
+      x: x == freezed
+          ? _value.x
+          : x // ignore: cast_nullable_to_non_nullable
+              as double?,
+      y: y == freezed
+          ? _value.y
+          : y // ignore: cast_nullable_to_non_nullable
+              as double?,
     ));
   }
 }
@@ -417,12 +494,12 @@ abstract class _$MyEventCopyWith<$Res> implements $MyEventCopyWith<$Res> {
       __$MyEventCopyWithImpl<$Res>;
   @override
   $Res call(
-      {@JsonKey(name: 'e') Events event,
-      @JsonKey(name: 'i') int index,
-      @JsonKey(name: 't') int time,
-      @JsonKey(name: 'c') String color,
-      double x,
-      double y});
+      {@JsonKey(name: 'e') Events? event,
+      @JsonKey(name: 'i') int? index,
+      @JsonKey(name: 't') int? time,
+      @JsonKey(name: 'c') String? color,
+      double? x,
+      double? y});
 }
 
 /// @nodoc
@@ -436,27 +513,44 @@ class __$MyEventCopyWithImpl<$Res> extends _$MyEventCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object event = freezed,
-    Object index = freezed,
-    Object time = freezed,
-    Object color = freezed,
-    Object x = freezed,
-    Object y = freezed,
+    Object? event = freezed,
+    Object? index = freezed,
+    Object? time = freezed,
+    Object? color = freezed,
+    Object? x = freezed,
+    Object? y = freezed,
   }) {
     return _then(_MyEvent(
-      event: event == freezed ? _value.event : event as Events,
-      index: index == freezed ? _value.index : index as int,
-      time: time == freezed ? _value.time : time as int,
-      color: color == freezed ? _value.color : color as String,
-      x: x == freezed ? _value.x : x as double,
-      y: y == freezed ? _value.y : y as double,
+      event: event == freezed
+          ? _value.event
+          : event // ignore: cast_nullable_to_non_nullable
+              as Events?,
+      index: index == freezed
+          ? _value.index
+          : index // ignore: cast_nullable_to_non_nullable
+              as int?,
+      time: time == freezed
+          ? _value.time
+          : time // ignore: cast_nullable_to_non_nullable
+              as int?,
+      color: color == freezed
+          ? _value.color
+          : color // ignore: cast_nullable_to_non_nullable
+              as String?,
+      x: x == freezed
+          ? _value.x
+          : x // ignore: cast_nullable_to_non_nullable
+              as double?,
+      y: y == freezed
+          ? _value.y
+          : y // ignore: cast_nullable_to_non_nullable
+              as double?,
     ));
   }
 }
 
-@JsonSerializable()
-
 /// @nodoc
+@JsonSerializable()
 class _$_MyEvent implements _MyEvent {
   _$_MyEvent(
       {@JsonKey(name: 'e') this.event,
@@ -471,20 +565,20 @@ class _$_MyEvent implements _MyEvent {
 
   @override
   @JsonKey(name: 'e')
-  final Events event;
+  final Events? event;
   @override
   @JsonKey(name: 'i')
-  final int index;
+  final int? index;
   @override
   @JsonKey(name: 't')
-  final int time;
+  final int? time;
   @override
   @JsonKey(name: 'c')
-  final String color;
+  final String? color;
   @override
-  final double x;
+  final double? x;
   @override
-  final double y;
+  final double? y;
 
   @override
   String toString() {
@@ -519,6 +613,7 @@ class _$_MyEvent implements _MyEvent {
       const DeepCollectionEquality().hash(x) ^
       const DeepCollectionEquality().hash(y);
 
+  @JsonKey(ignore: true)
   @override
   _$MyEventCopyWith<_MyEvent> get copyWith =>
       __$MyEventCopyWithImpl<_MyEvent>(this, _$identity);
@@ -531,31 +626,33 @@ class _$_MyEvent implements _MyEvent {
 
 abstract class _MyEvent implements MyEvent {
   factory _MyEvent(
-      {@JsonKey(name: 'e') Events event,
-      @JsonKey(name: 'i') int index,
-      @JsonKey(name: 't') int time,
-      @JsonKey(name: 'c') String color,
-      double x,
-      double y}) = _$_MyEvent;
+      {@JsonKey(name: 'e') Events? event,
+      @JsonKey(name: 'i') int? index,
+      @JsonKey(name: 't') int? time,
+      @JsonKey(name: 'c') String? color,
+      double? x,
+      double? y}) = _$_MyEvent;
 
   factory _MyEvent.fromJson(Map<String, dynamic> json) = _$_MyEvent.fromJson;
 
   @override
   @JsonKey(name: 'e')
-  Events get event;
+  Events? get event => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: 'i')
-  int get index;
+  int? get index => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: 't')
-  int get time;
+  int? get time => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: 'c')
-  String get color;
+  String? get color => throw _privateConstructorUsedError;
   @override
-  double get x;
+  double? get x => throw _privateConstructorUsedError;
   @override
-  double get y;
+  double? get y => throw _privateConstructorUsedError;
   @override
-  _$MyEventCopyWith<_MyEvent> get copyWith;
+  @JsonKey(ignore: true)
+  _$MyEventCopyWith<_MyEvent> get copyWith =>
+      throw _privateConstructorUsedError;
 }

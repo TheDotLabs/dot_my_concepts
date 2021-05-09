@@ -29,7 +29,7 @@ class _LoginScreenState extends BaseState<LoginScreen> {
           success: (_) {
             _onLoginSuccess();
           },
-          error: (error) {
+          failure: (error) {
             showSnackBar('Oops! Something went wrong. Error: $error');
           },
         );
@@ -75,7 +75,7 @@ class _LoginScreenState extends BaseState<LoginScreen> {
                 ),
                 Text(
                   'Your Teaching Made Easy',
-                  style: Theme.of(context).textTheme.bodyText2.copyWith(
+                  style: Theme.of(context).textTheme.bodyText2!.copyWith(
                         fontSize: 12,
                       ),
                   textAlign: TextAlign.center,

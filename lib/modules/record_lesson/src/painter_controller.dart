@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart' hide Image;
 
 class Painter extends StatefulWidget {
-  final PainterController painterController;
+  final PainterController? painterController;
 
   final VoidCallback onTouch;
   final bool disableTouch;
@@ -14,7 +14,7 @@ class Painter extends StatefulWidget {
     this.onTouch, {
     this.disableTouch = false,
   }) : super(
-          key: ValueKey<PainterController>(painterController),
+          key: ValueKey<PainterController?>(painterController),
         );
 
   @override
@@ -30,7 +30,7 @@ class _PainterState extends State<Painter> {
       isComplex: true,
       willChange: true,
       painter: PainterPainter(
-        widget.painterController._pathHistory,
+        widget.painterController!._pathHistory,
         repaint: widget.painterController,
       ),
     );
@@ -53,31 +53,31 @@ class _PainterState extends State<Painter> {
   void _onPanStart(DragStartDetails start) {
     Offset pos = (context.findRenderObject() as RenderBox)
         .globalToLocal(start.globalPosition);
-    widget.painterController._pathHistory.add(pos);
-    widget.painterController.notifyListeners();
+    widget.painterController!._pathHistory!.add(pos);
+    widget.painterController!.notifyListeners();
   }
 
   void _onPanUpdate(DragUpdateDetails update) {
     Offset pos = (context.findRenderObject() as RenderBox)
         .globalToLocal(update.globalPosition);
-    widget.painterController._pathHistory.updateCurrent(pos);
-    widget.painterController.notifyListeners();
+    widget.painterController!._pathHistory!.updateCurrent(pos);
+    widget.painterController!.notifyListeners();
   }
 
   void _onPanEnd(DragEndDetails end) {
-    widget.painterController._pathHistory.endCurrent();
-    widget.painterController.notifyListeners();
+    widget.painterController!._pathHistory!.endCurrent();
+    widget.painterController!.notifyListeners();
   }
 }
 
 class PainterPainter extends CustomPainter {
-  final PathHistory _path;
+  final PathHistory? _path;
 
-  PainterPainter(this._path, {Listenable repaint}) : super(repaint: repaint);
+  PainterPainter(this._path, {Listenable? repaint}) : super(repaint: repaint);
 
   @override
   void paint(Canvas canvas, Size size) {
-    _path.draw(canvas, size);
+    _path!.draw(canvas, size);
   }
 
   @override
@@ -88,13 +88,13 @@ class PainterPainter extends CustomPainter {
 
 class PathHistory {
   var path = new Path();
-  Paint backgroundPaint;
-  Paint paint;
-  bool _inDrag;
+  late Paint backgroundPaint;
+  Paint? paint;
+  late bool _inDrag;
 
-  PainterController painterController;
+  PainterController? painterController;
 
-  PathHistory({Color backgroundColor, this.paint, this.painterController}) {
+  PathHistory({required Color backgroundColor, this.paint, this.painterController}) {
     _inDrag = false;
     backgroundPaint = Paint()..color = backgroundColor;
   }
@@ -104,22 +104,22 @@ class PathHistory {
       _inDrag = true;
       path = new Path();
       path.moveTo(startPoint.dx, startPoint.dy);
-      if (painterController.startMotion != null)
-        painterController.startMotion(startPoint.dx, startPoint.dy);
+      if (painterController!.startMotion != null)
+        painterController!.startMotion!(startPoint.dx, startPoint.dy);
     }
   }
 
   void updateCurrent(Offset nextPoint) {
     if (_inDrag) {
       path.lineTo(nextPoint.dx, nextPoint.dy);
-      if (painterController.moveMotion != null)
-        painterController.moveMotion(nextPoint.dx, nextPoint.dy);
+      if (painterController!.moveMotion != null)
+        painterController!.moveMotion!(nextPoint.dx, nextPoint.dy);
     }
   }
 
   void endCurrent() {
     _inDrag = false;
-    if (painterController.endMotion != null) painterController.endMotion();
+    if (painterController!.endMotion != null) painterController!.endMotion!();
   }
 
   void draw(Canvas canvas, Size size) {
@@ -127,12 +127,12 @@ class PathHistory {
       Rect.fromLTWH(0, 0, size.width, size.height),
       backgroundPaint,
     );
-    canvas.drawPath(path, paint);
+    canvas.drawPath(path, paint!);
   }
 
   void clear() {
     path = new Path();
-    painterController.notifyListeners();
+    painterController!.notifyListeners();
   }
 
   void onPointerStart(double x, double y) {
@@ -153,20 +153,20 @@ class PathHistory {
   }
 
   void setPointerColor(Color color) {
-    paint.color = color;
+    paint!.color = color;
   }
 }
 
 typedef PathMotion = void Function(double x, double y);
 
 class PainterController extends ChangeNotifier {
-  Color drawColor;
-  Color backgroundColor;
+  Color? drawColor;
+  Color? backgroundColor;
   double thickness;
-  PathHistory _pathHistory;
-  PathMotion startMotion;
-  PathMotion moveMotion;
-  VoidCallback endMotion;
+  PathHistory? _pathHistory;
+  PathMotion? startMotion;
+  PathMotion? moveMotion;
+  VoidCallback? endMotion;
 
   PainterController({
     this.backgroundColor,
@@ -177,14 +177,14 @@ class PainterController extends ChangeNotifier {
     this.endMotion,
   }) {
     final paint = Paint()
-      ..color = drawColor
+      ..color = drawColor!
       ..style = PaintingStyle.stroke
       ..strokeWidth = thickness
       ..strokeCap = StrokeCap.round
       ..strokeJoin = StrokeJoin.round;
 
     _pathHistory = PathHistory(
-      backgroundColor: backgroundColor,
+      backgroundColor: backgroundColor!,
       paint: paint,
       painterController: this,
     );
@@ -195,26 +195,26 @@ class PainterController extends ChangeNotifier {
   }
 
   void clear() {
-    _pathHistory.clear();
+    _pathHistory!.clear();
     notifyListeners();
   }
 
   void onPointerStart(double x, double y) {
-    _pathHistory.onPointerStart(x, y);
+    _pathHistory!.onPointerStart(x, y);
     notifyListeners();
   }
 
   void onPointerMove(double x, double y) {
-    _pathHistory.onPointerMove(x, y);
+    _pathHistory!.onPointerMove(x, y);
     notifyListeners();
   }
 
   void onPointerEnd() {
-    _pathHistory.onPointerEnd();
+    _pathHistory!.onPointerEnd();
     notifyListeners();
   }
 
   void setPointerColor(Color color) {
-    _pathHistory.setPointerColor(color);
+    _pathHistory!.setPointerColor(color);
   }
 }

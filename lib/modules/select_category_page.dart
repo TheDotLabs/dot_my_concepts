@@ -30,7 +30,7 @@ class _SelectCategoryPageState extends State<SelectCategoryPage> {
           stream: _getStream(),
           builder: (context, snapshot) {
             if (snapshot.hasData && snapshot.data != null) {
-              final list = snapshot.data;
+              final list = snapshot.data!;
               return Container(
                 child: ListView(
                   padding: EdgeInsets.symmetric(
@@ -46,14 +46,14 @@ class _SelectCategoryPageState extends State<SelectCategoryPage> {
                           vertical: 8,
                         ),
                         leading: CachedNetworkImage(
-                          imageUrl: e.image,
+                          imageUrl: e.image!,
                           height: 40,
                           width: 40,
                         ),
                         trailing: Icon(Icons.keyboard_arrow_right),
-                        title: Text(e.title),
+                        title: Text(e.title!),
                         subtitle:
-                            e.description != null ? Text(e.description) : null,
+                            e.description != null ? Text(e.description!) : null,
                         onTap: () => _onCategorySelect(e),
                       ),
                     )
@@ -62,7 +62,7 @@ class _SelectCategoryPageState extends State<SelectCategoryPage> {
               );
             } else if (snapshot.hasError) {
               return Center(
-                child: Text(snapshot.error),
+                child: Text(snapshot.error as String),
               );
             } else {
               return Center(

@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 class EmptyText extends StatelessWidget {
   EmptyText({this.msg});
 
-  final String msg;
+  final String? msg;
 
   @override
   Widget build(BuildContext context) {

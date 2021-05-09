@@ -4,6 +4,7 @@ import 'dart:io';
 import 'package:audioplayers/audioplayers.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:collection/collection.dart' show IterableExtension;
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
@@ -21,41 +22,41 @@ import 'package:rxdart/rxdart.dart';
 class PlayLessonPage extends StatefulWidget {
   PlayLessonPage({this.lessonId});
 
-  final String lessonId;
+  final String? lessonId;
 
   @override
   _PlayLessonPageState createState() => _PlayLessonPageState();
 }
 
 class _PlayLessonPageState extends State<PlayLessonPage> {
-  final _subject = BehaviorSubject<Lesson>();
+  final _subject = BehaviorSubject<Lesson?>();
 
-  PainterController _paintController;
+  PainterController? _paintController;
 
-  MyCountdownTimer countDownTimer;
+  MyCountdownTimer? countDownTimer;
 
-  Duration remainingDuration;
+  Duration? remainingDuration;
 
-  int _imageIndex = 0;
+  int? _imageIndex = 0;
 
   final _paintKey = GlobalKey();
 
-  Stopwatch stopWatch;
+  Stopwatch? stopWatch;
 
   var eventList = <MyEvent>[];
 
   final int _eventChunkSize = 500;
-  int _lastEventTime = 0;
+  int? _lastEventTime = 0;
 
   AudioPlayer audioPlayer = AudioPlayer();
 
   bool _showVideoControls = false;
 
-  String _audioPath;
+  late String _audioPath;
 
-  Duration _pauseDuration;
+  Duration? _pauseDuration;
 
-  Lesson get lesson => _subject.value;
+  Lesson? get lesson => _subject.value;
 
   @override
   void initState() {
@@ -78,7 +79,7 @@ class _PlayLessonPageState extends State<PlayLessonPage> {
             : AppBar(
                 title: Text("View Lesson"),
               ),
-        body: StreamBuilder<Lesson>(
+        body: StreamBuilder<Lesson?>(
             stream: _subject,
             builder: (context, snapshot) {
               if (snapshot.hasData && snapshot.data != null) {
@@ -107,7 +108,8 @@ class _PlayLessonPageState extends State<PlayLessonPage> {
                                       fit: StackFit.expand,
                                       children: [
                                         CachedNetworkImage(
-                                          imageUrl: lesson.images[_imageIndex],
+                                          imageUrl:
+                                              lesson!.images![_imageIndex!],
                                           placeholder: (context, url) =>
                                               Center(child: CircularLoading()),
                                           errorWidget: (context, url, error) =>
@@ -184,8 +186,8 @@ class _PlayLessonPageState extends State<PlayLessonPage> {
                                                                   width: 16,
                                                                 ),
                                                                 Text(
-                                                                  (Duration(milliseconds: lesson.duration) -
-                                                                          remainingDuration)
+                                                                  (Duration(milliseconds: lesson!.duration!) -
+                                                                          remainingDuration!)
                                                                       .toString()
                                                                       .split('.')[
                                                                           0]
@@ -218,13 +220,13 @@ class _PlayLessonPageState extends State<PlayLessonPage> {
                                                                       ),
                                                                       child:
                                                                           Slider(
-                                                                        value: (lesson.duration -
+                                                                        value: (lesson!.duration! -
                                                                                 (remainingDuration?.inMilliseconds ?? 0))
                                                                             .toDouble(),
                                                                         min:
                                                                             0.0,
-                                                                        max: lesson
-                                                                            .duration
+                                                                        max: lesson!
+                                                                            .duration!
                                                                             .toDouble(),
                                                                         onChanged:
                                                                             (double
@@ -241,8 +243,8 @@ class _PlayLessonPageState extends State<PlayLessonPage> {
                                                                     null)
                                                                   Text(
                                                                     Duration(
-                                                                            milliseconds: lesson
-                                                                                .duration)
+                                                                            milliseconds: lesson!
+                                                                                .duration!)
                                                                         .toString()
                                                                         .split('.')[
                                                                             0]
@@ -296,15 +298,16 @@ class _PlayLessonPageState extends State<PlayLessonPage> {
                                         Positioned.fill(
                                           child: IgnorePointer(
                                             ignoring: (countDownTimer == null ||
-                                                    !countDownTimer.isRunning)
+                                                    !countDownTimer!.isRunning)
                                                 ? false
                                                 : true,
                                             child: AnimatedOpacity(
-                                              opacity: (countDownTimer ==
-                                                          null ||
-                                                      !countDownTimer.isRunning)
-                                                  ? 1.0
-                                                  : 0.0,
+                                              opacity:
+                                                  (countDownTimer == null ||
+                                                          !countDownTimer!
+                                                              .isRunning)
+                                                      ? 1.0
+                                                      : 0.0,
                                               duration:
                                                   Duration(milliseconds: 200),
                                               child: Container(
@@ -315,7 +318,7 @@ class _PlayLessonPageState extends State<PlayLessonPage> {
                                                   child: Container(
                                                     child: (countDownTimer ==
                                                                 null ||
-                                                            !countDownTimer
+                                                            !countDownTimer!
                                                                 .isRunning)
                                                         ? FloatingActionButton(
                                                             onPressed: () {
@@ -355,8 +358,8 @@ class _PlayLessonPageState extends State<PlayLessonPage> {
                         height: 1,
                       ),
                       ListTile(
-                        title: Text("${lesson.name ?? "---"}"),
-                        subtitle: Text("${lesson.description ?? "---"}"),
+                        title: Text("${lesson!.name ?? "---"}"),
+                        subtitle: Text("${lesson!.description ?? "---"}"),
                       ),
                       Divider(
                         height: 1,
@@ -379,7 +382,7 @@ class _PlayLessonPageState extends State<PlayLessonPage> {
   Future<void> _onStop() async {
     try {
       print('on stop');
-      audioPlayer?.stop();
+      audioPlayer.stop();
     } catch (e, s) {
       print(e);
     }
@@ -395,10 +398,10 @@ class _PlayLessonPageState extends State<PlayLessonPage> {
           .doc('lessons/${widget.lessonId}')
           .get();
       _subject.add(
-        Lesson.fromJson(doc.data()).copyWith(id: doc.id, events: events),
+        Lesson.fromJson(doc.data()!).copyWith(id: doc.id, events: events),
       );
 
-      lesson.images.forEach((element) {
+      lesson!.images!.forEach((element) {
         precacheImage(
           CachedNetworkImageProvider(element),
           context,
@@ -411,7 +414,7 @@ class _PlayLessonPageState extends State<PlayLessonPage> {
   }
 
   void _onTick(Duration elapsed) {
-    RenderBox box = _paintKey.currentContext.findRenderObject();
+    RenderBox box = _paintKey.currentContext!.findRenderObject() as RenderBox;
     final height = box.size.height;
     final width = box.size.width;
 
@@ -420,58 +423,55 @@ class _PlayLessonPageState extends State<PlayLessonPage> {
     }
 
     final events = eventList.where((element) =>
-        (elapsed.inMilliseconds - 25 < element.time) &&
-        (element.time < elapsed.inMilliseconds + 25));
-    if (events != null) {
-      events.forEach((event) {
-        if (event.event == Events.changeImage) {
-          _paintController.clear();
-          setState(() {
-            _imageIndex = event.index;
-          });
-        } else if (event.event == Events.pointerStart) {
-          _paintController.onPointerStart(event.x * width, event.y * height);
-        } else if (event.event == Events.pointerMove) {
-          _paintController.onPointerMove(event.x * width, event.y * height);
-        } else if (event.event == Events.pointerEnd) {
-          _paintController.onPointerEnd();
-        }
-      });
-      eventList.removeWhere((element) => events.contains(element));
-    }
+        (elapsed.inMilliseconds - 25 < element.time!) &&
+        (element.time! < elapsed.inMilliseconds + 25));
+    events.forEach((event) {
+      if (event.event == Events.changeImage) {
+        _paintController!.clear();
+        setState(() {
+          _imageIndex = event.index;
+        });
+      } else if (event.event == Events.pointerStart) {
+        _paintController!.onPointerStart(event.x! * width, event.y! * height);
+      } else if (event.event == Events.pointerMove) {
+        _paintController!.onPointerMove(event.x! * width, event.y! * height);
+      } else if (event.event == Events.pointerEnd) {
+        _paintController!.onPointerEnd();
+      }
+    });
+    eventList.removeWhere((element) => events.contains(element));
   }
 
-  void _startVideo({double elapsedTime}) async {
+  void _startVideo({double? elapsedTime}) async {
     _lastEventTime = elapsedTime?.toInt() ?? 0;
     eventList = _getNextList();
 
     final newList =
-        lesson.events.where((element) => element.time <= _lastEventTime);
-    final item = newList.lastWhere(
-        (element) => element.event == Events.changeImage,
-        orElse: () => null);
+        lesson!.events!.where((element) => element.time! <= _lastEventTime!);
+    final item = newList
+        .lastWhereOrNull((element) => element.event == Events.changeImage);
 
-    final lastMoveEvent = newList.lastWhere(
-        (element) => element.event == Events.pointerMove,
-        orElse: () => null);
+    final lastMoveEvent = newList
+        .lastWhereOrNull((element) => element.event == Events.pointerMove);
 
     setState(() {
       _imageIndex = item?.index ?? 0;
       countDownTimer?.cancel();
-      _paintController.onPointerStart(lastMoveEvent?.x, lastMoveEvent?.y);
+      _paintController!
+          .onPointerStart(lastMoveEvent?.x ?? 0, lastMoveEvent?.y ?? 0);
 
       this.remainingDuration = Duration(
-        milliseconds: lesson.duration - (elapsedTime?.toInt() ?? 0),
+        milliseconds: lesson!.duration! - (elapsedTime?.toInt() ?? 0),
       );
     });
 
     countDownTimer = MyCountdownTimer(
         Duration(
-          milliseconds: lesson.duration,
+          milliseconds: lesson!.duration!,
         ),
         Duration(milliseconds: 1),
         elapsedTime: Duration(milliseconds: elapsedTime?.toInt() ?? 0));
-    countDownTimer.listen((event) {
+    countDownTimer!.listen((event) {
       if (mounted) {
         setState(() {
           this.remainingDuration = event.remaining;
@@ -480,7 +480,7 @@ class _PlayLessonPageState extends State<PlayLessonPage> {
         if (event.remaining.inMilliseconds <
             Duration(milliseconds: 20).inMilliseconds) {
           _imageIndex = 0;
-          _paintController.clear();
+          _paintController!.clear();
         }
       }
     });
@@ -499,19 +499,20 @@ class _PlayLessonPageState extends State<PlayLessonPage> {
     }
   }
 
-  List<MyEvent> _getNextList({int fromTime}) {
-    final list = lesson.events
+  List<MyEvent> _getNextList({int? fromTime}) {
+    final list = lesson!.events!
         .where((element) =>
-            element.time > (fromTime ?? _lastEventTime) &&
-            element.time < (fromTime ?? _lastEventTime) + 5000)
+            element.time! > (fromTime ?? _lastEventTime!) &&
+            element.time! < (fromTime ?? _lastEventTime)! + 5000)
         .toList();
-    _lastEventTime = list?.last?.time ?? lesson.events.last.time;
+    _lastEventTime = list.last.time ?? lesson!.events!.last.time;
     return list;
   }
 
   Future<List<MyEvent>> _loadEvents() async {
-    final storageReference =
-        FirebaseStorage().ref().child('lessons/${widget.lessonId}/events.json');
+    final storageReference = FirebaseStorage.instance
+        .ref()
+        .child('lessons/${widget.lessonId}/events.json');
     var directory = await getTemporaryDirectory();
     final path = p.join(directory.path, '${widget.lessonId}/events.json');
     final file = File(path);
@@ -557,9 +558,9 @@ class _PlayLessonPageState extends State<PlayLessonPage> {
   }
 
   _onPauseVideo() {
-    _pauseDuration = countDownTimer.elapsedTime;
+    _pauseDuration = countDownTimer!.elapsedTime;
 
-    audioPlayer?.pause();
+    audioPlayer.pause();
     countDownTimer?.cancel();
   }
 
@@ -575,8 +576,8 @@ class _PlayLessonPageState extends State<PlayLessonPage> {
   void dispose() {
     _subject.close();
     countDownTimer?.cancel();
-    audioPlayer?.stop();
-    audioPlayer?.dispose();
+    audioPlayer.stop();
+    audioPlayer.dispose();
     super.dispose();
   }
 }

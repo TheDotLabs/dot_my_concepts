@@ -8,7 +8,7 @@ class BoxHeader extends StatelessWidget {
     this.fontSize = 12,
   });
 
-  final String title;
+  final String? title;
   final EdgeInsets margin;
   final EdgeInsets padding;
   final double fontSize;
@@ -24,7 +24,7 @@ class BoxHeader extends StatelessWidget {
       ),
       child: Text(
         (title ?? "--").toUpperCase(),
-        style: Theme.of(context).textTheme.overline.copyWith(
+        style: Theme.of(context).textTheme.overline!.copyWith(
               fontSize: fontSize,
             ),
       ),

@@ -12,13 +12,13 @@ class CategoryHeader extends StatefulWidget {
 }
 
 class _CategoryHeaderState extends State<CategoryHeader> {
-  String _category;
+  String? _category;
 
-  String _subject;
+  String? _subject;
 
-  String _unit;
+  String? _unit;
 
-  String _chapter;
+  String? _chapter;
 
   @override
   void initState() {
@@ -49,7 +49,7 @@ class _CategoryHeaderState extends State<CategoryHeader> {
                     ),
                     child: Text(
                       '$_chapter'.toUpperCase(),
-                      style: Theme.of(context).textTheme.bodyText1.copyWith(
+                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
                             fontSize: 10,
                             color: Colors.white,
                           ),
@@ -61,17 +61,17 @@ class _CategoryHeaderState extends State<CategoryHeader> {
                         color: Colors.grey[200],
                         borderRadius: BorderRadius.circular(2),
                         border: Border.all(
-                            color: Colors.blueGrey[100], width: 0.5)),
+                            color: Colors.blueGrey[100]!, width: 0.5)),
                     padding: EdgeInsets.symmetric(vertical: 4, horizontal: 6),
                     child: Text(
                       '$_unit'.toUpperCase(),
-                      style: Theme.of(context).textTheme.bodyText1.copyWith(
+                      style: Theme.of(context).textTheme.bodyText1!.copyWith(
                             fontSize: 10,
                             fontWeight: FontWeight.w600,
                             color: Theme.of(context)
                                 .textTheme
-                                .bodyText1
-                                .color
+                                .bodyText1!
+                                .color!
                                 .withOpacity(0.9),
                           ),
                     ),
@@ -91,15 +91,15 @@ class _CategoryHeaderState extends State<CategoryHeader> {
           .get();
 
       setState(() {
-        _category = categoryDoc.data()['title'];
-        _subject = (categoryDoc.data()['subjects'] as List).firstWhere(
+        _category = categoryDoc.data()!['title'];
+        _subject = (categoryDoc.data()!['subjects'] as List).firstWhere(
             (element) => element['id'] == widget.lesson.subject)['title'];
-        _unit = (categoryDoc.data()['subjects'] as List)
+        _unit = (categoryDoc.data()!['subjects'] as List)
             .firstWhere(
                 (element) => element['id'] == widget.lesson.subject)['units']
             .firstWhere(
                 (element) => element['id'] == widget.lesson.unit)['title'];
-        _chapter = (categoryDoc.data()['subjects'] as List)
+        _chapter = (categoryDoc.data()!['subjects'] as List)
             .firstWhere(
                 (element) => element['id'] == widget.lesson.subject)['units']
             .firstWhere(

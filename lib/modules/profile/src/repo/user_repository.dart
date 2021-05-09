@@ -1,4 +1,4 @@
-import 'package:flutter_record_lesson/modules/common/index.dart';
+import 'package:fa_flutter_core/fa_flutter_core.dart';
 import 'package:flutter_record_lesson/modules/profile/index.dart';
 import 'package:rxdart/rxdart.dart';
 
@@ -9,9 +9,9 @@ abstract class UserRepository {
 
   Future<Result> registerUser(MyUser user);
 
-  MyUser getLoggedInUser();
+  MyUser? getLoggedInUser();
 
-  BehaviorSubject<MyUser> getLoggedInUserStream();
+  BehaviorSubject<MyUser?> getLoggedInUserStream();
 
   Future<Result> logoutUser();
 
@@ -19,7 +19,7 @@ abstract class UserRepository {
 
   void setUserLoggedIn(bool value);
 
-  Future<void> saveSelectedCategory(String id);
+  Future<void> saveSelectedCategory(String? id);
 
   Future<void> setUserSignedCla(bool value);
 

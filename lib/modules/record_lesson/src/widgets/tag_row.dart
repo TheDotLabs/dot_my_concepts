@@ -22,7 +22,7 @@ class TagsRow extends StatelessWidget {
           ),
       builder: (context, snapshot) {
         if (snapshot.hasData && snapshot.data != null) {
-          final category = MyCategory.fromJson(snapshot.data.data());
+          final category = MyCategory.fromJson(snapshot.data!.data() as Map<String, dynamic>);
           return Wrap(
             runSpacing: 8,
             spacing: 8,
@@ -33,27 +33,27 @@ class TagsRow extends StatelessWidget {
                 fontSize: 10,
               ),
               BoxHeader(
-                category.subjects
+                category.subjects!
                     .firstWhere((subject) => subject.id == myCourse.subjectId)
                     .title,
                 margin: EdgeInsets.zero,
                 fontSize: 10,
               ),
               BoxHeader(
-                category.subjects
+                category.subjects!
                     .firstWhere((subject) => subject.id == myCourse.subjectId)
-                    .units
+                    .units!
                     .firstWhere((unit) => unit.id == myCourse.unitId)
                     .title,
                 margin: EdgeInsets.zero,
                 fontSize: 10,
               ),
               BoxHeader(
-                category.subjects
+                category.subjects!
                     .firstWhere((subject) => subject.id == myCourse.subjectId)
-                    .units
+                    .units!
                     .firstWhere((unit) => unit.id == myCourse.unitId)
-                    .chapters
+                    .chapters!
                     .firstWhere((chapter) => chapter.id == myCourse.chapterId)
                     .title,
                 margin: EdgeInsets.zero,

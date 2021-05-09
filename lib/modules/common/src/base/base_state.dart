@@ -6,7 +6,7 @@ abstract class BaseState<T extends StatefulWidget> extends State<T> {
   GlobalKey<ScaffoldState> get scaffoldKey => _scaffoldKey;
 
   showSnackBar(String message) {
-    _scaffoldKey.currentState
+    _scaffoldKey.currentState!
       ..hideCurrentSnackBar()
       ..showSnackBar(
         SnackBar(content: Text(message)),
