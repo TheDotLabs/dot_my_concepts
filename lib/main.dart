@@ -1,5 +1,6 @@
 import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 import 'package:flutter_record_lesson/app/bloc/base/app_bloc.dart';
 import 'package:flutter_record_lesson/modules/home/src/home_page.dart';
 import 'package:flutter_record_lesson/modules/login/index.dart';
@@ -11,6 +12,10 @@ import 'modules/profile/index.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await SystemChrome.setPreferredOrientations([
+    DeviceOrientation.portraitUp,
+    DeviceOrientation.portraitDown,
+  ]);
   await Injector().configure(Flavor.debug);
   runApp(MyApp());
 }

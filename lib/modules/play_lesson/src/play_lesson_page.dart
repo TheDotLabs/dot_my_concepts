@@ -15,6 +15,7 @@ import 'package:flutter_record_lesson/modules/common/src/widgets/circular_loadin
 import 'package:flutter_record_lesson/modules/record_lesson/models/my_event.dart';
 import 'package:flutter_record_lesson/modules/record_lesson/src/painter_controller.dart';
 import 'package:flutter_record_lesson/utils/extensions/behavior_subject.dart';
+import 'package:flutter_record_lesson/utils/log_utils.dart';
 import 'package:path/path.dart' as p;
 import 'package:path_provider/path_provider.dart';
 import 'package:rxdart/rxdart.dart';
@@ -381,24 +382,25 @@ class _PlayLessonPageState extends State<PlayLessonPage> {
 
   Future<void> _onStop() async {
     try {
-      print('on stop');
-      audioPlayer.stop();
+      await audioPlayer.stop();
     } catch (e, s) {
-      print(e);
+      logger.e(e, s);
     }
   }
 
   Future<void> init() async {
     try {
       _subject.addDataSafely(null);
-      final events = await _loadEvents();
+      // final events = await _loadEvents();
       await _loadAudio();
 
       final doc = await FirebaseFirestore.instance
           .doc('lessons/${widget.lessonId}')
           .get();
       _subject.add(
-        Lesson.fromJson(doc.data()!).copyWith(id: doc.id, events: events),
+        Lesson.fromJson(doc.data()!).copyWith(
+          id: doc.id,
+        ),
       );
 
       lesson!.images!.forEach((element) {
@@ -408,7 +410,7 @@ class _PlayLessonPageState extends State<PlayLessonPage> {
         );
       });
     } catch (e, s) {
-      print(e);
+      logger.e(e, s);
       _subject.addErrorSafely(e);
     }
   }

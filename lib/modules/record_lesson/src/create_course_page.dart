@@ -110,8 +110,9 @@ class _CreateCoursePageState extends State<CreateCoursePage> {
                           ? () async {
                               final progressDialog =
                                   ProgressDialog(context, isDismissible: false)
-                                    ..style(message: 'Please Wait !')
-                                    ..show();
+                                    ..style(message: 'Please Wait !');
+
+                              await progressDialog.show();
                               final result = await injector<RecordLessonBloc>()
                                   .createNewCourse(
                                 name: name.text,

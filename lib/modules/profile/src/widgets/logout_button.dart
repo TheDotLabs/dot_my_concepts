@@ -13,7 +13,7 @@ class LogoutButton extends StatelessWidget {
         height: 48.0,
         child: RaisedButton(
           onPressed: () async {
-            _showDialog(context);
+            await _showDialog(context);
           },
           color: Colors.white,
           elevation: 0,

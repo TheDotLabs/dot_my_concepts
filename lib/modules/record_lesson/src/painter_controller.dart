@@ -94,7 +94,11 @@ class PathHistory {
 
   PainterController? painterController;
 
-  PathHistory({required Color backgroundColor, this.paint, this.painterController}) {
+  PathHistory({
+    required Color backgroundColor,
+    this.paint,
+    this.painterController,
+  }) {
     _inDrag = false;
     backgroundPaint = Paint()..color = backgroundColor;
   }
@@ -136,19 +140,14 @@ class PathHistory {
   }
 
   void onPointerStart(double x, double y) {
-    print('on p start');
     add(Offset(x, y));
   }
 
   void onPointerMove(double x, double y) {
-    print('on p move');
-
     updateCurrent(Offset(x, y));
   }
 
   void onPointerEnd() {
-    print('on p end');
-
     endCurrent();
   }
 
@@ -190,6 +189,7 @@ class PainterController extends ChangeNotifier {
     );
   }
 
+  @override
   void notifyListeners() {
     super.notifyListeners();
   }

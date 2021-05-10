@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_record_lesson/core/widgets/BorderContainer.dart';
 import 'package:flutter_record_lesson/models/category.dart';
-import 'package:flutter_record_lesson/modules/record_lesson/src/record_lesson.dart';
+import 'package:flutter_record_lesson/modules/record_lesson/src/select_images_page.dart';
 import 'package:rxdart/rxdart.dart';
 
 class ChapterPage extends StatefulWidget {
@@ -46,7 +46,7 @@ class _ChapterPageState extends State<ChapterPage> {
                     onTap: () {
                       Navigator.of(context).push(
                         MaterialPageRoute(
-                          builder: (_) => RecordLessonPage(),
+                          builder: (_) => SelectImagePage(),
                         ),
                       );
                     },
