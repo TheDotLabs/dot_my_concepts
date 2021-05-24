@@ -49,7 +49,7 @@ class _StartTeachingPageState extends State<StartTeachingPage> {
               ),
               child: RaisedButton(
                 onPressed: () {
-                  if (injector<AppBloc>().hasUserSignedCla) {
+                  if (locator<AppBloc>().hasUserSignedCla) {
                     Navigator.of(context).push(
                       MaterialPageRoute(
                         builder: (_) => CategoryPage(),

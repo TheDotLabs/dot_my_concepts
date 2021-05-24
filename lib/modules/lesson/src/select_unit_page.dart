@@ -41,7 +41,8 @@ class _SelectUnitPageState extends State<SelectUnitPage> {
         title: Text('Select Chapter'),
       ),
       body: Container(
-        child: (widget.subject.units != null && widget.subject.units!.isNotEmpty)
+        child: (widget.subject.units != null &&
+                widget.subject.units!.isNotEmpty)
             ? ListView(
                 physics: BouncingScrollPhysics(),
                 padding: EdgeInsets.symmetric(
@@ -104,14 +105,14 @@ class _SelectUnitPageState extends State<SelectUnitPage> {
   List<MyUnit> _getList() {
     final list = List<MyUnit>.from(widget.subject.units!);
 
-    list.sort((a, b) => int.parse(a.id!).compareTo(int.parse(b.id!)));
+    list.sort((a, b) => int.parse(a.id).compareTo(int.parse(b.id)));
     return list;
   }
 
   List<MyChapter> _getChapterList(List<MyChapter> rawList) {
     final list = List<MyChapter>.from(rawList);
 
-    list.sort((a, b) => int.parse(a.id!).compareTo(int.parse(b.id!)));
+    list.sort((a, b) => int.parse(a.id).compareTo(int.parse(b.id)));
     return list;
   }
 }

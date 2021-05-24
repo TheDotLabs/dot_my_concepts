@@ -14,7 +14,7 @@ abstract class LoginRepository {
 
   @protected
   Future<Result> registerUser(MyUser user) =>
-      injector<UserRepository>().registerUser(user);
+      locator<UserRepository>().registerUser(user);
 
   Future<Result> login();
 

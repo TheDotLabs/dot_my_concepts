@@ -21,7 +21,7 @@ class _$MyUserTearOff {
   const _$MyUserTearOff();
 
   _MyUser call(
-      {String? id,
+      {required String id,
       @JsonKey(includeIfNull: false) String? name,
       String? email,
       @JsonKey(includeIfNull: false) String? avatar,
@@ -53,7 +53,7 @@ const $MyUser = _$MyUserTearOff();
 
 /// @nodoc
 mixin _$MyUser {
-  String? get id => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
   @JsonKey(includeIfNull: false)
   String? get name => throw _privateConstructorUsedError;
   String? get email => throw _privateConstructorUsedError;
@@ -77,7 +77,7 @@ abstract class $MyUserCopyWith<$Res> {
   factory $MyUserCopyWith(MyUser value, $Res Function(MyUser) then) =
       _$MyUserCopyWithImpl<$Res>;
   $Res call(
-      {String? id,
+      {String id,
       @JsonKey(includeIfNull: false) String? name,
       String? email,
       @JsonKey(includeIfNull: false) String? avatar,
@@ -114,7 +114,7 @@ class _$MyUserCopyWithImpl<$Res> implements $MyUserCopyWith<$Res> {
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -168,7 +168,7 @@ abstract class _$MyUserCopyWith<$Res> implements $MyUserCopyWith<$Res> {
       __$MyUserCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String? id,
+      {String id,
       @JsonKey(includeIfNull: false) String? name,
       String? email,
       @JsonKey(includeIfNull: false) String? avatar,
@@ -207,7 +207,7 @@ class __$MyUserCopyWithImpl<$Res> extends _$MyUserCopyWithImpl<$Res>
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       name: name == freezed
           ? _value.name
           : name // ignore: cast_nullable_to_non_nullable
@@ -248,7 +248,7 @@ class __$MyUserCopyWithImpl<$Res> extends _$MyUserCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_MyUser implements _MyUser {
   _$_MyUser(
-      {this.id,
+      {required this.id,
       @JsonKey(includeIfNull: false) this.name,
       this.email,
       @JsonKey(includeIfNull: false) this.avatar,
@@ -262,7 +262,7 @@ class _$_MyUser implements _MyUser {
       _$_$_MyUserFromJson(json);
 
   @override
-  final String? id;
+  final String id;
   @override
   @JsonKey(includeIfNull: false)
   final String? name;
@@ -344,7 +344,7 @@ class _$_MyUser implements _MyUser {
 
 abstract class _MyUser implements MyUser {
   factory _MyUser(
-      {String? id,
+      {required String id,
       @JsonKey(includeIfNull: false) String? name,
       String? email,
       @JsonKey(includeIfNull: false) String? avatar,
@@ -357,7 +357,7 @@ abstract class _MyUser implements MyUser {
   factory _MyUser.fromJson(Map<String, dynamic> json) = _$_MyUser.fromJson;
 
   @override
-  String? get id => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
   @override
   @JsonKey(includeIfNull: false)
   String? get name => throw _privateConstructorUsedError;

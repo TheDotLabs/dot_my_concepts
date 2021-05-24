@@ -12,7 +12,7 @@ class TeachingPage extends StatefulWidget {
 class _TeachingPageState extends State<TeachingPage> {
   @override
   Widget build(BuildContext context) {
-    return injector<AppBloc>().isTeacher
+    return locator<AppBloc>().isTeacher
         ? TeachingDashboardPage()
         : StartTeachingPage();
   }

@@ -21,27 +21,37 @@ class _$LessonTearOff {
   const _$LessonTearOff();
 
   _Lesson call(
-      {List<MyEvent>? events,
-      String? id,
+      {required String id,
+      required String uid,
+      required String name,
+      required String description,
+      required String category,
+      required String subject,
+      required String unit,
+      required String chapter,
       int? duration,
-      String? name,
-      String? description,
       List<String>? images,
-      String? category,
-      String? subject,
-      String? unit,
-      String? chapter}) {
+      String? audioUrl,
+      String? eventsUrl,
+      @JsonKey(includeIfNull: false) List<String>? rawImagePaths,
+      @JsonKey(includeIfNull: false) String? audioPath,
+      @JsonKey(includeIfNull: false) List<MyEvent>? events}) {
     return _Lesson(
-      events: events,
       id: id,
-      duration: duration,
+      uid: uid,
       name: name,
       description: description,
-      images: images,
       category: category,
       subject: subject,
       unit: unit,
       chapter: chapter,
+      duration: duration,
+      images: images,
+      audioUrl: audioUrl,
+      eventsUrl: eventsUrl,
+      rawImagePaths: rawImagePaths,
+      audioPath: audioPath,
+      events: events,
     );
   }
 
@@ -55,16 +65,24 @@ const $Lesson = _$LessonTearOff();
 
 /// @nodoc
 mixin _$Lesson {
-  List<MyEvent>? get events => throw _privateConstructorUsedError;
-  String? get id => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
+  String get uid => throw _privateConstructorUsedError;
+  String get name => throw _privateConstructorUsedError;
+  String get description => throw _privateConstructorUsedError;
+  String get category => throw _privateConstructorUsedError;
+  String get subject => throw _privateConstructorUsedError;
+  String get unit => throw _privateConstructorUsedError;
+  String get chapter => throw _privateConstructorUsedError;
   int? get duration => throw _privateConstructorUsedError;
-  String? get name => throw _privateConstructorUsedError;
-  String? get description => throw _privateConstructorUsedError;
   List<String>? get images => throw _privateConstructorUsedError;
-  String? get category => throw _privateConstructorUsedError;
-  String? get subject => throw _privateConstructorUsedError;
-  String? get unit => throw _privateConstructorUsedError;
-  String? get chapter => throw _privateConstructorUsedError;
+  String? get audioUrl => throw _privateConstructorUsedError;
+  String? get eventsUrl => throw _privateConstructorUsedError; // Raw data
+  @JsonKey(includeIfNull: false)
+  List<String>? get rawImagePaths => throw _privateConstructorUsedError;
+  @JsonKey(includeIfNull: false)
+  String? get audioPath => throw _privateConstructorUsedError;
+  @JsonKey(includeIfNull: false)
+  List<MyEvent>? get events => throw _privateConstructorUsedError;
 
   Map<String, dynamic> toJson() => throw _privateConstructorUsedError;
   @JsonKey(ignore: true)
@@ -76,16 +94,21 @@ abstract class $LessonCopyWith<$Res> {
   factory $LessonCopyWith(Lesson value, $Res Function(Lesson) then) =
       _$LessonCopyWithImpl<$Res>;
   $Res call(
-      {List<MyEvent>? events,
-      String? id,
+      {String id,
+      String uid,
+      String name,
+      String description,
+      String category,
+      String subject,
+      String unit,
+      String chapter,
       int? duration,
-      String? name,
-      String? description,
       List<String>? images,
-      String? category,
-      String? subject,
-      String? unit,
-      String? chapter});
+      String? audioUrl,
+      String? eventsUrl,
+      @JsonKey(includeIfNull: false) List<String>? rawImagePaths,
+      @JsonKey(includeIfNull: false) String? audioPath,
+      @JsonKey(includeIfNull: false) List<MyEvent>? events});
 }
 
 /// @nodoc
@@ -98,58 +121,83 @@ class _$LessonCopyWithImpl<$Res> implements $LessonCopyWith<$Res> {
 
   @override
   $Res call({
-    Object? events = freezed,
     Object? id = freezed,
-    Object? duration = freezed,
+    Object? uid = freezed,
     Object? name = freezed,
     Object? description = freezed,
-    Object? images = freezed,
     Object? category = freezed,
     Object? subject = freezed,
     Object? unit = freezed,
     Object? chapter = freezed,
+    Object? duration = freezed,
+    Object? images = freezed,
+    Object? audioUrl = freezed,
+    Object? eventsUrl = freezed,
+    Object? rawImagePaths = freezed,
+    Object? audioPath = freezed,
+    Object? events = freezed,
   }) {
     return _then(_value.copyWith(
-      events: events == freezed
-          ? _value.events
-          : events // ignore: cast_nullable_to_non_nullable
-              as List<MyEvent>?,
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
+      uid: uid == freezed
+          ? _value.uid
+          : uid // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: description == freezed
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
+      category: category == freezed
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as String,
+      subject: subject == freezed
+          ? _value.subject
+          : subject // ignore: cast_nullable_to_non_nullable
+              as String,
+      unit: unit == freezed
+          ? _value.unit
+          : unit // ignore: cast_nullable_to_non_nullable
+              as String,
+      chapter: chapter == freezed
+          ? _value.chapter
+          : chapter // ignore: cast_nullable_to_non_nullable
+              as String,
       duration: duration == freezed
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
               as int?,
-      name: name == freezed
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String?,
-      description: description == freezed
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String?,
       images: images == freezed
           ? _value.images
           : images // ignore: cast_nullable_to_non_nullable
               as List<String>?,
-      category: category == freezed
-          ? _value.category
-          : category // ignore: cast_nullable_to_non_nullable
+      audioUrl: audioUrl == freezed
+          ? _value.audioUrl
+          : audioUrl // ignore: cast_nullable_to_non_nullable
               as String?,
-      subject: subject == freezed
-          ? _value.subject
-          : subject // ignore: cast_nullable_to_non_nullable
+      eventsUrl: eventsUrl == freezed
+          ? _value.eventsUrl
+          : eventsUrl // ignore: cast_nullable_to_non_nullable
               as String?,
-      unit: unit == freezed
-          ? _value.unit
-          : unit // ignore: cast_nullable_to_non_nullable
+      rawImagePaths: rawImagePaths == freezed
+          ? _value.rawImagePaths
+          : rawImagePaths // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      audioPath: audioPath == freezed
+          ? _value.audioPath
+          : audioPath // ignore: cast_nullable_to_non_nullable
               as String?,
-      chapter: chapter == freezed
-          ? _value.chapter
-          : chapter // ignore: cast_nullable_to_non_nullable
-              as String?,
+      events: events == freezed
+          ? _value.events
+          : events // ignore: cast_nullable_to_non_nullable
+              as List<MyEvent>?,
     ));
   }
 }
@@ -160,16 +208,21 @@ abstract class _$LessonCopyWith<$Res> implements $LessonCopyWith<$Res> {
       __$LessonCopyWithImpl<$Res>;
   @override
   $Res call(
-      {List<MyEvent>? events,
-      String? id,
+      {String id,
+      String uid,
+      String name,
+      String description,
+      String category,
+      String subject,
+      String unit,
+      String chapter,
       int? duration,
-      String? name,
-      String? description,
       List<String>? images,
-      String? category,
-      String? subject,
-      String? unit,
-      String? chapter});
+      String? audioUrl,
+      String? eventsUrl,
+      @JsonKey(includeIfNull: false) List<String>? rawImagePaths,
+      @JsonKey(includeIfNull: false) String? audioPath,
+      @JsonKey(includeIfNull: false) List<MyEvent>? events});
 }
 
 /// @nodoc
@@ -183,58 +236,83 @@ class __$LessonCopyWithImpl<$Res> extends _$LessonCopyWithImpl<$Res>
 
   @override
   $Res call({
-    Object? events = freezed,
     Object? id = freezed,
-    Object? duration = freezed,
+    Object? uid = freezed,
     Object? name = freezed,
     Object? description = freezed,
-    Object? images = freezed,
     Object? category = freezed,
     Object? subject = freezed,
     Object? unit = freezed,
     Object? chapter = freezed,
+    Object? duration = freezed,
+    Object? images = freezed,
+    Object? audioUrl = freezed,
+    Object? eventsUrl = freezed,
+    Object? rawImagePaths = freezed,
+    Object? audioPath = freezed,
+    Object? events = freezed,
   }) {
     return _then(_Lesson(
-      events: events == freezed
-          ? _value.events
-          : events // ignore: cast_nullable_to_non_nullable
-              as List<MyEvent>?,
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
+      uid: uid == freezed
+          ? _value.uid
+          : uid // ignore: cast_nullable_to_non_nullable
+              as String,
+      name: name == freezed
+          ? _value.name
+          : name // ignore: cast_nullable_to_non_nullable
+              as String,
+      description: description == freezed
+          ? _value.description
+          : description // ignore: cast_nullable_to_non_nullable
+              as String,
+      category: category == freezed
+          ? _value.category
+          : category // ignore: cast_nullable_to_non_nullable
+              as String,
+      subject: subject == freezed
+          ? _value.subject
+          : subject // ignore: cast_nullable_to_non_nullable
+              as String,
+      unit: unit == freezed
+          ? _value.unit
+          : unit // ignore: cast_nullable_to_non_nullable
+              as String,
+      chapter: chapter == freezed
+          ? _value.chapter
+          : chapter // ignore: cast_nullable_to_non_nullable
+              as String,
       duration: duration == freezed
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
               as int?,
-      name: name == freezed
-          ? _value.name
-          : name // ignore: cast_nullable_to_non_nullable
-              as String?,
-      description: description == freezed
-          ? _value.description
-          : description // ignore: cast_nullable_to_non_nullable
-              as String?,
       images: images == freezed
           ? _value.images
           : images // ignore: cast_nullable_to_non_nullable
               as List<String>?,
-      category: category == freezed
-          ? _value.category
-          : category // ignore: cast_nullable_to_non_nullable
+      audioUrl: audioUrl == freezed
+          ? _value.audioUrl
+          : audioUrl // ignore: cast_nullable_to_non_nullable
               as String?,
-      subject: subject == freezed
-          ? _value.subject
-          : subject // ignore: cast_nullable_to_non_nullable
+      eventsUrl: eventsUrl == freezed
+          ? _value.eventsUrl
+          : eventsUrl // ignore: cast_nullable_to_non_nullable
               as String?,
-      unit: unit == freezed
-          ? _value.unit
-          : unit // ignore: cast_nullable_to_non_nullable
+      rawImagePaths: rawImagePaths == freezed
+          ? _value.rawImagePaths
+          : rawImagePaths // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
+      audioPath: audioPath == freezed
+          ? _value.audioPath
+          : audioPath // ignore: cast_nullable_to_non_nullable
               as String?,
-      chapter: chapter == freezed
-          ? _value.chapter
-          : chapter // ignore: cast_nullable_to_non_nullable
-              as String?,
+      events: events == freezed
+          ? _value.events
+          : events // ignore: cast_nullable_to_non_nullable
+              as List<MyEvent>?,
     ));
   }
 }
@@ -243,64 +321,77 @@ class __$LessonCopyWithImpl<$Res> extends _$LessonCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_Lesson implements _Lesson {
   _$_Lesson(
-      {this.events,
-      this.id,
+      {required this.id,
+      required this.uid,
+      required this.name,
+      required this.description,
+      required this.category,
+      required this.subject,
+      required this.unit,
+      required this.chapter,
       this.duration,
-      this.name,
-      this.description,
       this.images,
-      this.category,
-      this.subject,
-      this.unit,
-      this.chapter});
+      this.audioUrl,
+      this.eventsUrl,
+      @JsonKey(includeIfNull: false) this.rawImagePaths,
+      @JsonKey(includeIfNull: false) this.audioPath,
+      @JsonKey(includeIfNull: false) this.events});
 
   factory _$_Lesson.fromJson(Map<String, dynamic> json) =>
       _$_$_LessonFromJson(json);
 
   @override
-  final List<MyEvent>? events;
+  final String id;
   @override
-  final String? id;
+  final String uid;
+  @override
+  final String name;
+  @override
+  final String description;
+  @override
+  final String category;
+  @override
+  final String subject;
+  @override
+  final String unit;
+  @override
+  final String chapter;
   @override
   final int? duration;
   @override
-  final String? name;
-  @override
-  final String? description;
-  @override
   final List<String>? images;
   @override
-  final String? category;
+  final String? audioUrl;
   @override
-  final String? subject;
+  final String? eventsUrl;
+  @override // Raw data
+  @JsonKey(includeIfNull: false)
+  final List<String>? rawImagePaths;
   @override
-  final String? unit;
+  @JsonKey(includeIfNull: false)
+  final String? audioPath;
   @override
-  final String? chapter;
+  @JsonKey(includeIfNull: false)
+  final List<MyEvent>? events;
 
   @override
   String toString() {
-    return 'Lesson(events: $events, id: $id, duration: $duration, name: $name, description: $description, images: $images, category: $category, subject: $subject, unit: $unit, chapter: $chapter)';
+    return 'Lesson(id: $id, uid: $uid, name: $name, description: $description, category: $category, subject: $subject, unit: $unit, chapter: $chapter, duration: $duration, images: $images, audioUrl: $audioUrl, eventsUrl: $eventsUrl, rawImagePaths: $rawImagePaths, audioPath: $audioPath, events: $events)';
   }
 
   @override
   bool operator ==(dynamic other) {
     return identical(this, other) ||
         (other is _Lesson &&
-            (identical(other.events, events) ||
-                const DeepCollectionEquality().equals(other.events, events)) &&
             (identical(other.id, id) ||
                 const DeepCollectionEquality().equals(other.id, id)) &&
-            (identical(other.duration, duration) ||
-                const DeepCollectionEquality()
-                    .equals(other.duration, duration)) &&
+            (identical(other.uid, uid) ||
+                const DeepCollectionEquality().equals(other.uid, uid)) &&
             (identical(other.name, name) ||
                 const DeepCollectionEquality().equals(other.name, name)) &&
             (identical(other.description, description) ||
                 const DeepCollectionEquality()
                     .equals(other.description, description)) &&
-            (identical(other.images, images) ||
-                const DeepCollectionEquality().equals(other.images, images)) &&
             (identical(other.category, category) ||
                 const DeepCollectionEquality()
                     .equals(other.category, category)) &&
@@ -310,22 +401,47 @@ class _$_Lesson implements _Lesson {
             (identical(other.unit, unit) ||
                 const DeepCollectionEquality().equals(other.unit, unit)) &&
             (identical(other.chapter, chapter) ||
-                const DeepCollectionEquality().equals(other.chapter, chapter)));
+                const DeepCollectionEquality()
+                    .equals(other.chapter, chapter)) &&
+            (identical(other.duration, duration) ||
+                const DeepCollectionEquality()
+                    .equals(other.duration, duration)) &&
+            (identical(other.images, images) ||
+                const DeepCollectionEquality().equals(other.images, images)) &&
+            (identical(other.audioUrl, audioUrl) ||
+                const DeepCollectionEquality()
+                    .equals(other.audioUrl, audioUrl)) &&
+            (identical(other.eventsUrl, eventsUrl) ||
+                const DeepCollectionEquality()
+                    .equals(other.eventsUrl, eventsUrl)) &&
+            (identical(other.rawImagePaths, rawImagePaths) ||
+                const DeepCollectionEquality()
+                    .equals(other.rawImagePaths, rawImagePaths)) &&
+            (identical(other.audioPath, audioPath) ||
+                const DeepCollectionEquality()
+                    .equals(other.audioPath, audioPath)) &&
+            (identical(other.events, events) ||
+                const DeepCollectionEquality().equals(other.events, events)));
   }
 
   @override
   int get hashCode =>
       runtimeType.hashCode ^
-      const DeepCollectionEquality().hash(events) ^
       const DeepCollectionEquality().hash(id) ^
-      const DeepCollectionEquality().hash(duration) ^
+      const DeepCollectionEquality().hash(uid) ^
       const DeepCollectionEquality().hash(name) ^
       const DeepCollectionEquality().hash(description) ^
-      const DeepCollectionEquality().hash(images) ^
       const DeepCollectionEquality().hash(category) ^
       const DeepCollectionEquality().hash(subject) ^
       const DeepCollectionEquality().hash(unit) ^
-      const DeepCollectionEquality().hash(chapter);
+      const DeepCollectionEquality().hash(chapter) ^
+      const DeepCollectionEquality().hash(duration) ^
+      const DeepCollectionEquality().hash(images) ^
+      const DeepCollectionEquality().hash(audioUrl) ^
+      const DeepCollectionEquality().hash(eventsUrl) ^
+      const DeepCollectionEquality().hash(rawImagePaths) ^
+      const DeepCollectionEquality().hash(audioPath) ^
+      const DeepCollectionEquality().hash(events);
 
   @JsonKey(ignore: true)
   @override
@@ -340,39 +456,57 @@ class _$_Lesson implements _Lesson {
 
 abstract class _Lesson implements Lesson {
   factory _Lesson(
-      {List<MyEvent>? events,
-      String? id,
+      {required String id,
+      required String uid,
+      required String name,
+      required String description,
+      required String category,
+      required String subject,
+      required String unit,
+      required String chapter,
       int? duration,
-      String? name,
-      String? description,
       List<String>? images,
-      String? category,
-      String? subject,
-      String? unit,
-      String? chapter}) = _$_Lesson;
+      String? audioUrl,
+      String? eventsUrl,
+      @JsonKey(includeIfNull: false) List<String>? rawImagePaths,
+      @JsonKey(includeIfNull: false) String? audioPath,
+      @JsonKey(includeIfNull: false) List<MyEvent>? events}) = _$_Lesson;
 
   factory _Lesson.fromJson(Map<String, dynamic> json) = _$_Lesson.fromJson;
 
   @override
-  List<MyEvent>? get events => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
   @override
-  String? get id => throw _privateConstructorUsedError;
+  String get uid => throw _privateConstructorUsedError;
+  @override
+  String get name => throw _privateConstructorUsedError;
+  @override
+  String get description => throw _privateConstructorUsedError;
+  @override
+  String get category => throw _privateConstructorUsedError;
+  @override
+  String get subject => throw _privateConstructorUsedError;
+  @override
+  String get unit => throw _privateConstructorUsedError;
+  @override
+  String get chapter => throw _privateConstructorUsedError;
   @override
   int? get duration => throw _privateConstructorUsedError;
   @override
-  String? get name => throw _privateConstructorUsedError;
-  @override
-  String? get description => throw _privateConstructorUsedError;
-  @override
   List<String>? get images => throw _privateConstructorUsedError;
   @override
-  String? get category => throw _privateConstructorUsedError;
+  String? get audioUrl => throw _privateConstructorUsedError;
   @override
-  String? get subject => throw _privateConstructorUsedError;
+  String? get eventsUrl => throw _privateConstructorUsedError;
+  @override // Raw data
+  @JsonKey(includeIfNull: false)
+  List<String>? get rawImagePaths => throw _privateConstructorUsedError;
   @override
-  String? get unit => throw _privateConstructorUsedError;
+  @JsonKey(includeIfNull: false)
+  String? get audioPath => throw _privateConstructorUsedError;
   @override
-  String? get chapter => throw _privateConstructorUsedError;
+  @JsonKey(includeIfNull: false)
+  List<MyEvent>? get events => throw _privateConstructorUsedError;
   @override
   @JsonKey(ignore: true)
   _$LessonCopyWith<_Lesson> get copyWith => throw _privateConstructorUsedError;
@@ -387,10 +521,10 @@ class _$MyEventTearOff {
   const _$MyEventTearOff();
 
   _MyEvent call(
-      {@JsonKey(name: 'e') Events? event,
-      @JsonKey(name: 'i') int? index,
-      @JsonKey(name: 't') int? time,
-      @JsonKey(name: 'c') String? color,
+      {@JsonKey(name: 'e', includeIfNull: false) Events? event,
+      @JsonKey(name: 'i', includeIfNull: false) int? index,
+      @JsonKey(name: 't', includeIfNull: false) int? time,
+      @JsonKey(name: 'c', includeIfNull: false) String? color,
       double? x,
       double? y}) {
     return _MyEvent(
@@ -413,13 +547,13 @@ const $MyEvent = _$MyEventTearOff();
 
 /// @nodoc
 mixin _$MyEvent {
-  @JsonKey(name: 'e')
+  @JsonKey(name: 'e', includeIfNull: false)
   Events? get event => throw _privateConstructorUsedError;
-  @JsonKey(name: 'i')
+  @JsonKey(name: 'i', includeIfNull: false)
   int? get index => throw _privateConstructorUsedError;
-  @JsonKey(name: 't')
+  @JsonKey(name: 't', includeIfNull: false)
   int? get time => throw _privateConstructorUsedError;
-  @JsonKey(name: 'c')
+  @JsonKey(name: 'c', includeIfNull: false)
   String? get color => throw _privateConstructorUsedError;
   double? get x => throw _privateConstructorUsedError;
   double? get y => throw _privateConstructorUsedError;
@@ -434,10 +568,10 @@ abstract class $MyEventCopyWith<$Res> {
   factory $MyEventCopyWith(MyEvent value, $Res Function(MyEvent) then) =
       _$MyEventCopyWithImpl<$Res>;
   $Res call(
-      {@JsonKey(name: 'e') Events? event,
-      @JsonKey(name: 'i') int? index,
-      @JsonKey(name: 't') int? time,
-      @JsonKey(name: 'c') String? color,
+      {@JsonKey(name: 'e', includeIfNull: false) Events? event,
+      @JsonKey(name: 'i', includeIfNull: false) int? index,
+      @JsonKey(name: 't', includeIfNull: false) int? time,
+      @JsonKey(name: 'c', includeIfNull: false) String? color,
       double? x,
       double? y});
 }
@@ -494,10 +628,10 @@ abstract class _$MyEventCopyWith<$Res> implements $MyEventCopyWith<$Res> {
       __$MyEventCopyWithImpl<$Res>;
   @override
   $Res call(
-      {@JsonKey(name: 'e') Events? event,
-      @JsonKey(name: 'i') int? index,
-      @JsonKey(name: 't') int? time,
-      @JsonKey(name: 'c') String? color,
+      {@JsonKey(name: 'e', includeIfNull: false) Events? event,
+      @JsonKey(name: 'i', includeIfNull: false) int? index,
+      @JsonKey(name: 't', includeIfNull: false) int? time,
+      @JsonKey(name: 'c', includeIfNull: false) String? color,
       double? x,
       double? y});
 }
@@ -553,10 +687,10 @@ class __$MyEventCopyWithImpl<$Res> extends _$MyEventCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_MyEvent implements _MyEvent {
   _$_MyEvent(
-      {@JsonKey(name: 'e') this.event,
-      @JsonKey(name: 'i') this.index,
-      @JsonKey(name: 't') this.time,
-      @JsonKey(name: 'c') this.color,
+      {@JsonKey(name: 'e', includeIfNull: false) this.event,
+      @JsonKey(name: 'i', includeIfNull: false) this.index,
+      @JsonKey(name: 't', includeIfNull: false) this.time,
+      @JsonKey(name: 'c', includeIfNull: false) this.color,
       this.x,
       this.y});
 
@@ -564,16 +698,16 @@ class _$_MyEvent implements _MyEvent {
       _$_$_MyEventFromJson(json);
 
   @override
-  @JsonKey(name: 'e')
+  @JsonKey(name: 'e', includeIfNull: false)
   final Events? event;
   @override
-  @JsonKey(name: 'i')
+  @JsonKey(name: 'i', includeIfNull: false)
   final int? index;
   @override
-  @JsonKey(name: 't')
+  @JsonKey(name: 't', includeIfNull: false)
   final int? time;
   @override
-  @JsonKey(name: 'c')
+  @JsonKey(name: 'c', includeIfNull: false)
   final String? color;
   @override
   final double? x;
@@ -626,26 +760,26 @@ class _$_MyEvent implements _MyEvent {
 
 abstract class _MyEvent implements MyEvent {
   factory _MyEvent(
-      {@JsonKey(name: 'e') Events? event,
-      @JsonKey(name: 'i') int? index,
-      @JsonKey(name: 't') int? time,
-      @JsonKey(name: 'c') String? color,
+      {@JsonKey(name: 'e', includeIfNull: false) Events? event,
+      @JsonKey(name: 'i', includeIfNull: false) int? index,
+      @JsonKey(name: 't', includeIfNull: false) int? time,
+      @JsonKey(name: 'c', includeIfNull: false) String? color,
       double? x,
       double? y}) = _$_MyEvent;
 
   factory _MyEvent.fromJson(Map<String, dynamic> json) = _$_MyEvent.fromJson;
 
   @override
-  @JsonKey(name: 'e')
+  @JsonKey(name: 'e', includeIfNull: false)
   Events? get event => throw _privateConstructorUsedError;
   @override
-  @JsonKey(name: 'i')
+  @JsonKey(name: 'i', includeIfNull: false)
   int? get index => throw _privateConstructorUsedError;
   @override
-  @JsonKey(name: 't')
+  @JsonKey(name: 't', includeIfNull: false)
   int? get time => throw _privateConstructorUsedError;
   @override
-  @JsonKey(name: 'c')
+  @JsonKey(name: 'c', includeIfNull: false)
   String? get color => throw _privateConstructorUsedError;
   @override
   double? get x => throw _privateConstructorUsedError;

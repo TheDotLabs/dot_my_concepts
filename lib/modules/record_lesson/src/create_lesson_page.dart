@@ -110,7 +110,7 @@ class _CreateLessonPageState extends State<CreateLessonPage> {
                       onPressed: checkIfNotEmpty(name.text) &&
                               checkIfNotEmpty(description.text)
                           ? () {
-                              injector<RecordLessonBloc>().createNewLesson(
+                              locator<RecordingLessonBloc>().createNewLesson(
                                 name: name.text,
                                 description: description.text,
                                 course: widget.course!,

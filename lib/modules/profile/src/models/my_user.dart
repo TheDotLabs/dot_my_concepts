@@ -6,7 +6,7 @@ part 'my_user.g.dart';
 @freezed
 abstract class MyUser with _$MyUser {
   factory MyUser({
-    String? id,
+    required String id,
     @JsonKey(includeIfNull: false) String? name,
     String? email,
     @JsonKey(includeIfNull: false) String? avatar,

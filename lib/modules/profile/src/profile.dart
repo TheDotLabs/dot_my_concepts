@@ -21,7 +21,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
   @override
   Widget build(BuildContext context) {
     return StreamBuilder<MyUser?>(
-      stream: injector<UserRepository>().getLoggedInUserStream(),
+      stream: locator<UserRepository>().getLoggedInUserStream(),
       builder: (context, snapshot) {
         if (snapshot.hasData && snapshot.data != null) {
           return ListView(

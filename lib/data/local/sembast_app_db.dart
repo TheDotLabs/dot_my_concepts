@@ -1,3 +1,6 @@
+import 'dart:convert';
+
+import 'package:flutter_record_lesson/modules/record_lesson/models/my_event.dart';
 import 'package:flutter_record_lesson/utils/log_utils.dart';
 import 'package:path/path.dart';
 import 'package:path_provider/path_provider.dart';
@@ -8,6 +11,7 @@ import 'app_db.dart';
 
 class SembastAppDb extends AppDb {
   Database? db;
+  final lessonStore = StoreRef.main();
 
   @override
   Future<void> initialise() async {
@@ -26,6 +30,18 @@ class SembastAppDb extends AppDb {
     } catch (e, s) {
       logger.e(e, s);
       throw Exception("Error in initialising sembast Db");
+    }
+  }
+
+  @override
+  Future<void> saveRawLesson(Lesson lesson) async {
+    try {
+      final result =
+          await lessonStore.record(lesson.id).put(db!, jsonEncode(lesson));
+      return result;
+    } catch (e, s) {
+      logger.e(e, s);
+      rethrow;
     }
   }
 

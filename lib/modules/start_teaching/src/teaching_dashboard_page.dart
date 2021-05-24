@@ -19,7 +19,7 @@ class _TeachingDashboardPageState extends State<TeachingDashboardPage> {
   final Stream<List<MyCourse>> _coursesStream = FirebaseFirestore.instance
       .collection('courses')
       .where('userId',
-          isEqualTo: injector<UserRepository>().getLoggedInUser()!.id)
+          isEqualTo: locator<UserRepository>().getLoggedInUser()!.id)
       .snapshots()
       .transform(
     StreamTransformer.fromHandlers(

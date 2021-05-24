@@ -9,7 +9,7 @@ import 'package:quiver/async.dart';
 
 import '../painter_controller.dart';
 
-class RecordLessonBloc extends BaseBloc {
+class Bloc extends BaseBloc {
   static const double kPointerDotSize = 20;
   static const double kPointerColorOpacity = 0.4;
 
@@ -21,7 +21,7 @@ class RecordLessonBloc extends BaseBloc {
   ];
   final paintKey = GlobalKey();
 
-  final _eventList = <MyEvent>[];
+  final eventList = <MyEvent>[];
   late int startEpoch;
   List<File> imageList = <File>[];
 
@@ -36,11 +36,6 @@ class RecordLessonBloc extends BaseBloc {
   final remainingDurationNotifier = ValueNotifier<Duration>(
     Duration(seconds: LessonConstants.totalSeconds),
   );
-
-  @override
-  void dispose() {
-    // TODO: implement dispose
-  }
 
   void addImages(List<String> images) {
     imageList.addAll(
@@ -85,7 +80,7 @@ class RecordLessonBloc extends BaseBloc {
     final box = paintKey.currentContext!.findRenderObject() as RenderBox;
     final height = box.size.height;
     final width = box.size.width;
-    _eventList.add(
+    eventList.add(
       MyEvent(
         event: name,
         index: index,
@@ -103,5 +98,12 @@ class RecordLessonBloc extends BaseBloc {
     countDownTimer?.cancel();
     countDownTimer = null;
     paintController!.clear();
+    initPaintController();
+  }
+
+  @override
+  void dispose() {
+    reset();
+    remainingDurationNotifier.dispose();
   }
 }

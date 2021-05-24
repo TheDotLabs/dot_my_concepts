@@ -99,7 +99,7 @@ class _SignClaPageState extends State<SignClaPage> {
                 child: RaisedButton(
                   onPressed: _allQAAccepted
                       ? () {
-                          injector<AppBloc>().saveUserSignedCla();
+                          locator<AppBloc>().saveUserSignedCla();
                           Navigator.of(context).pushReplacement(
                             MaterialPageRoute(
                               builder: (_) => CategoryPage(),

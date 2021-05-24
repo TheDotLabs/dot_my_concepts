@@ -267,7 +267,7 @@ class _FeedPageState extends State<FeedPage>
         .collection('lessons')
         .where(
           'category',
-          isEqualTo: injector<AppBloc>().selectedCategory,
+          isEqualTo: locator<AppBloc>().selectedCategory,
         )
         .limit(5)
         .snapshots()
@@ -289,7 +289,7 @@ class _FeedPageState extends State<FeedPage>
         .collection('courses')
         .where(
           'category',
-          isEqualTo: injector<AppBloc>().selectedCategory,
+          isEqualTo: locator<AppBloc>().selectedCategory,
         )
         .limit(5)
         .snapshots()

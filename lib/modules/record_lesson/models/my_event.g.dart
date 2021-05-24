@@ -8,34 +8,56 @@ part of 'my_event.dart';
 
 _$_Lesson _$_$_LessonFromJson(Map<String, dynamic> json) {
   return _$_Lesson(
+    id: json['id'] as String,
+    uid: json['uid'] as String,
+    name: json['name'] as String,
+    description: json['description'] as String,
+    category: json['category'] as String,
+    subject: json['subject'] as String,
+    unit: json['unit'] as String,
+    chapter: json['chapter'] as String,
+    duration: json['duration'] as int?,
+    images:
+        (json['images'] as List<dynamic>?)?.map((e) => e as String).toList(),
+    audioUrl: json['audioUrl'] as String?,
+    eventsUrl: json['eventsUrl'] as String?,
+    rawImagePaths: (json['rawImagePaths'] as List<dynamic>?)
+        ?.map((e) => e as String)
+        .toList(),
+    audioPath: json['audioPath'] as String?,
     events: (json['events'] as List<dynamic>?)
         ?.map((e) => MyEvent.fromJson(e as Map<String, dynamic>))
         .toList(),
-    id: json['id'] as String?,
-    duration: json['duration'] as int?,
-    name: json['name'] as String?,
-    description: json['description'] as String?,
-    images:
-        (json['images'] as List<dynamic>?)?.map((e) => e as String).toList(),
-    category: json['category'] as String?,
-    subject: json['subject'] as String?,
-    unit: json['unit'] as String?,
-    chapter: json['chapter'] as String?,
   );
 }
 
-Map<String, dynamic> _$_$_LessonToJson(_$_Lesson instance) => <String, dynamic>{
-      'events': instance.events,
-      'id': instance.id,
-      'duration': instance.duration,
-      'name': instance.name,
-      'description': instance.description,
-      'images': instance.images,
-      'category': instance.category,
-      'subject': instance.subject,
-      'unit': instance.unit,
-      'chapter': instance.chapter,
-    };
+Map<String, dynamic> _$_$_LessonToJson(_$_Lesson instance) {
+  final val = <String, dynamic>{
+    'id': instance.id,
+    'uid': instance.uid,
+    'name': instance.name,
+    'description': instance.description,
+    'category': instance.category,
+    'subject': instance.subject,
+    'unit': instance.unit,
+    'chapter': instance.chapter,
+    'duration': instance.duration,
+    'images': instance.images,
+    'audioUrl': instance.audioUrl,
+    'eventsUrl': instance.eventsUrl,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('rawImagePaths', instance.rawImagePaths);
+  writeNotNull('audioPath', instance.audioPath);
+  writeNotNull('events', instance.events);
+  return val;
+}
 
 _$_MyEvent _$_$_MyEventFromJson(Map<String, dynamic> json) {
   return _$_MyEvent(
@@ -48,15 +70,23 @@ _$_MyEvent _$_$_MyEventFromJson(Map<String, dynamic> json) {
   );
 }
 
-Map<String, dynamic> _$_$_MyEventToJson(_$_MyEvent instance) =>
-    <String, dynamic>{
-      'e': _$EventsEnumMap[instance.event],
-      'i': instance.index,
-      't': instance.time,
-      'c': instance.color,
-      'x': instance.x,
-      'y': instance.y,
-    };
+Map<String, dynamic> _$_$_MyEventToJson(_$_MyEvent instance) {
+  final val = <String, dynamic>{};
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('e', _$EventsEnumMap[instance.event]);
+  writeNotNull('i', instance.index);
+  writeNotNull('t', instance.time);
+  writeNotNull('c', instance.color);
+  val['x'] = instance.x;
+  val['y'] = instance.y;
+  return val;
+}
 
 K _$enumDecode<K, V>(
   Map<K, V> enumValues,

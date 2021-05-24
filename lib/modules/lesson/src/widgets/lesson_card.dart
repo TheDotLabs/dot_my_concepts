@@ -44,7 +44,7 @@ class LessonCard extends StatelessWidget {
                     Padding(
                       padding: const EdgeInsets.all(12.0),
                       child: Text(
-                        "${lesson.name ?? "---"}",
+                        "${lesson.name}",
                         style: Theme.of(context).textTheme.bodyText1!.copyWith(
                               fontWeight: FontWeight.w700,
                             ),

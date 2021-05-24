@@ -6,15 +6,15 @@ part 'course.g.dart';
 @freezed
 abstract class MyCourse with _$MyCourse {
   factory MyCourse({
-    String? id,
-    String? userId,
+    required String id,
+    required String userId,
+    required String categoryId,
+    required String subjectId,
+    required String chapterId,
+    required String unitId,
     String? title,
     String? subtitle,
     String? cover,
-    String? categoryId,
-    String? subjectId,
-    String? chapterId,
-    String? unitId,
     List<String>? lessons,
   }) = _MyCourse;
 

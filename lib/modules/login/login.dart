@@ -23,7 +23,7 @@ class _LoginScreenState extends BaseState<LoginScreen> {
     await progressDialog.show();
     switch (service) {
       case LoginProvider.google:
-        final result = await injector<GoogleLoginRepository>().login();
+        final result = await locator<GoogleLoginRepository>().login();
         await progressDialog.hide();
         result.when(
           success: (_) {

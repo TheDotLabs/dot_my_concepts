@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class StopButton extends StatelessWidget {
-  const StopButton({
+class PauseButton extends StatelessWidget {
+  const PauseButton({
     Key? key,
     required this.onTap,
   }) : super(key: key);
@@ -15,7 +15,7 @@ class StopButton extends StatelessWidget {
       color: Colors.black26,
       icon: Icon(Icons.stop, color: Colors.redAccent),
       label: Text(
-        'STOP',
+        'PAUSE',
         style: TextStyle(color: Colors.white),
       ),
       onPressed: onTap,

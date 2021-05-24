@@ -136,7 +136,7 @@ class _SelectCoursePageState extends State<SelectCoursePage> {
         .collection('courses')
         .where(
           'userId',
-          isEqualTo: injector<UserRepository>().getLoggedInUser()!.id,
+          isEqualTo: locator<UserRepository>().getLoggedInUser()!.id,
         )
         .snapshots()
         .transform(

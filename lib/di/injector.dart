@@ -13,7 +13,7 @@ import 'package:get_it/get_it.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 
 // ignore_for_file: cascade_invocations
-GetIt injector = GetIt.instance;
+GetIt locator = GetIt.instance;
 
 enum Flavor {
   debug,
@@ -42,7 +42,7 @@ class Injector {
   Future<void> _initHelpers() async {
     //await Executor().warmUp();
 
-    injector.registerSingleton<AppLog>(
+    locator.registerSingleton<AppLog>(
       logger,
     );
 
@@ -54,16 +54,16 @@ class Injector {
     /// SharedPreferences
     final appsPrefs = SharedAppPrefs();
     await appsPrefs.initialise();
-    injector.registerSingleton<AppPrefs>(appsPrefs);
+    locator.registerSingleton<AppPrefs>(appsPrefs);
     //final appPrefsHelper = AppPrefsHelperImpl(appPrefs: injector());
     //injector.registerSingleton<AppPrefsHelper>(appPrefsHelper);
 
     // FirestoreInstance
-    injector.registerLazySingleton<FirebaseFirestore>(
+    locator.registerLazySingleton<FirebaseFirestore>(
         () => FirebaseFirestore.instance);
 
     // GoogleLoginRepository
-    injector.registerLazySingleton<GoogleLoginRepository>(
+    locator.registerLazySingleton<GoogleLoginRepository>(
       () => GoogleLoginRepository(
         googleSignIn: GoogleSignIn(),
       ),
@@ -71,32 +71,32 @@ class Injector {
 
     // UserRepository
     final repo = FirebaseUserRepository(
-      prefHelper: injector(),
-      firestore: injector(),
+      prefHelper: locator(),
+      firestore: locator(),
     );
     await repo.init();
-    injector.registerLazySingleton<UserRepository>(() => repo);
+    locator.registerLazySingleton<UserRepository>(() => repo);
 
     /// DbHelper;
     final appDb = SembastAppDb();
     await appDb.initialise();
-    injector.registerSingleton<AppDb>(appDb);
+    locator.registerSingleton<AppDb>(appDb);
   }
 
   Future<void> _initBlocs() async {
     // ApplicationBloc
     final appBloc = AppBlocImpl(
-      appPrefs: injector(),
-      firestore: injector(),
+      appPrefs: locator(),
+      firestore: locator(),
     );
     //await appBloc.init();
-    injector.registerSingleton<AppBloc>(
+    locator.registerSingleton<AppBloc>(
       appBloc,
     );
 
     // GoogleLoginRepository
-    injector.registerLazySingleton<RecordLessonBloc>(
-      () => RecordLessonBloc(),
+    locator.registerLazySingleton<RecordingLessonBloc>(
+      () => RecordingLessonBloc(userRepository: locator()),
     );
   }
 }

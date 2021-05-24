@@ -8,40 +8,45 @@ import 'package:flutter_record_lesson/modules/profile/index.dart';
 import 'package:flutter_record_lesson/modules/record_lesson/models/my_event.dart';
 import 'package:flutter_record_lesson/utils/log_utils.dart';
 
-class RecordLessonBloc extends BaseBloc {
+class RecordingLessonBloc extends BaseBloc {
+  RecordingLessonBloc({required this.userRepository});
+
+  final UserRepository userRepository;
   late Lesson currentLesson;
 
   @override
   void dispose() {}
 
-  void createNewLesson({String? name, String? description, required MyCourse course}) {
-    logger.i(
-      'Creating new lesson: {name: $name, description: $description, course: $course}...',
-    );
-
+  void createNewLesson({
+    required String name,
+    required String description,
+    required MyCourse course,
+  }) {
     final uid = FirebaseFirestore.instance.collection('lessons').doc().id;
     currentLesson = Lesson(
       id: uid,
+      uid: userRepository.getLoggedInUser()!.id,
       name: name,
       description: description,
       category: course.categoryId,
       chapter: course.chapterId,
       unit: course.unitId,
+      subject: course.subjectId,
     );
 
     logger.i('Created new lesson: ${currentLesson.toString()}');
   }
 
   Future<Result<MyCourse>> createNewCourse({
-    String? name,
-    String? description,
     required MyCategory category,
     required MySubject subject,
     required MyUnit unit,
     required MyChapter chapter,
+    String? name,
+    String? description,
   }) async {
     try {
-      final user = injector<UserRepository>().getLoggedInUser()!;
+      final user = locator<UserRepository>().getLoggedInUser()!;
       final doc = FirebaseFirestore.instance.collection('courses').doc();
       final course = MyCourse(
         id: doc.id,

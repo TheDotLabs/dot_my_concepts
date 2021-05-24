@@ -58,7 +58,7 @@ class MyApp extends StatelessWidget {
           subtitle2: textTheme.subtitle2!.copyWith(letterSpacing: 1.0),
         );
     return ChangeNotifierProvider.value(
-      value: injector<AppBloc>(),
+      value: locator<AppBloc>(),
       child: MaterialApp(
         title: 'DotMyConcepts',
         navigatorObservers: [
@@ -86,7 +86,7 @@ class MyApp extends StatelessWidget {
           textTheme: newTextTheme,
         ),
         debugShowCheckedModeBanner: false,
-        home: injector<UserRepository>().getUserLoggedIn()
+        home: locator<UserRepository>().getUserLoggedIn()
             ? HomePage()
             : LoginScreen(),
         builder: _buildWidget,

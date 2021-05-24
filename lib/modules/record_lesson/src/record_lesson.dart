@@ -1,11 +1,13 @@
 import 'dart:async';
-import 'dart:convert';
 import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_record_lesson/constants/lesson_constants.dart';
+import 'package:flutter_record_lesson/data/local/app_db.dart';
+import 'package:flutter_record_lesson/di/injector.dart';
+import 'package:flutter_record_lesson/modules/common/src/bloc/record_lesson_bloc.dart';
 import 'package:flutter_record_lesson/modules/record_lesson/src/widgets/my_app_bar.dart';
 import 'package:flutter_record_lesson/modules/record_lesson/src/widgets/ready_widget.dart';
 import 'package:flutter_record_lesson/modules/record_lesson/src/widgets/stop_button.dart';
@@ -23,6 +25,7 @@ import 'package:quiver/async.dart';
 import '../models/my_event.dart';
 import 'blocs/record_lesson_bloc.dart';
 import 'painter_controller.dart';
+import 'publish_lesson_page.dart';
 import 'widgets/fade_screen.dart';
 import 'widgets/image_controller_button.dart';
 
@@ -38,17 +41,22 @@ class RecordLessonPage extends StatefulWidget {
 }
 
 class _RecordLessonPageState extends State<RecordLessonPage> {
-  final _bloc = RecordLessonBloc();
+  final _bloc = Bloc();
   FlutterSoundRecorder? myRecorder;
-  late File outputFile;
+  late File audioFile;
   int pageIndex = 0;
   bool _preparingRecord = false;
 
-  double get getPreviousBtnOpacity =>
-      (_bloc.isRecording && pageIndex > 0) ? 1 : 0;
+  StreamSubscription<CountdownTimer>? countDownSubs;
 
-  double get getNextBtnOpacity =>
-      (_bloc.isRecording && pageIndex < _bloc.imageList.length - 1) ? 1 : 0;
+  bool get showPreviousBtn => _bloc.isRecording && pageIndex > 0;
+
+  bool get showNextBtn =>
+      _bloc.isRecording && pageIndex < _bloc.imageList.length - 1;
+
+  double get getPreviousBtnOpacity => showPreviousBtn ? 1 : 0;
+
+  double get getNextBtnOpacity => showNextBtn ? 1 : 0;
 
   File get getCurrentImage => _bloc.imageList[pageIndex];
 
@@ -85,31 +93,33 @@ class _RecordLessonPageState extends State<RecordLessonPage> {
                   () {},
                 ),
               ),
-            Positioned(
-              left: 16,
-              bottom: 8,
-              child: Transform.rotate(
-                angle: 3.14,
+            if (showPreviousBtn)
+              Positioned(
+                left: 16,
+                bottom: 8,
+                child: Transform.rotate(
+                  angle: 3.14,
+                  child: ImageControllerButton(
+                    opacity: getPreviousBtnOpacity,
+                    onTap: _onPreviousImageTap,
+                    icon: Icon(
+                      Icons.double_arrow,
+                    ),
+                  ),
+                ),
+              ),
+            if (showNextBtn)
+              Positioned(
+                right: 16,
+                bottom: 8,
                 child: ImageControllerButton(
-                  opacity: getPreviousBtnOpacity,
-                  onTap: _onPreviousImageTap,
+                  opacity: getNextBtnOpacity,
+                  onTap: _onNextImageTap,
                   icon: Icon(
                     Icons.double_arrow,
                   ),
                 ),
               ),
-            ),
-            Positioned(
-              right: 16,
-              bottom: 8,
-              child: ImageControllerButton(
-                opacity: getNextBtnOpacity,
-                onTap: _onNextImageTap,
-                icon: Icon(
-                  Icons.double_arrow,
-                ),
-              ),
-            ),
             if (_bloc.isRecording)
               Positioned(
                 right: 16,
@@ -122,7 +132,7 @@ class _RecordLessonPageState extends State<RecordLessonPage> {
               Positioned(
                 top: 6,
                 left: 16,
-                child: StopButton(
+                child: PauseButton(
                   onTap: _onStopRecord,
                 ),
               ),
@@ -131,7 +141,7 @@ class _RecordLessonPageState extends State<RecordLessonPage> {
                 left: 4,
                 child: Column(
                   children: [
-                    ...RecordLessonBloc.kPointerColors.map(
+                    ...Bloc.kPointerColors.map(
                       (e) => Material(
                         color: Colors.transparent,
                         child: InkWell(
@@ -139,10 +149,10 @@ class _RecordLessonPageState extends State<RecordLessonPage> {
                           child: Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Container(
-                              height: RecordLessonBloc.kPointerDotSize,
-                              width: RecordLessonBloc.kPointerDotSize,
+                              height: Bloc.kPointerDotSize,
+                              width: Bloc.kPointerDotSize,
                               decoration: BoxDecoration(
-                                color: e.withOpacity(0.5),
+                                color: e.withOpacity(0.9),
                                 shape: BoxShape.rectangle,
                               ),
                             ),
@@ -154,14 +164,16 @@ class _RecordLessonPageState extends State<RecordLessonPage> {
                 ),
               ),
             if (_preparingRecord)
-              Container(
-                color: Colors.black.withOpacity(0.78),
-                child: Lottie.asset(
-                  'assets/lottie/15012-tiktok-3-sec-countdown.json',
-                  height: 56,
-                  repeat: false,
+              IgnorePointer(
+                child: Container(
+                  color: Colors.black.withOpacity(0.78),
+                  alignment: Alignment.center,
+                  child: Lottie.asset(
+                    'assets/lottie/15012-tiktok-3-sec-countdown.json',
+                    height: 56,
+                    repeat: false,
+                  ),
                 ),
-                alignment: Alignment.center,
               ),
             if (_bloc.isNotRecording && !_preparingRecord) FadeScreen(),
             if (_bloc.isNotRecording && !_preparingRecord)
@@ -184,52 +196,19 @@ class _RecordLessonPageState extends State<RecordLessonPage> {
         await myRecorder!.closeAudioSession();
         myRecorder = null;
       }
-      // final currentLesson = injector<RecordLessonBloc>().currentLesson;
-      // final _uploadedImages = <String>[];
-      // for (var i = 0; i < _imageList.length; i++) {
-      //   final storageReference = FirebaseStorage.instance
-      //       .ref()
-      //       .child('lessons/${currentLesson.id}/$i.jpg');
-      //   await storageReference.putFile(_imageList.elementAt(i),
-      //       SettableMetadata(contentType: 'image/jpeg'));
-      //   final imageUrl = await storageReference.getDownloadURL();
-      //   _uploadedImages.add(imageUrl);
-      // }
-      //
-      // final lesson = currentLesson.copyWith(
-      //   events: _eventList,
-      //   duration: DateTime.now().millisecondsSinceEpoch - startEpoch,
-      //   images: _uploadedImages,
-      // );
-      // final jsonString = jsonEncode(lesson.toJson());
-      //
-      // /// MP3 audio
-      // final storageReference1 = FirebaseStorage.instance
-      //     .ref()
-      //     .child('lessons/${lesson.id}/audio.aac');
-      // await storageReference1.putFile(
-      //     outputFile, SettableMetadata(contentType: 'audio/aac'));
-      //
-      // final audioUrl = await storageReference1.getDownloadURL();
-      // print(audioUrl);
-      //
-      // /// Events
-      // final storageReference = FirebaseStorage.instance
-      //     .ref()
-      //     .child('lessons/${lesson.id}/events.json');
-      // await storageReference.putData(utf8.encode(jsonString) as Uint8List,
-      //     SettableMetadata(contentType: 'application/json'));
-      // final jsonUrl = await storageReference.getDownloadURL();
-      // print(jsonUrl);
-      //
-      // final lessonRef =
-      //     FirebaseFirestore.instance.collection('lessons').doc(lesson.id);
-      //
-      // await lessonRef.set({
-      //   ...lesson.copyWith().toJson(),
-      // }, SetOptions(merge: true));
 
-      logger.i('Lesson Uploaded');
+      final currentLesson = locator<RecordingLessonBloc>().currentLesson;
+      final updatedLesson = currentLesson.copyWith(
+        events: _bloc.eventList,
+        duration: DateTime.now().millisecondsSinceEpoch - _bloc.startEpoch,
+        rawImagePaths: _bloc.imageList.map((e) => e.path).toList(
+              growable: false,
+            ),
+        audioPath: audioFile.path,
+      );
+
+      await locator<AppDb>().saveRawLesson(updatedLesson);
+      _openNextPage(updatedLesson);
     } catch (e, s) {
       logger.e(e, s);
     }
@@ -257,16 +236,17 @@ class _RecordLessonPageState extends State<RecordLessonPage> {
 
   Future<void> _startRecorder() async {
     await myRecorder!.startRecorder(
-      toFile: outputFile.path,
+      toFile: audioFile.path,
       codec: Codec.aacADTS,
       audioSource: AudioSource.defaultSource,
     );
 
-    _bloc.countDownTimer = new CountdownTimer(
+    _bloc.countDownTimer = CountdownTimer(
       Duration(seconds: LessonConstants.totalSeconds),
       Duration(seconds: 1),
     );
-    _bloc.countDownTimer!.listen((event) {
+
+    countDownSubs = _bloc.countDownTimer!.listen((event) {
       setState(() {
         _bloc.remainingDurationNotifier.value = event.remaining;
       });
@@ -281,16 +261,17 @@ class _RecordLessonPageState extends State<RecordLessonPage> {
       _bloc.remainingDurationNotifier.value = Duration(
         seconds: LessonConstants.totalSeconds,
       );
+
       final tempDir = await getTemporaryDirectory();
-      outputFile = File('${tempDir.path}/flutter_sound-tmp.aac');
+      audioFile = File('${tempDir.path}/flutter_sound-tmp.aac');
 
       // Request Microphone permission if needed
       final status = await Permission.microphone.request();
-      if (status != PermissionStatus.granted)
+      if (status != PermissionStatus.granted) {
         throw RecordingPermissionException("Microphone permission not granted");
+      }
     } catch (e, s) {
       logger.e(e, s);
-
       rethrow;
     }
   }
@@ -300,17 +281,6 @@ class _RecordLessonPageState extends State<RecordLessonPage> {
       _bloc.reset();
       myRecorder = null;
     });
-  }
-
-  @override
-  void dispose() {
-    _bloc.dispose();
-    SystemChrome.setPreferredOrientations([
-      DeviceOrientation.portraitUp,
-      DeviceOrientation.portraitDown,
-    ]);
-    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
-    super.dispose();
   }
 
   void _onPreviousImageTap() {
@@ -339,5 +309,25 @@ class _RecordLessonPageState extends State<RecordLessonPage> {
       DeviceOrientation.landscapeLeft,
     ]);
     SystemChrome.setEnabledSystemUIOverlays([]);
+  }
+
+  @override
+  void dispose() {
+    countDownSubs?.cancel();
+    _bloc.dispose();
+    SystemChrome.setPreferredOrientations([
+      DeviceOrientation.portraitUp,
+      DeviceOrientation.portraitDown,
+    ]);
+    SystemChrome.setEnabledSystemUIOverlays(SystemUiOverlay.values);
+    super.dispose();
+  }
+
+  void _openNextPage(Lesson updatedLesson) {
+    Navigator.of(context).pushReplacement(
+      MaterialPageRoute(
+        builder: (_) => PublishLessonPage(lesson: updatedLesson),
+      ),
+    );
   }
 }

@@ -91,7 +91,7 @@ class _SelectCategoryPageState extends State<SelectCategoryPage> {
   }
 
   void _onCategorySelect(MyCategory e) {
-    injector<AppBloc>().onCategorySelection(e);
+    locator<AppBloc>().onCategorySelection(e);
     Navigator.of(context).pop();
   }
 }

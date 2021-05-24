@@ -46,7 +46,7 @@ class LogoutButton extends StatelessWidget {
             FlatButton(
               child: Text("Proceed"),
               onPressed: () async {
-                final result = await injector<UserRepository>().logoutUser();
+                final result = await locator<UserRepository>().logoutUser();
                 result.when(
                   success: (_) {
                     Navigator.of(context).pushAndRemoveUntil(

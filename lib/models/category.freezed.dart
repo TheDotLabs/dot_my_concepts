@@ -21,7 +21,7 @@ class _$MyCategoryTearOff {
   const _$MyCategoryTearOff();
 
   _MyCategory call(
-      {String? id = "0",
+      {required String id,
       String? title,
       String? description,
       String? image,
@@ -45,7 +45,7 @@ const $MyCategory = _$MyCategoryTearOff();
 
 /// @nodoc
 mixin _$MyCategory {
-  String? get id => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
   String? get title => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
   String? get image => throw _privateConstructorUsedError;
@@ -63,7 +63,7 @@ abstract class $MyCategoryCopyWith<$Res> {
           MyCategory value, $Res Function(MyCategory) then) =
       _$MyCategoryCopyWithImpl<$Res>;
   $Res call(
-      {String? id,
+      {String id,
       String? title,
       String? description,
       String? image,
@@ -90,7 +90,7 @@ class _$MyCategoryCopyWithImpl<$Res> implements $MyCategoryCopyWith<$Res> {
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       title: title == freezed
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -118,7 +118,7 @@ abstract class _$MyCategoryCopyWith<$Res> implements $MyCategoryCopyWith<$Res> {
       __$MyCategoryCopyWithImpl<$Res>;
   @override
   $Res call(
-      {String? id,
+      {String id,
       String? title,
       String? description,
       String? image,
@@ -147,7 +147,7 @@ class __$MyCategoryCopyWithImpl<$Res> extends _$MyCategoryCopyWithImpl<$Res>
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       title: title == freezed
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -172,14 +172,17 @@ class __$MyCategoryCopyWithImpl<$Res> extends _$MyCategoryCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_MyCategory implements _MyCategory {
   _$_MyCategory(
-      {this.id = "0", this.title, this.description, this.image, this.subjects});
+      {required this.id,
+      this.title,
+      this.description,
+      this.image,
+      this.subjects});
 
   factory _$_MyCategory.fromJson(Map<String, dynamic> json) =>
       _$_$_MyCategoryFromJson(json);
 
-  @JsonKey(defaultValue: "0")
   @override
-  final String? id;
+  final String id;
   @override
   final String? title;
   @override
@@ -234,7 +237,7 @@ class _$_MyCategory implements _MyCategory {
 
 abstract class _MyCategory implements MyCategory {
   factory _MyCategory(
-      {String? id,
+      {required String id,
       String? title,
       String? description,
       String? image,
@@ -244,7 +247,7 @@ abstract class _MyCategory implements MyCategory {
       _$_MyCategory.fromJson;
 
   @override
-  String? get id => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
   @override
   String? get title => throw _privateConstructorUsedError;
   @override
@@ -268,7 +271,7 @@ class _$MySubjectTearOff {
   const _$MySubjectTearOff();
 
   _MySubject call(
-      {@JsonKey(defaultValue: 0) String? id,
+      {required String id,
       String? title,
       String? description,
       List<MyUnit>? units}) {
@@ -290,8 +293,7 @@ const $MySubject = _$MySubjectTearOff();
 
 /// @nodoc
 mixin _$MySubject {
-  @JsonKey(defaultValue: 0)
-  String? get id => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
   String? get title => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
   List<MyUnit>? get units => throw _privateConstructorUsedError;
@@ -307,10 +309,7 @@ abstract class $MySubjectCopyWith<$Res> {
   factory $MySubjectCopyWith(MySubject value, $Res Function(MySubject) then) =
       _$MySubjectCopyWithImpl<$Res>;
   $Res call(
-      {@JsonKey(defaultValue: 0) String? id,
-      String? title,
-      String? description,
-      List<MyUnit>? units});
+      {String id, String? title, String? description, List<MyUnit>? units});
 }
 
 /// @nodoc
@@ -332,7 +331,7 @@ class _$MySubjectCopyWithImpl<$Res> implements $MySubjectCopyWith<$Res> {
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       title: title == freezed
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -356,10 +355,7 @@ abstract class _$MySubjectCopyWith<$Res> implements $MySubjectCopyWith<$Res> {
       __$MySubjectCopyWithImpl<$Res>;
   @override
   $Res call(
-      {@JsonKey(defaultValue: 0) String? id,
-      String? title,
-      String? description,
-      List<MyUnit>? units});
+      {String id, String? title, String? description, List<MyUnit>? units});
 }
 
 /// @nodoc
@@ -382,7 +378,7 @@ class __$MySubjectCopyWithImpl<$Res> extends _$MySubjectCopyWithImpl<$Res>
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       title: title == freezed
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -402,18 +398,13 @@ class __$MySubjectCopyWithImpl<$Res> extends _$MySubjectCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_MySubject implements _MySubject {
-  _$_MySubject(
-      {@JsonKey(defaultValue: 0) this.id,
-      this.title,
-      this.description,
-      this.units});
+  _$_MySubject({required this.id, this.title, this.description, this.units});
 
   factory _$_MySubject.fromJson(Map<String, dynamic> json) =>
       _$_$_MySubjectFromJson(json);
 
   @override
-  @JsonKey(defaultValue: 0)
-  final String? id;
+  final String id;
   @override
   final String? title;
   @override
@@ -462,7 +453,7 @@ class _$_MySubject implements _MySubject {
 
 abstract class _MySubject implements MySubject {
   factory _MySubject(
-      {@JsonKey(defaultValue: 0) String? id,
+      {required String id,
       String? title,
       String? description,
       List<MyUnit>? units}) = _$_MySubject;
@@ -471,8 +462,7 @@ abstract class _MySubject implements MySubject {
       _$_MySubject.fromJson;
 
   @override
-  @JsonKey(defaultValue: 0)
-  String? get id => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
   @override
   String? get title => throw _privateConstructorUsedError;
   @override
@@ -494,7 +484,7 @@ class _$MyUnitTearOff {
   const _$MyUnitTearOff();
 
   _MyUnit call(
-      {@JsonKey(defaultValue: 0) String? id,
+      {required String id,
       String? title,
       String? description,
       List<MyChapter>? chapters}) {
@@ -516,8 +506,7 @@ const $MyUnit = _$MyUnitTearOff();
 
 /// @nodoc
 mixin _$MyUnit {
-  @JsonKey(defaultValue: 0)
-  String? get id => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
   String? get title => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
   List<MyChapter>? get chapters => throw _privateConstructorUsedError;
@@ -532,7 +521,7 @@ abstract class $MyUnitCopyWith<$Res> {
   factory $MyUnitCopyWith(MyUnit value, $Res Function(MyUnit) then) =
       _$MyUnitCopyWithImpl<$Res>;
   $Res call(
-      {@JsonKey(defaultValue: 0) String? id,
+      {String id,
       String? title,
       String? description,
       List<MyChapter>? chapters});
@@ -557,7 +546,7 @@ class _$MyUnitCopyWithImpl<$Res> implements $MyUnitCopyWith<$Res> {
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       title: title == freezed
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -580,7 +569,7 @@ abstract class _$MyUnitCopyWith<$Res> implements $MyUnitCopyWith<$Res> {
       __$MyUnitCopyWithImpl<$Res>;
   @override
   $Res call(
-      {@JsonKey(defaultValue: 0) String? id,
+      {String id,
       String? title,
       String? description,
       List<MyChapter>? chapters});
@@ -606,7 +595,7 @@ class __$MyUnitCopyWithImpl<$Res> extends _$MyUnitCopyWithImpl<$Res>
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       title: title == freezed
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -626,18 +615,13 @@ class __$MyUnitCopyWithImpl<$Res> extends _$MyUnitCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_MyUnit implements _MyUnit {
-  _$_MyUnit(
-      {@JsonKey(defaultValue: 0) this.id,
-      this.title,
-      this.description,
-      this.chapters});
+  _$_MyUnit({required this.id, this.title, this.description, this.chapters});
 
   factory _$_MyUnit.fromJson(Map<String, dynamic> json) =>
       _$_$_MyUnitFromJson(json);
 
   @override
-  @JsonKey(defaultValue: 0)
-  final String? id;
+  final String id;
   @override
   final String? title;
   @override
@@ -687,7 +671,7 @@ class _$_MyUnit implements _MyUnit {
 
 abstract class _MyUnit implements MyUnit {
   factory _MyUnit(
-      {@JsonKey(defaultValue: 0) String? id,
+      {required String id,
       String? title,
       String? description,
       List<MyChapter>? chapters}) = _$_MyUnit;
@@ -695,8 +679,7 @@ abstract class _MyUnit implements MyUnit {
   factory _MyUnit.fromJson(Map<String, dynamic> json) = _$_MyUnit.fromJson;
 
   @override
-  @JsonKey(defaultValue: 0)
-  String? get id => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
   @override
   String? get title => throw _privateConstructorUsedError;
   @override
@@ -716,10 +699,7 @@ MyChapter _$MyChapterFromJson(Map<String, dynamic> json) {
 class _$MyChapterTearOff {
   const _$MyChapterTearOff();
 
-  _MyChapter call(
-      {@JsonKey(defaultValue: 0) String? id,
-      String? title,
-      String? description}) {
+  _MyChapter call({required String id, String? title, String? description}) {
     return _MyChapter(
       id: id,
       title: title,
@@ -737,8 +717,7 @@ const $MyChapter = _$MyChapterTearOff();
 
 /// @nodoc
 mixin _$MyChapter {
-  @JsonKey(defaultValue: 0)
-  String? get id => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
   String? get title => throw _privateConstructorUsedError;
   String? get description => throw _privateConstructorUsedError;
 
@@ -752,10 +731,7 @@ mixin _$MyChapter {
 abstract class $MyChapterCopyWith<$Res> {
   factory $MyChapterCopyWith(MyChapter value, $Res Function(MyChapter) then) =
       _$MyChapterCopyWithImpl<$Res>;
-  $Res call(
-      {@JsonKey(defaultValue: 0) String? id,
-      String? title,
-      String? description});
+  $Res call({String id, String? title, String? description});
 }
 
 /// @nodoc
@@ -776,7 +752,7 @@ class _$MyChapterCopyWithImpl<$Res> implements $MyChapterCopyWith<$Res> {
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       title: title == freezed
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -795,10 +771,7 @@ abstract class _$MyChapterCopyWith<$Res> implements $MyChapterCopyWith<$Res> {
           _MyChapter value, $Res Function(_MyChapter) then) =
       __$MyChapterCopyWithImpl<$Res>;
   @override
-  $Res call(
-      {@JsonKey(defaultValue: 0) String? id,
-      String? title,
-      String? description});
+  $Res call({String id, String? title, String? description});
 }
 
 /// @nodoc
@@ -820,7 +793,7 @@ class __$MyChapterCopyWithImpl<$Res> extends _$MyChapterCopyWithImpl<$Res>
       id: id == freezed
           ? _value.id
           : id // ignore: cast_nullable_to_non_nullable
-              as String?,
+              as String,
       title: title == freezed
           ? _value.title
           : title // ignore: cast_nullable_to_non_nullable
@@ -836,15 +809,13 @@ class __$MyChapterCopyWithImpl<$Res> extends _$MyChapterCopyWithImpl<$Res>
 /// @nodoc
 @JsonSerializable()
 class _$_MyChapter implements _MyChapter {
-  _$_MyChapter(
-      {@JsonKey(defaultValue: 0) this.id, this.title, this.description});
+  _$_MyChapter({required this.id, this.title, this.description});
 
   factory _$_MyChapter.fromJson(Map<String, dynamic> json) =>
       _$_$_MyChapterFromJson(json);
 
   @override
-  @JsonKey(defaultValue: 0)
-  final String? id;
+  final String id;
   @override
   final String? title;
   @override
@@ -887,17 +858,14 @@ class _$_MyChapter implements _MyChapter {
 }
 
 abstract class _MyChapter implements MyChapter {
-  factory _MyChapter(
-      {@JsonKey(defaultValue: 0) String? id,
-      String? title,
-      String? description}) = _$_MyChapter;
+  factory _MyChapter({required String id, String? title, String? description}) =
+      _$_MyChapter;
 
   factory _MyChapter.fromJson(Map<String, dynamic> json) =
       _$_MyChapter.fromJson;
 
   @override
-  @JsonKey(defaultValue: 0)
-  String? get id => throw _privateConstructorUsedError;
+  String get id => throw _privateConstructorUsedError;
   @override
   String? get title => throw _privateConstructorUsedError;
   @override
