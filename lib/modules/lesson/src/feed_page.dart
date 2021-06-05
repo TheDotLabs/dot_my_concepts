@@ -288,7 +288,7 @@ class _FeedPageState extends State<FeedPage>
     return FirebaseFirestore.instance
         .collection('courses')
         .where(
-          'category',
+          'categoryId',
           isEqualTo: locator<AppBloc>().selectedCategory,
         )
         .limit(5)

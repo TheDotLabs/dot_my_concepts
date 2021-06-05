@@ -10,38 +10,54 @@ class CourseCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BorderContainer(
-      child: Container(
-        width: MediaQuery.of(context).size.width / 1.6,
-        child: GestureDetector(
-          onTap: () {
-            /*Navigator.of(context).push(
-              MaterialPageRoute(
-                builder: (_) => PlayLessonPage(
-                  lessonId: lesson.id,
+    return Container(
+      margin: EdgeInsets.symmetric(horizontal: 2),
+      child: BorderContainer(
+        child: Container(
+          width: MediaQuery.of(context).size.width / 1.6,
+          child: GestureDetector(
+            onTap: () {
+              /*Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) => PlayLessonPage(
+                    lessonId: lesson.id,
+                  ),
                 ),
-              ),
-            );*/
-          },
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.stretch,
-            children: [
-              Expanded(
-                child: CachedNetworkImage(
-                  imageUrl: course.cover!,
-                  fit: BoxFit.cover,
+              );*/
+            },
+            child: Column(
+              crossAxisAlignment: CrossAxisAlignment.stretch,
+              children: [
+                Expanded(
+                  child: CachedNetworkImage(
+                    imageUrl: course.cover ?? '-',
+                    fit: BoxFit.cover,
+                    errorWidget: (_, __, ___) {
+                      return Container(
+                        alignment: Alignment.center,
+                        child: Icon(
+                          Icons.image_outlined,
+                          color: Colors.grey.withOpacity(0.5),
+                          size: 56,
+                        ),
+                      );
+                    },
+                  ),
                 ),
-              ),
-              Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Text(
-                  course.title!,
-                  style: Theme.of(context).textTheme.bodyText1!.copyWith(
-                        fontWeight: FontWeight.w700,
-                      ),
+                Divider(
+                  height: 1,
                 ),
-              ),
-            ],
+                Padding(
+                  padding: const EdgeInsets.all(12.0),
+                  child: Text(
+                    course.title!,
+                    style: Theme.of(context).textTheme.bodyText1!.copyWith(
+                          fontWeight: FontWeight.w700,
+                        ),
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),

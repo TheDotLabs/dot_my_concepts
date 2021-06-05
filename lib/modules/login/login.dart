@@ -4,6 +4,8 @@ import 'package:flutter_record_lesson/data/repo/google_login_repository.dart';
 import 'package:flutter_record_lesson/di/injector.dart';
 import 'package:flutter_record_lesson/modules/common/index.dart';
 import 'package:flutter_record_lesson/modules/home/index.dart';
+import 'package:flutter_record_lesson/modules/profile/index.dart';
+import 'package:flutter_record_lesson/modules/select_category_page.dart';
 import 'package:flutter_signin_button/flutter_signin_button.dart';
 import 'package:lottie/lottie.dart';
 import 'package:progress_dialog/progress_dialog.dart';
@@ -128,10 +130,24 @@ class _LoginScreenState extends BaseState<LoginScreen> {
   }
 
   void _onLoginSuccess() {
-    Navigator.of(context).pushAndRemoveUntil(
-      MaterialPageRoute(builder: (_) => HomePage()),
-      (route) => false,
-    );
+    if (locator<UserRepository>().getLoggedInUser()!.selectedCategory != null) {
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(
+          builder: (_) => HomePage(),
+        ),
+        (route) => false,
+      );
+    } else {
+      Navigator.of(context).pushAndRemoveUntil(
+        MaterialPageRoute(
+          builder: (_) => SelectCategoryPage(
+            showHome: true,
+            title: 'Start by selecting a course',
+          ),
+        ),
+        (route) => false,
+      );
+    }
     /* Navigator.pushNamedAndRemoveUntil(
       context,
       Routes.HOME,
