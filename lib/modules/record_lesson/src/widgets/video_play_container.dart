@@ -19,7 +19,7 @@ class VideoPlayContainer extends StatelessWidget {
           duration: Duration(milliseconds: 200),
           child: Container(
             decoration: BoxDecoration(
-              color: Colors.black54,
+              color: Colors.black.withOpacity(0.78),
             ),
             child: Center(
               child: Container(

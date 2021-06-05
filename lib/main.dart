@@ -4,6 +4,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_record_lesson/app/bloc/base/app_bloc.dart';
 import 'package:flutter_record_lesson/modules/home/src/home_page.dart';
 import 'package:flutter_record_lesson/modules/login/index.dart';
+import 'package:flutter_record_lesson/modules/select_category_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
@@ -39,13 +40,13 @@ class MyApp extends StatelessWidget {
             letterSpacing: 1.0,
             fontWeight: FontWeight.w600,
           ),
-          bodyText1: textTheme.bodyText1!.copyWith(letterSpacing: 1.0),
-          bodyText2: textTheme.bodyText2!.copyWith(letterSpacing: 1.0),
-          headline1: textTheme.headline1!.copyWith(letterSpacing: 1.0),
-          headline2: textTheme.headline2!.copyWith(letterSpacing: 1.0),
-          headline3: textTheme.headline3!.copyWith(letterSpacing: 1.0),
-          headline4: textTheme.headline4!.copyWith(letterSpacing: 1.0),
-          headline5: textTheme.headline5!.copyWith(letterSpacing: 1.0),
+          bodyText1: textTheme.bodyText1!.copyWith(letterSpacing: 1),
+          bodyText2: textTheme.bodyText2!.copyWith(letterSpacing: 1),
+          headline1: textTheme.headline1!.copyWith(letterSpacing: 1),
+          headline2: textTheme.headline2!.copyWith(letterSpacing: 1),
+          headline3: textTheme.headline3!.copyWith(letterSpacing: 1),
+          headline4: textTheme.headline4!.copyWith(letterSpacing: 1),
+          headline5: textTheme.headline5!.copyWith(letterSpacing: 1),
           headline6: textTheme.headline6!.copyWith(
             fontSize: 18,
             fontWeight: FontWeight.w700,
@@ -87,7 +88,13 @@ class MyApp extends StatelessWidget {
         ),
         debugShowCheckedModeBanner: false,
         home: locator<UserRepository>().getUserLoggedIn()
-            ? HomePage()
+            ? (locator<UserRepository>().getLoggedInUser()!.selectedCategory !=
+                    null
+                ? HomePage()
+                : SelectCategoryPage(
+                    showHome: true,
+                    title: 'Start by selecting a course',
+                  ))
             : LoginScreen(),
         builder: _buildWidget,
       ),

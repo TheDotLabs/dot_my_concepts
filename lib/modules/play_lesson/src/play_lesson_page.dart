@@ -212,6 +212,10 @@ class _PlayLessonPageState extends State<PlayLessonPage> {
       (element) => element.event == Events.pointerMove,
     );
 
+    final lastEndEvent = tempList.lastWhereOrNull(
+      (element) => element.event == Events.pointerMove,
+    );
+
     _imageChangeNotifier.value = lastImageChangeEvent?.index ?? 0;
     elapsedTimeNotifier.value = elapsedTime.toInt();
 

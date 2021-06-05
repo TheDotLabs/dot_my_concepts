@@ -12,12 +12,12 @@ import 'package:flutter_record_lesson/modules/common/src/widgets/circular_loadin
 import 'package:flutter_record_lesson/modules/common/src/widgets/empty_text.dart';
 import 'package:flutter_record_lesson/modules/common/src/widgets/section_divider.dart';
 import 'package:flutter_record_lesson/modules/lesson/src/select_unit_page.dart';
-import 'package:flutter_record_lesson/modules/lesson/src/widgets/lesson_card.dart';
 import 'package:flutter_record_lesson/modules/record_lesson/models/my_event.dart';
 import 'package:flutter_record_lesson/modules/record_lesson/src/view_courses_page.dart';
 import 'package:provider/provider.dart';
 
 import 'widgets/course_card.dart';
+import 'widgets/lesson_card.dart';
 
 class FeedPage extends StatefulWidget {
   @override

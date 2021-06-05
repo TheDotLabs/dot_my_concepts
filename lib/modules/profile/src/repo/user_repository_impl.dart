@@ -114,6 +114,7 @@ class FirebaseUserRepository implements UserRepository {
   @override
   Future<void> saveSelectedCategory(String? id) async {
     try {
+      _userSubject.add(_userSubject.value!.copyWith(selectedCategory: id));
       await firestore!.collection('users').doc(_userSubject.value!.id).update({
         'selectedCategory': id,
         'updatedAt': DateTime.now().millisecondsSinceEpoch ~/ 1000,

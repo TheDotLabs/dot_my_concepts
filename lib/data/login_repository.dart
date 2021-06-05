@@ -22,6 +22,10 @@ abstract class LoginRepository {
 
   Future<Result> logout();
 
+  Future<void> logoutFirebase() async {
+    await _firebaseAuth.signOut();
+  }
+
   Future<bool> isLoggedIn();
 }
 

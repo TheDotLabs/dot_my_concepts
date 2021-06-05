@@ -3,7 +3,6 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_record_lesson/modules/profile/index.dart';
 import 'package:flutter_record_lesson/utils/log_utils.dart';
 import 'package:google_sign_in/google_sign_in.dart';
-import 'package:meta/meta.dart';
 
 import '../login_repository.dart';
 
@@ -16,7 +15,8 @@ class GoogleLoginRepository extends LoginRepository {
   @override
   Future<Result> login() async {
     try {
-      final googleUser = await (_googleSignIn.signIn() as Future<GoogleSignInAccount>);
+      final googleUser =
+          await (_googleSignIn.signIn() as Future<GoogleSignInAccount>);
 
       final googleAuth = await googleUser.authentication;
 
@@ -50,6 +50,7 @@ class GoogleLoginRepository extends LoginRepository {
   @override
   Future<Result> logout() async {
     try {
+      await logoutFirebase();
       final result = await _googleSignIn.signOut();
       return Result.success(data: result);
     } catch (error) {
