@@ -88,7 +88,7 @@ class _RecordLessonPageState extends State<RecordLessonPage> {
             if (_bloc.isRecording)
               Container(
                 key: _bloc.paintKey,
-                child: Painter(
+                child: PainterWidget(
                   _bloc.paintController,
                   () {},
                 ),

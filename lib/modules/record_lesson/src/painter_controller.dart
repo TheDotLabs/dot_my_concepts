@@ -3,13 +3,13 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart' hide Image;
 
-class Painter extends StatefulWidget {
+class PainterWidget extends StatefulWidget {
   final PainterController? painterController;
 
   final VoidCallback onTouch;
   final bool disableTouch;
 
-  Painter(
+  PainterWidget(
     this.painterController,
     this.onTouch, {
     this.disableTouch = false,
@@ -18,47 +18,48 @@ class Painter extends StatefulWidget {
         );
 
   @override
-  _PainterState createState() => _PainterState();
+  _PainterWidgetState createState() => _PainterWidgetState();
 }
 
-class _PainterState extends State<Painter> {
-  bool _finished = false;
+class _PainterWidgetState extends State<PainterWidget> {
+  final _finished = false;
 
   @override
   Widget build(BuildContext context) {
-    Widget child = CustomPaint(
-      isComplex: true,
-      willChange: true,
-      painter: PainterPainter(
-        widget.painterController!._pathHistory,
-        repaint: widget.painterController,
+    Widget child = ClipRect(
+      child: CustomPaint(
+        isComplex: true,
+        willChange: true,
+        painter: MyPainter(
+          widget.painterController!._pathHistory,
+          repaint: widget.painterController,
+        ),
+        child: Container(
+          height: 500,
+          width: MediaQuery.of(context).size.width,
+        ),
       ),
     );
-    child = ClipRect(child: child);
     if (!_finished && !widget.disableTouch) {
       child = GestureDetector(
-        child: child,
         onPanStart: _onPanStart,
         onPanUpdate: _onPanUpdate,
         onPanEnd: _onPanEnd,
+        child: child,
       );
     }
-    return Container(
-      child: child,
-      width: double.infinity,
-      height: double.infinity,
-    );
+    return child;
   }
 
   void _onPanStart(DragStartDetails start) {
-    Offset pos = (context.findRenderObject() as RenderBox)
+    final pos = (context.findRenderObject() as RenderBox)
         .globalToLocal(start.globalPosition);
     widget.painterController!._pathHistory!.add(pos);
     widget.painterController!.notifyListeners();
   }
 
   void _onPanUpdate(DragUpdateDetails update) {
-    Offset pos = (context.findRenderObject() as RenderBox)
+    final pos = (context.findRenderObject() as RenderBox)
         .globalToLocal(update.globalPosition);
     widget.painterController!._pathHistory!.updateCurrent(pos);
     widget.painterController!.notifyListeners();
@@ -70,10 +71,13 @@ class _PainterState extends State<Painter> {
   }
 }
 
-class PainterPainter extends CustomPainter {
-  final PathHistory? _path;
+class MyPainter extends CustomPainter {
+  MyPainter(
+    this._path, {
+    Listenable? repaint,
+  }) : super(repaint: repaint);
 
-  PainterPainter(this._path, {Listenable? repaint}) : super(repaint: repaint);
+  final PathHistory? _path;
 
   @override
   void paint(Canvas canvas, Size size) {
@@ -81,13 +85,13 @@ class PainterPainter extends CustomPainter {
   }
 
   @override
-  bool shouldRepaint(PainterPainter oldDelegate) {
+  bool shouldRepaint(MyPainter oldDelegate) {
     return false;
   }
 }
 
 class PathHistory {
-  var path = new Path();
+  Path path = Path();
   late Paint backgroundPaint;
   Paint? paint;
   late bool _inDrag;
@@ -106,24 +110,28 @@ class PathHistory {
   void add(Offset startPoint) {
     if (!_inDrag) {
       _inDrag = true;
-      path = new Path();
+      path = Path();
       path.moveTo(startPoint.dx, startPoint.dy);
-      if (painterController!.startMotion != null)
+      if (painterController!.startMotion != null) {
         painterController!.startMotion!(startPoint.dx, startPoint.dy);
+      }
     }
   }
 
   void updateCurrent(Offset nextPoint) {
     if (_inDrag) {
       path.lineTo(nextPoint.dx, nextPoint.dy);
-      if (painterController!.moveMotion != null)
+      if (painterController!.moveMotion != null) {
         painterController!.moveMotion!(nextPoint.dx, nextPoint.dy);
+      }
     }
   }
 
   void endCurrent() {
     _inDrag = false;
-    if (painterController!.endMotion != null) painterController!.endMotion!();
+    if (painterController!.endMotion != null) {
+      painterController!.endMotion!();
+    }
   }
 
   void draw(Canvas canvas, Size size) {
@@ -135,7 +143,7 @@ class PathHistory {
   }
 
   void clear() {
-    path = new Path();
+    path = Path();
     painterController!.notifyListeners();
   }
 

@@ -61,9 +61,9 @@ Map<String, dynamic> _$_$_LessonToJson(_$_Lesson instance) {
 
 _$_MyEvent _$_$_MyEventFromJson(Map<String, dynamic> json) {
   return _$_MyEvent(
-    event: _$enumDecodeNullable(_$EventsEnumMap, json['e']),
+    event: _$enumDecode(_$EventsEnumMap, json['e']),
     index: json['i'] as int?,
-    time: json['t'] as int?,
+    time: json['t'] as int,
     color: json['c'] as String?,
     x: (json['x'] as num?)?.toDouble(),
     y: (json['y'] as num?)?.toDouble(),
@@ -71,7 +71,9 @@ _$_MyEvent _$_$_MyEventFromJson(Map<String, dynamic> json) {
 }
 
 Map<String, dynamic> _$_$_MyEventToJson(_$_MyEvent instance) {
-  final val = <String, dynamic>{};
+  final val = <String, dynamic>{
+    'e': _$EventsEnumMap[instance.event],
+  };
 
   void writeNotNull(String key, dynamic value) {
     if (value != null) {
@@ -79,9 +81,8 @@ Map<String, dynamic> _$_$_MyEventToJson(_$_MyEvent instance) {
     }
   }
 
-  writeNotNull('e', _$EventsEnumMap[instance.event]);
   writeNotNull('i', instance.index);
-  writeNotNull('t', instance.time);
+  val['t'] = instance.time;
   writeNotNull('c', instance.color);
   val['x'] = instance.x;
   val['y'] = instance.y;
@@ -112,17 +113,6 @@ K _$enumDecode<K, V>(
       return MapEntry(unknownValue, enumValues.values.first);
     },
   ).key;
-}
-
-K? _$enumDecodeNullable<K, V>(
-  Map<K, V> enumValues,
-  dynamic source, {
-  K? unknownValue,
-}) {
-  if (source == null) {
-    return null;
-  }
-  return _$enumDecode<K, V>(enumValues, source, unknownValue: unknownValue);
 }
 
 const _$EventsEnumMap = {

@@ -17,7 +17,7 @@ class Bloc extends BaseBloc {
   final String lessonId;
 
   Lesson? get lesson => _lesson;
-  int? lastEventTime = 0;
+  int lastEventTime = 0;
 
   Future<bool> init(String lessonId) async {
     try {
@@ -85,15 +85,23 @@ class Bloc extends BaseBloc {
     return events;
   }
 
-  List<MyEvent> getNextList({int? fromTime}) {
+  List<MyEvent> getNextList(int lastEventTime) {
     final list = getEvents()
-        .where((element) =>
-            element.time! > (fromTime ?? lastEventTime!) &&
-            element.time! < (fromTime ?? lastEventTime)! + 5000)
+        .where(
+          (element) =>
+              element.time >= lastEventTime &&
+              element.time <= lastEventTime + 5000,
+        )
         .toList();
-    if (list.isNotEmpty) {
-      lastEventTime = list.last.time ?? getEvents().last.time;
-    }
+    return list;
+  }
+
+  List<MyEvent> getBeforeList(int lastEventTime) {
+    final list = getEvents()
+        .where(
+          (element) => element.time <= lastEventTime,
+        )
+        .toList();
     return list;
   }
 

@@ -71,7 +71,7 @@ class Bloc extends BaseBloc {
   }
 
   void addEvent({
-    Events? name,
+    required Events name,
     int? index,
     double? x,
     double? y,

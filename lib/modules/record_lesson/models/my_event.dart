@@ -30,9 +30,9 @@ class Lesson with _$Lesson {
 @freezed
 class MyEvent with _$MyEvent {
   factory MyEvent({
-    @JsonKey(name: 'e', includeIfNull: false) Events? event,
+    @JsonKey(name: 'e', includeIfNull: false) required Events event,
     @JsonKey(name: 'i', includeIfNull: false) int? index,
-    @JsonKey(name: 't', includeIfNull: false) int? time,
+    @JsonKey(name: 't', includeIfNull: false) required int time,
     @JsonKey(name: 'c', includeIfNull: false) String? color,
     double? x,
     double? y,

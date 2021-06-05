@@ -521,9 +521,9 @@ class _$MyEventTearOff {
   const _$MyEventTearOff();
 
   _MyEvent call(
-      {@JsonKey(name: 'e', includeIfNull: false) Events? event,
+      {@JsonKey(name: 'e', includeIfNull: false) required Events event,
       @JsonKey(name: 'i', includeIfNull: false) int? index,
-      @JsonKey(name: 't', includeIfNull: false) int? time,
+      @JsonKey(name: 't', includeIfNull: false) required int time,
       @JsonKey(name: 'c', includeIfNull: false) String? color,
       double? x,
       double? y}) {
@@ -548,11 +548,11 @@ const $MyEvent = _$MyEventTearOff();
 /// @nodoc
 mixin _$MyEvent {
   @JsonKey(name: 'e', includeIfNull: false)
-  Events? get event => throw _privateConstructorUsedError;
+  Events get event => throw _privateConstructorUsedError;
   @JsonKey(name: 'i', includeIfNull: false)
   int? get index => throw _privateConstructorUsedError;
   @JsonKey(name: 't', includeIfNull: false)
-  int? get time => throw _privateConstructorUsedError;
+  int get time => throw _privateConstructorUsedError;
   @JsonKey(name: 'c', includeIfNull: false)
   String? get color => throw _privateConstructorUsedError;
   double? get x => throw _privateConstructorUsedError;
@@ -568,9 +568,9 @@ abstract class $MyEventCopyWith<$Res> {
   factory $MyEventCopyWith(MyEvent value, $Res Function(MyEvent) then) =
       _$MyEventCopyWithImpl<$Res>;
   $Res call(
-      {@JsonKey(name: 'e', includeIfNull: false) Events? event,
+      {@JsonKey(name: 'e', includeIfNull: false) Events event,
       @JsonKey(name: 'i', includeIfNull: false) int? index,
-      @JsonKey(name: 't', includeIfNull: false) int? time,
+      @JsonKey(name: 't', includeIfNull: false) int time,
       @JsonKey(name: 'c', includeIfNull: false) String? color,
       double? x,
       double? y});
@@ -597,7 +597,7 @@ class _$MyEventCopyWithImpl<$Res> implements $MyEventCopyWith<$Res> {
       event: event == freezed
           ? _value.event
           : event // ignore: cast_nullable_to_non_nullable
-              as Events?,
+              as Events,
       index: index == freezed
           ? _value.index
           : index // ignore: cast_nullable_to_non_nullable
@@ -605,7 +605,7 @@ class _$MyEventCopyWithImpl<$Res> implements $MyEventCopyWith<$Res> {
       time: time == freezed
           ? _value.time
           : time // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
       color: color == freezed
           ? _value.color
           : color // ignore: cast_nullable_to_non_nullable
@@ -628,9 +628,9 @@ abstract class _$MyEventCopyWith<$Res> implements $MyEventCopyWith<$Res> {
       __$MyEventCopyWithImpl<$Res>;
   @override
   $Res call(
-      {@JsonKey(name: 'e', includeIfNull: false) Events? event,
+      {@JsonKey(name: 'e', includeIfNull: false) Events event,
       @JsonKey(name: 'i', includeIfNull: false) int? index,
-      @JsonKey(name: 't', includeIfNull: false) int? time,
+      @JsonKey(name: 't', includeIfNull: false) int time,
       @JsonKey(name: 'c', includeIfNull: false) String? color,
       double? x,
       double? y});
@@ -658,7 +658,7 @@ class __$MyEventCopyWithImpl<$Res> extends _$MyEventCopyWithImpl<$Res>
       event: event == freezed
           ? _value.event
           : event // ignore: cast_nullable_to_non_nullable
-              as Events?,
+              as Events,
       index: index == freezed
           ? _value.index
           : index // ignore: cast_nullable_to_non_nullable
@@ -666,7 +666,7 @@ class __$MyEventCopyWithImpl<$Res> extends _$MyEventCopyWithImpl<$Res>
       time: time == freezed
           ? _value.time
           : time // ignore: cast_nullable_to_non_nullable
-              as int?,
+              as int,
       color: color == freezed
           ? _value.color
           : color // ignore: cast_nullable_to_non_nullable
@@ -687,9 +687,9 @@ class __$MyEventCopyWithImpl<$Res> extends _$MyEventCopyWithImpl<$Res>
 @JsonSerializable()
 class _$_MyEvent implements _MyEvent {
   _$_MyEvent(
-      {@JsonKey(name: 'e', includeIfNull: false) this.event,
+      {@JsonKey(name: 'e', includeIfNull: false) required this.event,
       @JsonKey(name: 'i', includeIfNull: false) this.index,
-      @JsonKey(name: 't', includeIfNull: false) this.time,
+      @JsonKey(name: 't', includeIfNull: false) required this.time,
       @JsonKey(name: 'c', includeIfNull: false) this.color,
       this.x,
       this.y});
@@ -699,13 +699,13 @@ class _$_MyEvent implements _MyEvent {
 
   @override
   @JsonKey(name: 'e', includeIfNull: false)
-  final Events? event;
+  final Events event;
   @override
   @JsonKey(name: 'i', includeIfNull: false)
   final int? index;
   @override
   @JsonKey(name: 't', includeIfNull: false)
-  final int? time;
+  final int time;
   @override
   @JsonKey(name: 'c', includeIfNull: false)
   final String? color;
@@ -760,9 +760,9 @@ class _$_MyEvent implements _MyEvent {
 
 abstract class _MyEvent implements MyEvent {
   factory _MyEvent(
-      {@JsonKey(name: 'e', includeIfNull: false) Events? event,
+      {@JsonKey(name: 'e', includeIfNull: false) required Events event,
       @JsonKey(name: 'i', includeIfNull: false) int? index,
-      @JsonKey(name: 't', includeIfNull: false) int? time,
+      @JsonKey(name: 't', includeIfNull: false) required int time,
       @JsonKey(name: 'c', includeIfNull: false) String? color,
       double? x,
       double? y}) = _$_MyEvent;
@@ -771,13 +771,13 @@ abstract class _MyEvent implements MyEvent {
 
   @override
   @JsonKey(name: 'e', includeIfNull: false)
-  Events? get event => throw _privateConstructorUsedError;
+  Events get event => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: 'i', includeIfNull: false)
   int? get index => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: 't', includeIfNull: false)
-  int? get time => throw _privateConstructorUsedError;
+  int get time => throw _privateConstructorUsedError;
   @override
   @JsonKey(name: 'c', includeIfNull: false)
   String? get color => throw _privateConstructorUsedError;
