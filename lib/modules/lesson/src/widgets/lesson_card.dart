@@ -98,7 +98,7 @@ class LessonCard extends StatelessWidget {
                             padding:
                                 const EdgeInsets.symmetric(horizontal: 12.0),
                             child: Text(
-                              '- ${snapshot.data?.name ?? '---'}',
+                              '${snapshot.data?.name ?? '---'}',
                               style: Theme.of(context)
                                   .textTheme
                                   .bodyText1!

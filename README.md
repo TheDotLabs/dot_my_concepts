@@ -49,3 +49,9 @@ flutter pub get && flutter pub run build_runner build --delete-conflicting-outpu
 To generate launcher icon
 
 `flutter pub run flutter_launcher_icons:main -f launcher_icon/flutter_launcher_icons.yaml`
+
+To release apk
+
+```shell
+flutter build apk --no-shrink --no-sound-null-safety --target-platform android-arm
+```

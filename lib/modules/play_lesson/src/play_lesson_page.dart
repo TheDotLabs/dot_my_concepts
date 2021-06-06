@@ -1,11 +1,17 @@
+import 'dart:async';
+
 import 'package:audioplayers/audioplayers.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:collection/collection.dart' show IterableExtension;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_record_lesson/core/widgets/my_countdown_timer.dart';
+import 'package:flutter_record_lesson/di/injector.dart';
+import 'package:flutter_record_lesson/modules/common/index.dart';
 import 'package:flutter_record_lesson/modules/common/src/widgets/circular_loading.dart';
 import 'package:flutter_record_lesson/modules/play_lesson/src/widgets/image_container.dart';
+import 'package:flutter_record_lesson/modules/profile/index.dart';
 import 'package:flutter_record_lesson/modules/record_lesson/models/my_event.dart';
 import 'package:flutter_record_lesson/modules/record_lesson/src/widgets/background_container.dart';
 import 'package:flutter_record_lesson/modules/record_lesson/src/widgets/video_play_container.dart';
@@ -89,90 +95,176 @@ class _PlayLessonPageState extends State<PlayLessonPage> {
               ? Center(
                   child: CircularLoading(),
                 )
-              : Column(
-                  crossAxisAlignment: CrossAxisAlignment.stretch,
-                  children: [
-                    GestureDetector(
-                      onTap: _onVideoTap,
-                      child: BackgroundContainer(
-                        child: Stack(
-                          fit: StackFit.expand,
-                          children: [
+              : StreamBuilder<Lesson?>(
+                  stream: _getLessonStream(),
+                  builder: (context, snapshot) {
+                    if (snapshot.hasData && snapshot.data != null) {
+                      return Column(
+                        crossAxisAlignment: CrossAxisAlignment.stretch,
+                        children: [
+                          GestureDetector(
+                            onTap: _onVideoTap,
+                            child: BackgroundContainer(
+                              child: Stack(
+                                fit: StackFit.expand,
+                                children: [
+                                  ValueListenableBuilder<int>(
+                                    valueListenable: _imageChangeNotifier,
+                                    builder: (_, value, __) {
+                                      return ImageContainer(
+                                        imageUrl: _bloc.lesson!.images![value],
+                                      );
+                                    },
+                                  ),
+                                  Container(
+                                    key: _paintKey,
+                                    child: PainterWidget(
+                                      paintController,
+                                    ),
+                                  ),
+                                  VideoControlsContainer(
+                                    elapsedTimeNotifier: elapsedTimeNotifier,
+                                    fullScreenTap: onFullScreenClick,
+                                    onPauseTap: onPauseVideo,
+                                    onResumeTap: onResumeTap,
+                                    showVideoControls:
+                                        _showVideoControls && _isVideoPlaying,
+                                  ),
+                                  VideoPlayContainer(
+                                    isVideoPlaying: _isVideoPlaying,
+                                    onTap: _onStartTap,
+                                  ),
+                                ],
+                              ),
+                            ),
+                          ),
+                          if (!isLandscape(context))
                             ValueListenableBuilder<int>(
-                              valueListenable: _imageChangeNotifier,
+                              valueListenable: elapsedTimeNotifier,
                               builder: (_, value, __) {
-                                return ImageContainer(
-                                  imageUrl: _bloc.lesson!.images![value],
+                                return IgnorePointer(
+                                  ignoring: true,
+                                  child: Stack(
+                                    alignment: Alignment.centerLeft,
+                                    children: [
+                                      Container(
+                                        height: 4,
+                                        decoration: BoxDecoration(
+                                          color: Colors.blue[50],
+                                        ),
+                                        width:
+                                            MediaQuery.of(context).size.width,
+                                      ),
+                                      Container(
+                                        height: 4,
+                                        decoration: BoxDecoration(
+                                          color: Colors.lightBlue,
+                                          borderRadius: BorderRadius.only(
+                                            topRight: Radius.circular(2),
+                                            bottomRight: Radius.circular(2),
+                                          ),
+                                        ),
+                                        alignment: Alignment.centerLeft,
+                                        width: MediaQuery.of(context)
+                                                .size
+                                                .width *
+                                            (value / _bloc.lesson!.duration!),
+                                      )
+                                    ],
+                                  ),
                                 );
                               },
                             ),
-                            Container(
-                              key: _paintKey,
-                              child: PainterWidget(
-                                paintController,
-                              ),
-                            ),
-                            VideoControlsContainer(
-                              elapsedTimeNotifier: elapsedTimeNotifier,
-                              fullScreenTap: onFullScreenClick,
-                              onPauseTap: onPauseVideo,
-                              onResumeTap: onResumeTap,
-                              showVideoControls:
-                                  _showVideoControls && _isVideoPlaying,
-                            ),
-                            VideoPlayContainer(
-                              isVideoPlaying: _isVideoPlaying,
-                              onTap: _onStartTap,
-                            ),
-                          ],
-                        ),
-                      ),
-                    ),
-                    if (!isLandscape(context))
-                      ValueListenableBuilder<int>(
-                        valueListenable: elapsedTimeNotifier,
-                        builder: (_, value, __) {
-                          return IgnorePointer(
-                            ignoring: true,
-                            child: Stack(
-                              alignment: Alignment.centerLeft,
+                          if (!isLandscape(context))
+                            Column(
+                              mainAxisSize: MainAxisSize.min,
                               children: [
-                                Container(
-                                  height: 4,
-                                  decoration: BoxDecoration(
-                                    color: Colors.blue[50],
+                                ListTile(
+                                  contentPadding: EdgeInsets.symmetric(
+                                    horizontal: 16,
+                                    vertical: 8,
                                   ),
-                                  width: MediaQuery.of(context).size.width,
+                                  title: Text("${_bloc.lesson!.name}"),
+                                  subtitle:
+                                      Text("${_bloc.lesson!.description}"),
                                 ),
-                                Container(
-                                  height: 4,
-                                  decoration: BoxDecoration(
-                                    color: Colors.lightBlue,
-                                    borderRadius: BorderRadius.only(
-                                      topRight: Radius.circular(2),
-                                      bottomRight: Radius.circular(2),
+                                SectionDivider(),
+                                Row(
+                                  mainAxisAlignment:
+                                      MainAxisAlignment.spaceEvenly,
+                                  children: [
+                                    FlatButton.icon(
+                                      onPressed: () {
+                                        _onUpvoteClick(_bloc.lesson!);
+                                      },
+                                      icon: Icon(
+                                        Icons.arrow_circle_up_rounded,
+                                        color: _isLiked(snapshot.data!)
+                                            ? null
+                                            : Colors.black54,
+                                      ),
+                                      label: Text(
+                                        'UPVOTE (${snapshot.data!.upvotes?.length ?? 0})',
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          color: _isLiked(snapshot.data!)
+                                              ? null
+                                              : Colors.black54,
+                                        ),
+                                      ),
+                                    ),
+                                    FlatButton.icon(
+                                      onPressed: () {},
+                                      icon: Icon(
+                                        Icons.mode_comment_outlined,
+                                        color: Colors.black54,
+                                      ),
+                                      label: Text(
+                                        'COMMENT (0)',
+                                        style: TextStyle(
+                                          fontSize: 12,
+                                          color: Colors.black54,
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                                SectionDivider(),
+                                SectionHeader('ALL COMMENTS'),
+                                Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: Text(
+                                    'No comments yet',
+                                    style: TextStyle(
+                                      fontStyle: FontStyle.italic,
                                     ),
                                   ),
-                                  alignment: Alignment.centerLeft,
-                                  width: MediaQuery.of(context).size.width *
-                                      (value / _bloc.lesson!.duration!),
-                                )
+                                ),
+                                SectionDivider(),
+                                SectionHeader('ALL RATINGS'),
+                                Padding(
+                                  padding: const EdgeInsets.all(16.0),
+                                  child: Text(
+                                    'No reviews yet',
+                                    style: TextStyle(
+                                      fontStyle: FontStyle.italic,
+                                    ),
+                                  ),
+                                ),
                               ],
                             ),
-                          );
-                        },
-                      ),
-                    if (!isLandscape(context))
-                      ListTile(
-                        title: Text("${_bloc.lesson!.name}"),
-                        subtitle: Text("${_bloc.lesson!.description}"),
-                      ),
-                    if (!isLandscape(context))
-                      Divider(
-                        height: 1,
-                      ),
-                  ],
-                ),
+                        ],
+                      );
+                    } else if (snapshot.hasError) {
+                      return Center(
+                        child: Text(snapshot.error as String),
+                      );
+                    } else {
+                      return Center(
+                        child: CircularLoading(),
+                      );
+                    }
+                  }),
         ),
       ),
     );
@@ -366,5 +458,41 @@ class _PlayLessonPageState extends State<PlayLessonPage> {
   double _getWidth() {
     final box = _paintKey.currentContext!.findRenderObject() as RenderBox;
     return box.size.width;
+  }
+
+  void _onUpvoteClick(Lesson lesson) {
+    final userId = locator<UserRepository>().getLoggedInUser()!.id;
+
+    var upvotes = lesson.upvotes ?? [];
+
+    final isLiked = _isLiked(lesson);
+    if (isLiked) {
+      upvotes = upvotes
+        ..remove(userId)
+        ..toSet().toList(growable: false);
+    } else {
+      upvotes = upvotes
+        ..add(userId)
+        ..toSet().toList(growable: false);
+    }
+    FirebaseFirestore.instance
+        .collection('lessons')
+        .doc(widget.lessonId)
+        .update({'upvotes': upvotes});
+  }
+
+  Stream<Lesson?> _getLessonStream() {
+    return FirebaseFirestore.instance
+        .collection('lessons')
+        .doc(widget.lessonId)
+        .snapshots()
+        .transform(StreamTransformer.fromHandlers(handleData: (data, sink) {
+      return sink.add(Lesson.fromJson(data.data()!).copyWith(id: data.id));
+    }));
+  }
+
+  _isLiked(Lesson lesson) {
+    final userId = locator<UserRepository>().getLoggedInUser()!.id;
+    return (lesson.upvotes ?? []).contains(userId);
   }
 }

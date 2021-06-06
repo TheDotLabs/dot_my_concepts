@@ -25,10 +25,12 @@ class _$LessonTearOff {
       required String uid,
       required String name,
       required String description,
+      required String course,
       required String category,
       required String subject,
       required String unit,
       required String chapter,
+      List<String>? upvotes,
       int? duration,
       List<String>? images,
       String? audioUrl,
@@ -41,10 +43,12 @@ class _$LessonTearOff {
       uid: uid,
       name: name,
       description: description,
+      course: course,
       category: category,
       subject: subject,
       unit: unit,
       chapter: chapter,
+      upvotes: upvotes,
       duration: duration,
       images: images,
       audioUrl: audioUrl,
@@ -69,10 +73,12 @@ mixin _$Lesson {
   String get uid => throw _privateConstructorUsedError;
   String get name => throw _privateConstructorUsedError;
   String get description => throw _privateConstructorUsedError;
+  String get course => throw _privateConstructorUsedError;
   String get category => throw _privateConstructorUsedError;
   String get subject => throw _privateConstructorUsedError;
   String get unit => throw _privateConstructorUsedError;
   String get chapter => throw _privateConstructorUsedError;
+  List<String>? get upvotes => throw _privateConstructorUsedError;
   int? get duration => throw _privateConstructorUsedError;
   List<String>? get images => throw _privateConstructorUsedError;
   String? get audioUrl => throw _privateConstructorUsedError;
@@ -98,10 +104,12 @@ abstract class $LessonCopyWith<$Res> {
       String uid,
       String name,
       String description,
+      String course,
       String category,
       String subject,
       String unit,
       String chapter,
+      List<String>? upvotes,
       int? duration,
       List<String>? images,
       String? audioUrl,
@@ -125,10 +133,12 @@ class _$LessonCopyWithImpl<$Res> implements $LessonCopyWith<$Res> {
     Object? uid = freezed,
     Object? name = freezed,
     Object? description = freezed,
+    Object? course = freezed,
     Object? category = freezed,
     Object? subject = freezed,
     Object? unit = freezed,
     Object? chapter = freezed,
+    Object? upvotes = freezed,
     Object? duration = freezed,
     Object? images = freezed,
     Object? audioUrl = freezed,
@@ -154,6 +164,10 @@ class _$LessonCopyWithImpl<$Res> implements $LessonCopyWith<$Res> {
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
+      course: course == freezed
+          ? _value.course
+          : course // ignore: cast_nullable_to_non_nullable
+              as String,
       category: category == freezed
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
@@ -170,6 +184,10 @@ class _$LessonCopyWithImpl<$Res> implements $LessonCopyWith<$Res> {
           ? _value.chapter
           : chapter // ignore: cast_nullable_to_non_nullable
               as String,
+      upvotes: upvotes == freezed
+          ? _value.upvotes
+          : upvotes // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
       duration: duration == freezed
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
@@ -212,10 +230,12 @@ abstract class _$LessonCopyWith<$Res> implements $LessonCopyWith<$Res> {
       String uid,
       String name,
       String description,
+      String course,
       String category,
       String subject,
       String unit,
       String chapter,
+      List<String>? upvotes,
       int? duration,
       List<String>? images,
       String? audioUrl,
@@ -240,10 +260,12 @@ class __$LessonCopyWithImpl<$Res> extends _$LessonCopyWithImpl<$Res>
     Object? uid = freezed,
     Object? name = freezed,
     Object? description = freezed,
+    Object? course = freezed,
     Object? category = freezed,
     Object? subject = freezed,
     Object? unit = freezed,
     Object? chapter = freezed,
+    Object? upvotes = freezed,
     Object? duration = freezed,
     Object? images = freezed,
     Object? audioUrl = freezed,
@@ -269,6 +291,10 @@ class __$LessonCopyWithImpl<$Res> extends _$LessonCopyWithImpl<$Res>
           ? _value.description
           : description // ignore: cast_nullable_to_non_nullable
               as String,
+      course: course == freezed
+          ? _value.course
+          : course // ignore: cast_nullable_to_non_nullable
+              as String,
       category: category == freezed
           ? _value.category
           : category // ignore: cast_nullable_to_non_nullable
@@ -285,6 +311,10 @@ class __$LessonCopyWithImpl<$Res> extends _$LessonCopyWithImpl<$Res>
           ? _value.chapter
           : chapter // ignore: cast_nullable_to_non_nullable
               as String,
+      upvotes: upvotes == freezed
+          ? _value.upvotes
+          : upvotes // ignore: cast_nullable_to_non_nullable
+              as List<String>?,
       duration: duration == freezed
           ? _value.duration
           : duration // ignore: cast_nullable_to_non_nullable
@@ -325,10 +355,12 @@ class _$_Lesson implements _Lesson {
       required this.uid,
       required this.name,
       required this.description,
+      required this.course,
       required this.category,
       required this.subject,
       required this.unit,
       required this.chapter,
+      this.upvotes,
       this.duration,
       this.images,
       this.audioUrl,
@@ -349,6 +381,8 @@ class _$_Lesson implements _Lesson {
   @override
   final String description;
   @override
+  final String course;
+  @override
   final String category;
   @override
   final String subject;
@@ -356,6 +390,8 @@ class _$_Lesson implements _Lesson {
   final String unit;
   @override
   final String chapter;
+  @override
+  final List<String>? upvotes;
   @override
   final int? duration;
   @override
@@ -376,7 +412,7 @@ class _$_Lesson implements _Lesson {
 
   @override
   String toString() {
-    return 'Lesson(id: $id, uid: $uid, name: $name, description: $description, category: $category, subject: $subject, unit: $unit, chapter: $chapter, duration: $duration, images: $images, audioUrl: $audioUrl, eventsUrl: $eventsUrl, rawImagePaths: $rawImagePaths, audioPath: $audioPath, events: $events)';
+    return 'Lesson(id: $id, uid: $uid, name: $name, description: $description, course: $course, category: $category, subject: $subject, unit: $unit, chapter: $chapter, upvotes: $upvotes, duration: $duration, images: $images, audioUrl: $audioUrl, eventsUrl: $eventsUrl, rawImagePaths: $rawImagePaths, audioPath: $audioPath, events: $events)';
   }
 
   @override
@@ -392,6 +428,8 @@ class _$_Lesson implements _Lesson {
             (identical(other.description, description) ||
                 const DeepCollectionEquality()
                     .equals(other.description, description)) &&
+            (identical(other.course, course) ||
+                const DeepCollectionEquality().equals(other.course, course)) &&
             (identical(other.category, category) ||
                 const DeepCollectionEquality()
                     .equals(other.category, category)) &&
@@ -403,6 +441,9 @@ class _$_Lesson implements _Lesson {
             (identical(other.chapter, chapter) ||
                 const DeepCollectionEquality()
                     .equals(other.chapter, chapter)) &&
+            (identical(other.upvotes, upvotes) ||
+                const DeepCollectionEquality()
+                    .equals(other.upvotes, upvotes)) &&
             (identical(other.duration, duration) ||
                 const DeepCollectionEquality()
                     .equals(other.duration, duration)) &&
@@ -431,10 +472,12 @@ class _$_Lesson implements _Lesson {
       const DeepCollectionEquality().hash(uid) ^
       const DeepCollectionEquality().hash(name) ^
       const DeepCollectionEquality().hash(description) ^
+      const DeepCollectionEquality().hash(course) ^
       const DeepCollectionEquality().hash(category) ^
       const DeepCollectionEquality().hash(subject) ^
       const DeepCollectionEquality().hash(unit) ^
       const DeepCollectionEquality().hash(chapter) ^
+      const DeepCollectionEquality().hash(upvotes) ^
       const DeepCollectionEquality().hash(duration) ^
       const DeepCollectionEquality().hash(images) ^
       const DeepCollectionEquality().hash(audioUrl) ^
@@ -460,10 +503,12 @@ abstract class _Lesson implements Lesson {
       required String uid,
       required String name,
       required String description,
+      required String course,
       required String category,
       required String subject,
       required String unit,
       required String chapter,
+      List<String>? upvotes,
       int? duration,
       List<String>? images,
       String? audioUrl,
@@ -483,6 +528,8 @@ abstract class _Lesson implements Lesson {
   @override
   String get description => throw _privateConstructorUsedError;
   @override
+  String get course => throw _privateConstructorUsedError;
+  @override
   String get category => throw _privateConstructorUsedError;
   @override
   String get subject => throw _privateConstructorUsedError;
@@ -490,6 +537,8 @@ abstract class _Lesson implements Lesson {
   String get unit => throw _privateConstructorUsedError;
   @override
   String get chapter => throw _privateConstructorUsedError;
+  @override
+  List<String>? get upvotes => throw _privateConstructorUsedError;
   @override
   int? get duration => throw _privateConstructorUsedError;
   @override

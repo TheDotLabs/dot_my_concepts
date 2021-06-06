@@ -13,6 +13,11 @@ import 'modules/profile/index.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle(
+    statusBarIconBrightness:
+        Brightness.light, // this will change the brightness of the icons
+    statusBarColor: Colors.white, // or any color you want
+  ));
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
@@ -27,10 +32,6 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     final textTheme = GoogleFonts.latoTextTheme(Theme.of(context).textTheme);
     final newTextTheme = textTheme
-        .apply(
-          bodyColor: Colors.grey[700],
-          displayColor: Colors.blueGrey[900],
-        )
         .copyWith(
           overline: textTheme.overline!.copyWith(
             fontSize: 12,
@@ -57,6 +58,10 @@ class MyApp extends StatelessWidget {
             fontWeight: FontWeight.w600,
           ),
           subtitle2: textTheme.subtitle2!.copyWith(letterSpacing: 1.0),
+        )
+        .apply(
+          bodyColor: Colors.grey[900],
+          displayColor: Colors.blueGrey[900],
         );
     return ChangeNotifierProvider.value(
       value: locator<AppBloc>(),

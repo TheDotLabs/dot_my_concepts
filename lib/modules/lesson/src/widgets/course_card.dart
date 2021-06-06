@@ -5,6 +5,7 @@ import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_record_lesson/core/models/course.dart';
 import 'package:flutter_record_lesson/core/widgets/BorderContainer.dart';
+import 'package:flutter_record_lesson/modules/course/view_course_page.dart';
 import 'package:flutter_record_lesson/modules/profile/index.dart';
 
 class CourseCard extends StatelessWidget {
@@ -25,21 +26,20 @@ class CourseCard extends StatelessWidget {
     return FutureBuilder<MyUser?>(
         future: _getFuture(course.userId),
         builder: (context, snapshot) {
-          return Container(
-            margin: EdgeInsets.symmetric(horizontal: 4),
-            child: BorderContainer(
-              child: Container(
-                width: MediaQuery.of(context).size.width / 1.35,
-                child: GestureDetector(
-                  onTap: () {
-                    /*Navigator.of(context).push(
-                    MaterialPageRoute(
-                      builder: (_) => PlayLessonPage(
-                        lessonId: lesson.id,
-                      ),
-                    ),
-                  );*/
-                  },
+          return GestureDetector(
+            onTap: () {
+              Navigator.of(context).push(
+                MaterialPageRoute(
+                  builder: (_) =>
+                      ViewCoursePage(course: course, user: snapshot.data),
+                ),
+              );
+            },
+            child: Container(
+              margin: EdgeInsets.symmetric(horizontal: 4),
+              child: BorderContainer(
+                child: Container(
+                  width: MediaQuery.of(context).size.width / 1.35,
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.stretch,
                     children: [

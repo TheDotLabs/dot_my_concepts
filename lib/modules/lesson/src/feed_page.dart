@@ -184,10 +184,10 @@ class _FeedPageState extends State<FeedPage>
                               ],
                             )
                           : Container(
-                              child: Center(child: EmptyText()),
                               padding: EdgeInsets.symmetric(
                                 vertical: 16,
                               ),
+                              child: Center(child: EmptyText()),
                             ),
                     );
                   } else if (snapshot.hasError) {

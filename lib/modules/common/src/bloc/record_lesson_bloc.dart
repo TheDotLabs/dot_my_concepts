@@ -28,6 +28,7 @@ class RecordingLessonBloc extends BaseBloc {
       uid: userRepository.getLoggedInUser()!.id,
       name: name,
       description: description,
+      course: course.id,
       category: course.categoryId,
       chapter: course.chapterId,
       unit: course.unitId,
