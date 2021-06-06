@@ -2,13 +2,13 @@ import 'package:bot_toast/bot_toast.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_record_lesson/app/bloc/base/app_bloc.dart';
-import 'package:flutter_record_lesson/modules/home/src/home_page.dart';
 import 'package:flutter_record_lesson/modules/login/index.dart';
-import 'package:flutter_record_lesson/modules/select_category_page.dart';
+import 'package:flutter_record_lesson/modules/welcome/welcome_page.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 
 import 'di/injector.dart';
+import 'modules/home/src/home_page.dart';
 import 'modules/profile/index.dart';
 
 void main() async {
@@ -91,10 +91,7 @@ class MyApp extends StatelessWidget {
             ? (locator<UserRepository>().getLoggedInUser()!.selectedCategory !=
                     null
                 ? HomePage()
-                : SelectCategoryPage(
-                    showHome: true,
-                    title: 'Start by selecting a course',
-                  ))
+                : WelcomePage())
             : LoginScreen(),
         builder: _buildWidget,
       ),

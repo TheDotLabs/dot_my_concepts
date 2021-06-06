@@ -124,7 +124,7 @@ class _FeedPageState extends State<FeedPage>
                   builder: (context, snapshot) {
                     if (snapshot.hasData && snapshot.data != null) {
                       return Container(
-                        height: 240,
+                        height: 220,
                         child: ((checkIfListIsNotEmpty(snapshot.data)))
                             ? ListView(
                                 padding: EdgeInsets.symmetric(
@@ -169,7 +169,7 @@ class _FeedPageState extends State<FeedPage>
                 builder: (context, snapshot) {
                   if (snapshot.hasData && snapshot.data != null) {
                     return Container(
-                      height: 180,
+                      height: 220,
                       child: (checkIfListIsNotEmpty(snapshot.data))
                           ? ListView(
                               padding: EdgeInsets.symmetric(

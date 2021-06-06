@@ -100,10 +100,11 @@ class _SelectCategoryPageState extends State<SelectCategoryPage> {
   void _onCategorySelect(MyCategory e) {
     locator<AppBloc>().onCategorySelection(e);
     if (widget.showHome) {
-      Navigator.of(context).pushReplacement(
+      Navigator.of(context).pushAndRemoveUntil(
         MaterialPageRoute(
           builder: (_) => HomePage(),
         ),
+        (_) => false,
       );
     } else {
       Navigator.of(context).pop();

@@ -40,77 +40,75 @@ class _SelectCoursePageState extends State<SelectCoursePage> {
         builder: (context, snapshot) {
           if (snapshot.hasData && snapshot.data != null) {
             final list = snapshot.data!;
-            return Container(
-              child: ListView(
-                padding: EdgeInsets.symmetric(
-                  vertical: 0,
-                ),
-                children: [
-                  SectionDivider(),
-                  ...list
-                      .map(
-                        (e) => Column(
-                          mainAxisSize: MainAxisSize.min,
-                          children: [
-                            ListTile(
-                              contentPadding: EdgeInsets.symmetric(
-                                horizontal: 16,
-                                vertical: 12,
-                              ),
-                              /*leading: CachedNetworkImage(
-                              imageUrl: e.image,
-                              height: 40,
-                              width: 40,
-                            ),*/
-                              trailing: Icon(Icons.keyboard_arrow_right),
-                              title: Text(
-                                e.title!,
-                              ),
-                              subtitle: Column(
-                                crossAxisAlignment: CrossAxisAlignment.start,
-                                children: [
-                                  Text(e.subtitle ?? "--"),
-                                  Container(
-                                    child: TagsRow(e),
-                                    margin: EdgeInsets.only(top: 8),
-                                  ),
-                                ],
-                              ),
-                              onTap: () {
-                                Navigator.of(context).push(
-                                  MaterialPageRoute(
-                                    builder: (_) => CreateLessonPage(
-                                      course: e,
-                                    ),
-                                  ),
-                                );
-                              },
-                            ),
-                            SectionDivider(),
-                          ],
-                        ),
-                      )
-                      .toList(),
-                  Container(
-                    margin: EdgeInsets.symmetric(vertical: 32),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
-                      children: [
-                        RaisedButton(
-                          onPressed: () {
-                            Navigator.of(context).push(
-                              MaterialPageRoute(
-                                builder: (_) => NestedCourseCreation(),
-                              ),
-                            );
-                          },
-                          child: Text('Add New Course'),
-                        ),
-                      ],
-                    ),
-                  ),
-                ],
+            return ListView(
+              padding: EdgeInsets.symmetric(
+                vertical: 0,
               ),
+              children: [
+                SectionDivider(),
+                ...list
+                    .map(
+                      (e) => Column(
+                        mainAxisSize: MainAxisSize.min,
+                        children: [
+                          ListTile(
+                            contentPadding: EdgeInsets.symmetric(
+                              horizontal: 16,
+                              vertical: 12,
+                            ),
+                            /*leading: CachedNetworkImage(
+                            imageUrl: e.image,
+                            height: 40,
+                            width: 40,
+                          ),*/
+                            trailing: Icon(Icons.keyboard_arrow_right),
+                            title: Text(
+                              e.title!,
+                            ),
+                            subtitle: Column(
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(e.subtitle ?? "--"),
+                                Container(
+                                  child: TagsRow(e),
+                                  margin: EdgeInsets.only(top: 8),
+                                ),
+                              ],
+                            ),
+                            onTap: () {
+                              Navigator.of(context).push(
+                                MaterialPageRoute(
+                                  builder: (_) => CreateLessonPage(
+                                    course: e,
+                                  ),
+                                ),
+                              );
+                            },
+                          ),
+                          SectionDivider(),
+                        ],
+                      ),
+                    )
+                    .toList(),
+                Container(
+                  margin: EdgeInsets.symmetric(vertical: 32),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      RaisedButton(
+                        onPressed: () {
+                          Navigator.of(context).push(
+                            MaterialPageRoute(
+                              builder: (_) => NestedCourseCreation(),
+                            ),
+                          );
+                        },
+                        child: Text('Add New Course'),
+                      ),
+                    ],
+                  ),
+                ),
+              ],
             );
           } else if (snapshot.hasError) {
             return Center(

@@ -35,7 +35,12 @@ class LogoutButton extends StatelessWidget {
       builder: (context) {
         return AlertDialog(
           title: Text("Logout"),
-          content: Text("Are you sure you want to logout?"),
+          content: Text(
+            "Are you sure you want to logout?",
+            style: TextStyle(
+              fontWeight: FontWeight.normal,
+            ),
+          ),
           actions: <Widget>[
             FlatButton(
               child: Text("Cancel"),

@@ -14,7 +14,7 @@ import 'package:flutter_record_lesson/modules/record_lesson/src/widgets/stop_but
 import 'package:flutter_record_lesson/modules/record_lesson/src/widgets/timer_widget.dart';
 import 'package:flutter_record_lesson/utils/log_utils.dart';
 import 'package:flutter_record_lesson/utils/toast_utils.dart';
-import 'package:flutter_sound/flutter_sound.dart';
+import 'package:flutter_sound_lite/flutter_sound.dart';
 import 'package:flutter_sound_platform_interface/flutter_sound_platform_interface.dart';
 import 'package:flutter_sound_platform_interface/flutter_sound_recorder_platform_interface.dart';
 import 'package:lottie/lottie.dart';

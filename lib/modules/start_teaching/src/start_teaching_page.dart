@@ -32,7 +32,7 @@ class _StartTeachingPageState extends State<StartTeachingPage> {
             Text(
               "It's a lot easier than you think",
               style: TextStyle(
-                fontSize: 12,
+                fontSize: 14,
               ),
               textAlign: TextAlign.center,
             ),
